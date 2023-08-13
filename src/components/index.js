@@ -6,3 +6,4 @@ export {default as DocFormAjout} from './docFormAjout/DocFormAjout';
 export {default as AlertFormAjout} from './alertFormAjout/AlertFormAjout';
 export {default as DocFormSupp} from './docFormSupp/DocFormSupp';
 export {default as AlertFormSupp} from './alertFormSupp/AlertFormSupp';
+export {default as docsList} from './docsList/DocsList';

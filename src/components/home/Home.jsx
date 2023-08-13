@@ -1,7 +1,8 @@
 import './Home.css'
 import React, { useEffect,useState } from 'react';
 import { Navbar ,Body} from '../index'
-import {DocFormAjout } from '../index';
+import {DocFormAjout ,DocsList} from '../index';
+import Dashboard from '../dashboard/Dashboard';
 function Home(props) {
 
   const handleAdd = () => {
@@ -163,7 +164,7 @@ function Home(props) {
   return (
     <>
       <div className="container">          
-          {(screenWidth > 850 || showNavbar) && <Navbar 
+          {/* {(screenWidth > 850 || showNavbar) && <Navbar 
           handleDeconnect={handleDeconnect} 
           username={props.username} 
           handleChargeComponent={setComponentCharged}
@@ -173,7 +174,9 @@ function Home(props) {
           && <Body componentCharged={componentCharged}
            pathName={pathName}
             showNavbar={handleShowNavbar}
-            screenWidth={screenWidth}/>}
+            screenWidth={screenWidth}/>} */}
+            <Navbar />
+            <Body componentCharged={Dashboard(DocsList)}/>
       </div>
     </>
   )
