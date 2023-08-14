@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faRightFromBracket ,faPlay ,faX} from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
-import {DocFormAjout ,AlertFormAjout,DocFormSupp,AlertFormSupp} from '../index';
+import {DocFormAjout } from '../index';
 import './Navbar.css'
 function Navbar(props) {
     const [isClickedDoc, setIsClickedDoc] = useState(false);

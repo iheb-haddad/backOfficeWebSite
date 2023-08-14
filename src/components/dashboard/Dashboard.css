@@ -1,0 +1,40 @@
+.buttonsBox{
+    margin-left: 50px;
+    margin-bottom: 20px;
+}
+.buttonsBox button , .buttonsBox input{
+    background-color: white;
+    color:#5356d0;
+    border : 2px solid rgb(83,86,208,0.6);
+    border-radius: 8px;
+    padding: 9px 15px;
+    font-family: 'Montserrat' , sans-serif;
+    font-size: 1rem;
+    margin: 7px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.buttonsBox input{
+    background-color: #f3f3fa;
+    border : 1px solid rgb(83,86,208,0.6);
+    cursor: text;
+    padding-right: 35px;
+}
+input::placeholder {
+    color: #5356d0;
+}
+input:focus{
+    outline: none;
+}  
+ 
+.buttonsBox button:hover{
+    color: white;
+    background-color: #5356d0;
+}
+.clicked{
+    color: white;
+    background-color: #5356d0;
+}
+.buttonsBox button span{
+    margin-left: 15px;
+}

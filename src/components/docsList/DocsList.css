@@ -1,0 +1,45 @@
+.headList{
+    display: flex;
+    width: 90%;
+    margin-left: 5%;
+    background-color: #f1f1fc;
+    height: 38px;
+    align-items: center;
+    padding-left: 10px;
+    color:#5356d0;
+    font-family: 'Montserrat' , sans-serif;
+    font-weight: 500;
+    border: 1px solid rgb(168, 168, 168);
+    font-size: 0.9rem;
+}
+.lineList{
+    background-color: white;
+    color: black;
+    font-size: 0.8rem;
+}
+.type{
+    width: 13%;
+}
+.titre{
+    width: 18%;
+    margin-right: 5px;
+}
+.langue{
+    width: 12%;
+}
+.webApp{
+    width: 37%;
+    margin-right: 5px;
+}
+.actions{
+    width: 20%;
+}
+.actions{
+    color :#5356d0;
+    display: flex;
+    justify-content: space-evenly;
+}
+.actions a {
+    text-decoration: none;
+}
+

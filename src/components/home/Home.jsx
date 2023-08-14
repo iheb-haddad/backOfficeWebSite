@@ -1,8 +1,7 @@
 import './Home.css'
 import React, { useEffect,useState } from 'react';
 import { Navbar ,Body} from '../index'
-import {DocFormAjout ,DocsList} from '../index';
-import Dashboard from '../dashboard/Dashboard';
+import {DocFormAjout ,DocsList ,Dashboard } from '../index';
 function Home(props) {
 
   const handleAdd = () => {
@@ -136,7 +135,7 @@ function Home(props) {
     localStorage.removeItem('connectValide');
     localStorage.removeItem('username');
   }
-  const [componentCharged , setComponentCharged] = useState(<DocFormAjout />);
+  
   const [pathName, setPathName] = useState('');
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -160,6 +159,20 @@ function Home(props) {
   const handleShowNavbar = () => {
     setShowNavbar((prev) => { return !prev })
   };
+  const [componentCharged , setComponentCharged] = useState(<DocsList />);
+  const [displayBackbtn , setDisplayBackbtn] = useState(false);
+  const [addbtnIsClicked , setAddbtnIsClicked] = useState(false);
+  const clickAddbtn = () => { 
+    setComponentCharged(<DocFormAjout/>)
+    setAddbtnIsClicked(true)
+    setDisplayBackbtn(true)
+  };
+  const clickBackbtn = () => { 
+    setComponentCharged(<DocsList/>)
+    setAddbtnIsClicked(false)
+    setDisplayBackbtn(false)
+  };
+  
 
   return (
     <>
@@ -176,7 +189,7 @@ function Home(props) {
             showNavbar={handleShowNavbar}
             screenWidth={screenWidth}/>} */}
             <Navbar />
-            <Body componentCharged={Dashboard(DocsList)}/>
+            <Body componentCharged={<Dashboard addbtnIsClicked={addbtnIsClicked} displayBackbtn={displayBackbtn} clickAddbtn = {clickAddbtn} clickBackbtn = {clickBackbtn} componentCharged={componentCharged} />}/>
       </div>
     </>
   )
