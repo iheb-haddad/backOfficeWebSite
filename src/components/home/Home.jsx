@@ -1,7 +1,7 @@
 import './Home.css'
 import React, { useEffect,useState } from 'react';
 import { Navbar ,Body} from '../index'
-import {DocFormAjout ,DocsList ,Dashboard } from '../index';
+import {DocFormAjout ,DocsList ,Dashboard ,ProfilePage} from '../index';
 function Home(props) {
 
   const handleAdd = () => {
@@ -140,6 +140,7 @@ function Home(props) {
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -159,27 +160,48 @@ function Home(props) {
   const handleShowNavbar = () => {
     setShowNavbar((prev) => { return !prev })
   };
-  const [componentCharged , setComponentCharged] = useState(<DocsList />);
+
+  ///////////////////////////////////////////////////////////////////////////////
+  const initialFilterParameteres = {
+    selectedType : 'tout',
+    selectedLanguage : 'tout',
+    selectedApp : 'tout'
+  }
+  const [filterParameters, setFilterParameters] = useState(initialFilterParameteres);
+  const [componentCharged , setComponentCharged] = useState(<DocsList filterParameters={filterParameters}/>);
   const [displayBackbtn , setDisplayBackbtn] = useState(false);
   const [addbtnIsClicked , setAddbtnIsClicked] = useState(false);
+  const [filterbtnIsClicked , setFilterbtnIsClicked] = useState(false);
   const clickAddbtn = () => { 
     setComponentCharged(<DocFormAjout/>)
     setAddbtnIsClicked(true)
     setDisplayBackbtn(true)
+    setFilterbtnIsClicked(false)
   };
-  const clickBackbtn = () => { 
-    setComponentCharged(<DocsList/>)
+  const clickFilterbtn = () => { 
+    setComponentCharged(<DocsList filterParameters={filterParameters}/>)
     setAddbtnIsClicked(false)
     setDisplayBackbtn(false)
+    setFilterbtnIsClicked(prev => !prev)
+    setFilterParameters(initialFilterParameteres)
   };
-  
+  const clickBackbtn = () => { 
+    setComponentCharged(<DocsList filterParameters={filterParameters}/>)
+    setAddbtnIsClicked(false)
+    setDisplayBackbtn(false)
+    setFilterbtnIsClicked(false)
+  };
+
+  useEffect(() =>{
+    setComponentCharged(<DocsList filterParameters={filterParameters}/>) 
+  },[filterParameters]);
 
   return (
     <>
       <div className="container">          
           {/* {(screenWidth > 850 || showNavbar) && <Navbar 
           handleDeconnect={handleDeconnect} 
-          username={props.username} 
+           
           handleChargeComponent={setComponentCharged}
           setPathname={setPathName}
           showNavbar={handleShowNavbar}/>}
@@ -188,8 +210,23 @@ function Home(props) {
            pathName={pathName}
             showNavbar={handleShowNavbar}
             screenWidth={screenWidth}/>} */}
-            <Navbar />
-            <Body componentCharged={<Dashboard addbtnIsClicked={addbtnIsClicked} displayBackbtn={displayBackbtn} clickAddbtn = {clickAddbtn} clickBackbtn = {clickBackbtn} componentCharged={componentCharged} />}/>
+            {(screenWidth > 850 || showNavbar) &&<Navbar showNavbar={handleShowNavbar}/>}
+            {(!showNavbar || screenWidth > 450) 
+           && <Body 
+            username={props.username}
+            showNavbar={handleShowNavbar}
+            screenWidth={screenWidth}
+            componentCharged={<ProfilePage />
+            // <Dashboard addbtnIsClicked={addbtnIsClicked}
+            // filterbtnIsClicked={filterbtnIsClicked} 
+            // displayBackbtn={displayBackbtn} 
+            // clickAddbtn = {clickAddbtn}
+            // clickFilterbtn = {clickFilterbtn}
+            // clickBackbtn = {clickBackbtn} 
+            // filterParameters = {filterParameters}
+            // setFilterParameters = {setFilterParameters}
+            // componentCharged={componentCharged} />
+          }/>}
       </div>
     </>
   )

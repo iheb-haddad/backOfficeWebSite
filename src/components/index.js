@@ -6,3 +6,4 @@ export {default as DocFormAjout} from './docFormAjout/DocFormAjout';
 export {default as DocsList} from './docsList/DocsList';
 export {default as ListLine} from './listLine/ListLine';
 export {default as Dashboard} from './dashboard/Dashboard';
+export {default as ProfilePage} from './profilePage/ProfilePage';

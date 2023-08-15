@@ -33,16 +33,52 @@
     font-weight: 100;
   }
   .headBody{
-
-    height: 10vh;
-    color: white;
+    height: 12vh;
+    color: black;
     display: flex;
-    justify-content: flex-start;
+    justify-content:flex-end;
     align-items: center;
     padding-left: 40px;
+    padding-right: 40px;
+
    }
+   .user{
+    position: relative;
+    height: 80px;
+    display: flex;
+    align-items: center;
+   }
+   .user span {
+    font-family: "Montserrat",sans-serif;
+    border-radius: 8px;
+    padding: 8px 12px 8px 40px;
+    border: 1px solid rgb(185, 176, 176,0.4);
+    box-shadow: 2px 0px 2px rgb(185, 176, 176,0.4);
+    font-weight: 600;
+    position: relative;
+  }
+  .user .rounded-image {
+    background-color: white;
+    left: -15px;
+    top:15px;
+    position: absolute;
+    width: 45px; /* Adjust the width and height as needed */
+    height: 45px;
+    border-radius: 50%; /* Makes the element circular */
+    overflow: hidden; 
+    z-index: 9999;/* Ensures the content within the rounded area is hidden */
+  }
+  
+  .user .rounded-image img {
+    width: 100%;
+    height: 120%;
+    object-fit: cover; /* Ensures the image covers the rounded area */
+  }
 @media (max-width: 850px){
   .body{
     width: 100vw;
+  }
+  .headBody{
+    justify-content: space-between;
   }
 }  

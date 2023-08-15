@@ -1,36 +1,27 @@
-import React,{useState} from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import React,{useState,useEffect} from 'react'
 import './DocFormAjout.css'
-import Select from "react-select";
-
 
 function DocFormAjout() {
     const initialValues = {
-        selectedApps: [],
-        selectedLanguage: 'Francais',
-        titleFr: '',
-        titleAn: '',
-        selectedTypeFr: 'Commun',
-        selectedTypeAn: 'Common',
-        selectedStatut: 'Public',
+        selectedApp: "",
+        selectedLanguage: '',
+        title: '',
+        selectedType: '',
+        selectedStatut: '',
         urlDocument: '',
       };
       const [formData, setFormData] = useState(initialValues);
+      const [typeDocument ,setTypeDocument] = useState("");
+
       const handleAnnuler = () => {
         setFormData(initialValues);
+        setTypeDocument("");
       };
 
-    // Array of all Apps
-    const appsList = [
-      { value: "http://localhost:3000/", label: "App1" },
-      { value: "App2", label: "App2" },
-      { value: "App3", label: "App3" },
-    ];
-    function handleSelectApp(data) {
+    function handleAppChange(event) {
         setFormData((prevData) => ({
             ...prevData,
-            selectedApps : data
+            selectedApp : event.target.value
           }));
     }
     
@@ -39,47 +30,25 @@ function DocFormAjout() {
             ...prevData,
             selectedLanguage : event.target.value
           }));
-          event.target.value === 'Anglais' ? setOblg('*') : setOblg('')
     };
     
-    const handleTitleFrChange = (event) => {
+    const handleTitleChange = (event) => {
         setFormData((prevData) => ({
           ...prevData,
-          titleFr: event.target.value,
+          title: event.target.value,
         }));
       };
       
-      const handleTitleAnChange = (event) => {
-        setFormData((prevData) => ({
-          ...prevData,
-          titleAn: event.target.value,
-        }));
-      };
-
-    const handleTypeFrChange = (event) => {
+    const handleTypeChange = (event) => {
         setFormData((prevData) => ({
             ...prevData,
-            selectedTypeFr: event.target.value,
+            selectedType: event.target.value,
           }));
-          
-      if (event.target.value === 'Commun' ){
-        setFormData((prevData) => ({
-            ...prevData,
-            selectedTypeAn: 'Common',
-          }));
-      }else if (event.target.value === 'Fiche métier' ){
-        setFormData((prevData) => ({
-            ...prevData,
-            selectedTypeAn: 'Job Description',
-          }));
-      }
-      else{
-        setFormData((prevData) => ({
-            ...prevData,
-            selectedTypeAn: 'Other',
-          }));
-      }
     };
+
+    const handleTypeDocChange = (event) => {
+      setTypeDocument(event.target.value);
+  };
 
     const handleStatutChange = (event) => {
         setFormData((prevData) => ({
@@ -97,30 +66,32 @@ function DocFormAjout() {
   const [message ,setMessage] = useState("")
   const [messageColor , setMessageColor] = useState("black")
   const [showError,setShowError] = useState(false)
+
     const handleAddDocument = () => {
-      const hasEmptyFields = Object.values(formData).some((value) => value === '');
-      setShowError(hasEmptyFields);
-      if (hasEmptyFields){
+      const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
+        return key !== 'title' && value === '';
+      });
+      const typeDocEmpty = formData.selectedType === 'document' && typeDocument === ''
+      setShowError(hasEmptyFields || typeDocEmpty);
+      if (hasEmptyFields || typeDocEmpty){
         setMessage("Il faut remplir tout les champs obligatoires *")
         setMessageColor("red")
         setTimeout(() => {
           setMessage("");
         }, 4000);
       }else{
-      const valuesList = formData.selectedApps.map((app) => app.value);
         const newDocument = {
-            id: Math.random().toString(36).substring(7),
-            langue: formData.selectedLanguage,
-            titleFr: formData.titleFr,
-            titleAn: formData.titleAn,
-            typeFr: formData.selectedTypeFr,
-            typeAn: formData.selectedTypeAn,
-            application: valuesList,
-            statut: formData.selectedStatut,
-            urlDoc: formData.urlDocument,
-          };
+          id: Math.random().toString(36).substring(7),
+          type: formData.selectedType,
+          langue: formData.selectedLanguage,
+          titre: formData.title,
+          ...(formData.selectedType === 'document' && { typeDoc: typeDocument }),
+          application: formData.selectedApp,
+          statut: formData.selectedStatut,
+          urlDoc: formData.urlDocument,
+        };
     
-        fetch('https://urlsjsonserver-p2nq.onrender.com/documents', {
+        fetch('https://urlsjsonserver-p2nq.onrender.com/documentations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -131,7 +102,8 @@ function DocFormAjout() {
           .then((data) => {
             console.log('New document added:', data);
             setFormData(initialValues);
-            setMessage("Le document est ajouté avec succés")
+            setTypeDocument("")
+            setMessage("La documentation est ajouté avec succés")
             setMessageColor("green")
             setTimeout(() => {
               setMessage("");
@@ -140,7 +112,7 @@ function DocFormAjout() {
           })
           .catch((error) => {
             console.error('Error adding new document:', error);
-            setMessage("Un problème effectue lors de l'ajout du document")
+            setMessage("Un problème effectue lors de l'ajout du documentation")
             setMessageColor("red")
             setTimeout(() => {
               setMessage("");
@@ -148,78 +120,92 @@ function DocFormAjout() {
           });
         }
       };
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+      const [webApplications ,setWebApplications] = useState([])
+      useEffect(() => {
+        fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
+          .then((response) => response.json())
+          .then((data) => {
+            setWebApplications(data) 
+              })
+          .catch((error) => {
+            console.error('Error fetching documents:', error);
+          });
+
+      }, []);
   return (
     <div className='docFormAjout'>
         <div className="entete">
-            <FontAwesomeIcon icon={faPlay} />
-            <h1>AJOUT D'UN DOCUMENT</h1>
+            <h1>Ajouter une documentation</h1>
         </div>
         <div className="configBox">
         <div className="configLine">
+                <h3>Type *</h3>
+                <select value={formData.selectedType} onChange={handleTypeChange} 
+                style={{border: (showError && !formData.selectedType) && "1px solid red"}}>
+                    <option value="">----</option>
+                    <option value="document">Document</option>
+                    <option value="instruction">Instruction</option>
+                    <option value="alerte">Alerte</option>
+                </select>
+            </div>
+            <div className="configLine" style={{display: formData.selectedType === 'document'? "block" : "none"}}>
+                <h3>Type Document*</h3>
+                <select value={typeDocument} onChange={handleTypeDocChange}
+                style={{border: (showError && !typeDocument) && "1px solid red"}}>
+                    <option value="">----</option>
+                    <option value="commun">Commun</option>
+                    <option value="fiche métier">Fiche métier</option>
+                    <option value="autre">Autre</option>
+                </select>
+            </div>      
+        <div className="configLine">
                 <h3>Langue *</h3>
-                <select value={formData.selectedLanguage} onChange={handleLanguageChange}>
-                    <option value="Francais">Francais</option>
-                    <option value="Anglais">Anglais</option>
+                <select value={formData.selectedLanguage} onChange={handleLanguageChange}
+                style={{border: (showError && !formData.selectedLanguage) && "1px solid red"}}>
+                    <option value="">----</option>
+                    <option value="francais">Francais</option>
+                    <option value="anglais">Anglais</option>
                 </select>
             </div> 
             <div className="configLine">
-                 <h3>Titre (FR) *</h3>
+                 <h3>Titre</h3>
                 <input
                     type="text"
-                    value={formData.titleFr}
-                    onChange={handleTitleFrChange}
-                    placeholder="Saisir titre en francais"
-                    style={{border: showError && !formData.titleFr ? "1px solid red":"none"}}
+                    value={formData.title}
+                    onChange={handleTitleChange}
+                    placeholder="Saisir titre "
+                    style={{border: (showError && !formData.title) && "1px solid red"}}
                     />
             </div>
             <div className="configLine">
-                <h3>Titre (EN) {formData.selectedLanguage === 'Anglais'? <span>*</span> : <span></span>}</h3>
-                <input
-                    type="text"
-                    value={formData.titleAn}
-                    onChange={handleTitleAnChange}
-                    placeholder="Saisir titre en anglais"
-                    style={{border: formData.selectedLanguage=== 'Anglais' && showError && !formData.titleAn ? "1px solid red":"none"}}
-                    />
-            </div>
-            <div className="configLine">
-                <h3>Type (FR) *</h3>
-                <select value={formData.selectedTypeFr} onChange={handleTypeFrChange}>
-                    <option value="Commun">Commun</option>
-                    <option value="Fiche métier">Fiche métier</option>
-                    <option value="Autre">Autre</option>
+                <h3>Application Web *</h3>
+                <select value={formData.selectedApp} onChange={handleAppChange}
+                style={{border: (showError && !formData.selectedApp) && "1px solid red"}}>
+                    <option value="">----</option>
+                    {webApplications.map((app) =>(
+                      <option key={app.id} value={app.url}>{app.nom}</option>
+                    ))}
                 </select>
-            </div>  
-            <div className="configLine">
-                <h3>Type (EN)</h3>
-                <div className="input">{formData.selectedTypeAn}</div>
             </div>   
-            <div className="configLine">
-                <h3>Application *</h3>
-                <Select className={showError && !formData.selectedApps[0] ? 'dropDown-menu error':'dropDown-menu'}
-                    options={appsList}
-                    placeholder="Select application"
-                    value={formData.selectedApps}
-                    onChange={handleSelectApp}
-                    isSearchable={true}
-                    isMulti
-                />
-            </div>
+
             <div className="configLine">
                 <h3>Statut *</h3>
-                <select value={formData.selectedStatut} onChange={handleStatutChange}>
-                    <option value="option1">Public</option>
-                    <option value="option2">Brouillon</option>
+                <select value={formData.selectedStatut} onChange={handleStatutChange}
+                style={{border: (showError && !formData.selectedStatut) && "1px solid red"}}>
+                    <option value="">----</option>
+                    <option value="public">Public</option>
+                    <option value="brouillon">Brouillon</option>
                 </select>
             </div>
             <div className="configLine">
-                 <h3>URL Document *</h3>
+                 <h3>Url Document *</h3>
                 <input
                     type="text"
                     value={formData.urlDocument}
                     onChange={handleUrlDocumentChange}
                     placeholder="Saisir Url du document"
-                    style={{border: showError && !formData.urlDocument ? "1px solid red":"none"}}
+                    style={{border: (showError && !formData.urlDocument) && "1px solid red"}}
                     />
             </div>                                   
         </div>

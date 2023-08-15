@@ -2,7 +2,7 @@
     margin-left: 50px;
     margin-bottom: 20px;
 }
-.buttonsBox button , .buttonsBox input{
+.buttonsBox button , .buttonsBox input ,.filterBox select{
     background-color: white;
     color:#5356d0;
     border : 2px solid rgb(83,86,208,0.6);
@@ -20,18 +20,27 @@
     cursor: text;
     padding-right: 35px;
 }
-input::placeholder {
+.buttonsBox input::placeholder {
     color: #5356d0;
 }
-input:focus{
+input:focus,select:focus{
     outline: none;
-}  
+}
+.filterBox{
+    margin-left: 100px;
+    margin-bottom: 20px;
+} 
+.filterBox select{
+    background-color: #f3f3fa;
+    border : 1px solid rgb(83,86,208,0.6);
+    padding-right: 35px;
+} 
  
 .buttonsBox button:hover{
     color: white;
     background-color: #5356d0;
 }
-.clicked{
+.buttonsBox .clicked{
     color: white;
     background-color: #5356d0;
 }

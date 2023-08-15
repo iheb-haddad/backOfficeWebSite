@@ -6,26 +6,6 @@
     z-index: 9999999; 
   }
 
-  .userInfo{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .userInfo > h3{
-    font-size: 0.9rem;
-    color: #818181;
-  }
-  .username > span{
-    font-size: 1.1rem;
-    margin-left: 10px;
-  }
-  .userInfo > button{
-    padding: 5px 15px;
-    margin-top: 15px;
-    cursor: pointer;
-  }
   button >span{
     margin-right: 10px;
   }
@@ -106,7 +86,7 @@
   .head{
   
     height: 12vh;
-    color: white;
+    color: rgb(0, 0, 0);
     font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
