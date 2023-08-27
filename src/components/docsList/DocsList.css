@@ -94,8 +94,8 @@
 }
 @media (max-width:620px){
     .headList{
-        width: 95%;
-        margin-left: 2%;
+        width: 91%;
+        margin-left: 4%;
     }
 }
 @media (max-width: 580px) {
@@ -125,4 +125,15 @@
         width: 16%;
     }
 }    
-
+@media (max-width: 420px) {
+    .headList {
+        font-size: 0.6rem;
+    }
+    .lineList{
+        font-size: 0.5rem;
+        padding-left: 3px;
+    }
+    .actions{
+        font-size: 0.4rem;
+    }
+}  

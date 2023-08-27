@@ -184,7 +184,7 @@
 }
 @media (max-width:530px) {
   .colorsForm , .urlBox{
-    width: 90%;
+    width: 93%;
     padding: 15px;
   }
   .confButtons{
@@ -209,7 +209,7 @@
     padding: 10px;
   }
   .confButtons{
-    padding-right: 1%;
+    padding-right: 0;
   }
   .confButtons button{
     border-radius: 7px;
@@ -218,7 +218,10 @@
   }
 }
 @media (max-width:400px) {
-  .colorsForm , .urlBox{
+  .colorsForm {
+    padding: 8px;
+  }
+  .urlBox{
     padding: 8px;
   }
   .confButtons{

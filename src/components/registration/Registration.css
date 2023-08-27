@@ -213,8 +213,4 @@
         margin-bottom: 20px;
     }
   }
-  @media (max-width: 420px) {
-    .registrationBox .bodyContainer{
-        /* width: 85%; */
-    }
-  }   
+ 
