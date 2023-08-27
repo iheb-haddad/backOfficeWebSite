@@ -320,6 +320,7 @@
 @media (max-width: 480px) {
     .modifications{
         padding: 6px;
+        margin-top: 15px;
     }
     .modificationsList{
         padding: 0;

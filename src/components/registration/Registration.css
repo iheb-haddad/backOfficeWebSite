@@ -193,14 +193,28 @@
     .registrationBox .bodyContainer{
         width: 70%;
     }
+    .connectionButton button{
+        height: 40px;
+    }
+    .loginInput input,.loginInput input::placeholder{
+        height: 37px;
+        font-size: 0.8rem;
+    }
+    .options h4{
+        font-size: 0.8rem;
+    }
   }
   @media (max-width: 500px) {
     .registrationBox .bodyContainer{
         width: 80%;
     }
+    .registrationBox .bodyContainer .logo{
+        margin-right: 20px;
+        margin-bottom: 20px;
+    }
   }
   @media (max-width: 420px) {
     .registrationBox .bodyContainer{
-        width: 85%;
+        /* width: 85%; */
     }
   }   
