@@ -5,7 +5,7 @@
 .profilePage .profileCover{
     height: 35%;
     /* background-color: #3354cc; */
-    background-image : url("./couverture.jpg");
+    /* background-image : url("./couverture.jpg"); */
     background-size: cover;
 }
 .profilePage .profileBody{

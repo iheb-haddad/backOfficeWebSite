@@ -74,7 +74,7 @@ function Accueil() {
 
                 </div>
             </div>
-            <div className="accueilBox bigBox citation">
+            <div className="accueilBox bigBox citation" style={{backgroundImage:'url(./citationBack.png)'}}>
                 <div className="title">Votre documentation, votre manière</div>
                 <div className="subtitle">"FlexiDoc : Votre documentation personnalisé pour une efficacité maximale et pour une productivité optimale.."</div>
             </div>

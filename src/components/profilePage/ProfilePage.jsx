@@ -81,7 +81,7 @@ function ProfilePage(props) {
 
   return (
     <div className="profilePage">
-      <div className="profileCover"></div>
+      <div className="profileCover" style={{backgroundImage:'url(./couverture.jpg)'}}></div>
       <div className="profileBody">
         <div className="boxes">
         <div className="sideBox">
