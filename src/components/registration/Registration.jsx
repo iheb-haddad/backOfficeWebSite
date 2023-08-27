@@ -55,7 +55,7 @@ function Registration(props) {
   
   return (
     <div className='registration'>
-        <div className="backgroundBox">
+        <div className="backgroundBox" style={{backgroundImage:'url(./loginBack.png)'}}>
           <div className="subtitle">DE RETOUR,</div>
           <div className="title">BIENVENUE !</div>
         </div>
