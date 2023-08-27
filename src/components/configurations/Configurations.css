@@ -233,3 +233,25 @@
     font-size: 0.4rem;
   }
 }
+@media (max-width:370px) {
+  .colorsForm {
+    padding: 7px;
+  }
+  .urlBox{
+    padding: 7px;
+  }
+  .confButtons{
+    padding-right: 0;
+  }
+  .confButtons button{
+    border-radius: 7px;
+    padding: 2px 1px;
+    font-size: 0.3rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.5rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.6rem;
+  }
+}
