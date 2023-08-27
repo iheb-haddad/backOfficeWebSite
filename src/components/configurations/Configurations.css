@@ -225,7 +225,7 @@
     padding: 8px;
   }
   .confButtons{
-    padding-right: 1%;
+    padding-right: 0;
   }
   .confButtons button{
     border-radius: 7px;
