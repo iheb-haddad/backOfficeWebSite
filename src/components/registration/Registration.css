@@ -3,165 +3,204 @@
     height: 100vh;
     width: 100vw;
     display: flex;
+}
+.backgroundBox{
+    height: 100vh;
+    width: 55vw;
+    background-image: url("./loginBack.png");
+    background-size: 100% 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.backgroundBox .subtitle{
+    font-family: 'Montserrat',sans-serif;
+    font-size: 3.2rem;
+}
+.backgroundBox .title{
+    font-family: 'Montserrat',sans-serif;
+    font-weight: bold;
+    font-size: 5rem;
 }
 .registrationBox{
-    height: 60vh;
-    width: 60vw;
-    max-width: 600px;
-    min-width: 500px;
-}
-.headBox{
-    background-image: linear-gradient(to top, #000000, #424242) ;
-    height: 25%;
-    color: white;
-    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    width: 45vw;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    /* max-width: 600px;
+    min-width: 500px; */
 }
-.title {
-     font-size: 1.7rem;
-     font-weight: bold;
-}
-   
-.subtitle {
-     font-size: 1.2rem;
-}
-
-.bodyContainer{
-    background-color: #f2f2f2;
-    height: 75%;
-    padding: 10px 15px;
-}
-.bodyBox1{
+.registrationBox .bodyContainer{
+    height: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    border-bottom:1px dashed  rgb(119, 119, 119); 
-    padding: 10px 0;
+}
+.registrationBox .bodyContainer .logo{
+    margin-bottom: 30px;
+}
+.registrationBox .bodyContainer .logo img{
+    width: 250px;
+    height: 130px;
 }
 .inputBox{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 90%;
-}
-.inputLine{
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    /* padding: 10px 0; */
+    width: 100%;
+}
+.loginInput{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-bottom: 15px; */
+}
+.loginInput input{
+    padding: 0;
+    margin:0;
+    background-color: white;
+    height: 45px;
+    width: 96%;
+    border: 2px solid #888789;
+    padding-left: 3%;
+    font-size: 1rem;
+}
+.loginInput input:focus{
+    outline: none;
+}
+.loginInput input::placeholder{
+    font-family: 'Montserrat',sans-serif;
+    font-size: 1rem;
+    color: #acabad;
 }
 .messageBox{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-}
-.messageBox .marg{
-    flex: 1;
+    align-self: flex-start;
+    margin-bottom: 5px;
+    padding-left: 15px;
+    padding-top: 5px;
 }
 .messageBox p{
-    flex: 2;
-    margin: 3px 0px 10px 10px;
-    color: red;
-} 
-.inputLine h3{
-    margin-top: 5px;
-    color: #272727;
+    margin: 0;
+    font-family: 'Montserrat',sans-serif;
     font-size: 0.9rem;
-    flex: 1;
-  }  
-.inputLine input{
-    flex: 2;
-    border:none;
-    background-color: white;
-    height: 35px;
-    padding-left: 20px;
-  }
+}
+.connectionButton{
+    width: 100%;
+    margin-top: 20px; 
+}
+.connectionButton button{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 20px;
+    font-family: 'Montserrat',sans-serif;
+    background-image: linear-gradient(to right, #141ac2, #6266db);
+    cursor: pointer;
+} 
+.connectionButton button:active{
+    scale: 0.95;
+}
 .optionsBox{
-    display: flex;
-    margin-left: 30%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    width: 100%;
+    margin-top: 30px;
  } 
 .optionsBox .options{
-    margin-right: 20px;
-    color: #b5b5b5;
+    width: 100%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .options h4{
-    margin: 5px;
     text-decoration: underline;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500;
+    margin: 0;
+    margin-top: 5px;
+    cursor: pointer;
+}
+.options h4:active{
+    color: #6266db;
 }
 .options label{
     font-size: 0.8rem;
     display: flex;
+    font-family: 'Montserrat',sans-serif;
+    font-weight: 500;
 }
 .options input{
     margin: 0;
     border-color: white;
     margin-right: 5px;
 } 
-  .optionsBox button{
-    border: none;
-    background-color: #535353;
-    color: rgb(242, 247, 247);
-    height: 40px;
-    margin-left: 10px;
-    cursor: pointer;
-    width: 100px;
-  }
-.optionsBox button:hover{
-    color: #a0a0a0;
-  }
-.bodyBox2{
-    margin-left: 15px;
-    padding-top: 10px;
+@media (max-width: 1050px) {
+    .registrationBox .bodyContainer{
+        width: 70%;
+    }
+    .connectionButton button{
+        font-size: 1.2rem;
+    }
+    .backgroundBox .subtitle{
+        font-size: 2.8rem;
+    }
+    .backgroundBox .title{
+        font-size: 4rem;
+    }
 }
-.bodyBox2 h5{
-    margin: 5px;
-}  
-
+@media (max-width: 950px) {
+    .registrationBox .bodyContainer{
+        width: 80%;
+    }
+    .registrationBox {
+        width: 50vw;
+    }
+    .backgroundBox{
+        width: 50vw;
+    }
+    .backgroundBox .subtitle{
+        font-size: 2.5rem;
+    }
+    .backgroundBox .title{
+        font-size: 3.5rem;
+    }
+}
+@media (max-width: 900px) {
+    .backgroundBox{
+        display: none;
+    }
+    .registrationBox {
+        width: 100vw;
+    }
+    .registrationBox .bodyContainer{
+        width: 60%;
+    }
+}
 @media (max-width: 550px) {
-    .registrationBox{
-        min-width: 90vw;
-        font-size: 80%;
-        max-height:400px;
-    }
-    .title{
-        font-size: 1.3rem;
-    }
-    .subtitle{
-        font-size: 1rem;
-    }
-    .inputBox{
-        width: 98%;
-    }
-    .inputLine{
-        padding-left:10px;
-        padding-right: 10px;
-    }
-    .inputLine h3{
-        font-size: 0.7rem;
-    }
-    .inputLine input{
-        height: 25px;
-    }
-    .optionsBox button{
-        width: 80px;
-        height: 30px;
-        font-size: 0.6rem;
-        margin-right: 20px;
-    }
-    .bodyContainer{
-        padding: 10px 0;
-    }
-    .options h4{
-        font-size: 0.7rem;
+    .registrationBox .bodyContainer{
+        width: 70%;
     }
   }
+  @media (max-width: 500px) {
+    .registrationBox .bodyContainer{
+        width: 80%;
+    }
+  }
+  @media (max-width: 420px) {
+    .registrationBox .bodyContainer{
+        width: 85%;
+    }
+  }   

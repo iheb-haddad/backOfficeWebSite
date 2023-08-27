@@ -213,7 +213,7 @@ function DocFormAjout() {
             <div className="message" style={{color:messageColor}}>{message}</div>
            <div>
               <button onClick={handleAnnuler}>Annuler</button>
-              <button onClick={handleAddDocument}>Envoyer</button>
+              <button onClick={handleAddDocument} className='appliquer'>Envoyer</button>
             </div>
         </div>
     </div>

@@ -1,0 +1,219 @@
+.colorsForm{
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 20px;
+    column-gap: 10px;
+    width: 80%;
+    margin-left: 8%;
+    padding: 20px;
+    height: 100%;
+    border: 1px solid rgb(194, 184, 184);
+    position: relative;
+    font-family: "Montserrat",sans-serif;
+    font-weight: 500;
+    color: #222e54;
+    margin-top: 20px;
+    background-color: white;
+}
+.colorsForm h4{
+  margin: 0;
+  padding: 0 5px;
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  background-color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.colorsLine h3{
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #222e54;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .colorsLine input{
+    border:1px solid rgb(214, 214, 214);
+    background-color: white;
+    height: 30px;
+    padding:0 10px;
+    width: 90%;
+  }
+  .colorsLine input:focus{
+    outline-color: rgb(83,86,208,0.6) ;
+  }
+.confButtons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10%;
+  padding-top: 3%;
+}
+  .confButtons button{
+    background-color: white;
+    color:#5356d0;
+    border : 2px solid rgb(83,86,208,0.6);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-family: 'Montserrat' , sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.confButtons button:hover{
+  color: white;
+  background-color: #5356d0;
+}
+.confButtons .appliquer{
+  color: white;
+  background-color: #5356d0;
+}  
+.confButtons .appliquer:active{
+    scale: 1.1;
+}
+.urlBox{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(194, 184, 184);
+  justify-content: center;
+  padding: 20px;
+  margin-left: 8%;
+  margin-top: 30px;
+  width: 80%;
+  font-family: "Montserrat",sans-serif;
+  font-weight: 500;
+  color: #222e54;
+  position: relative;
+  background-color: white;
+}
+.urlForm{
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 20px;
+  column-gap: 10px; 
+  height: 100%;
+  font-family: "Montserrat",sans-serif;
+  font-weight: 500;
+}
+.urlBox h4{
+  margin-bottom: 30px;
+  font-weight: 500
+}
+.urlBox h5{
+  margin: 0;
+  padding: 0 5px;
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  background-color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.urlLine h3{
+  margin-top: 0;
+  margin-bottom: 5px;
+  color:#222e54;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.urlLine input{
+  border:1px solid rgb(214, 214, 214);
+  background-color: white;
+  height: 30px;
+  padding:0 10px;
+  width: 90%;
+}
+.urlLine input:focus{
+  outline-color: rgb(83,86,208,0.6) ;
+}
+@media (max-width: 1160px) {
+  .colorsForm{
+      margin-top: 40px;
+  }
+}
+@media (max-width:850px) {
+  .colorsForm h4 , .urlBox h5{
+    font-size: 1rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.8rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.9rem;
+  }
+  .colorsForm , .urlBox{
+    width: 90%;
+    margin-left: 3%;
+  }
+}
+@media (max-width:700px) {
+  .confButtons{
+    padding-right: 5%;
+  }
+  .confButtons button{
+    padding: 6px 8px;
+    margin-left: 5px;
+  }
+  .colorsForm h4 , .urlBox h5{
+    top:-10px;
+    font-size: 0.9rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.7rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.8rem;
+  }
+  .colorsForm , .urlBox{
+    width: 90%;
+    margin-left: 1%;
+  }
+}
+@media (max-width:600px) {
+  .confButtons{
+    padding-right: 3%;
+  }
+  .confButtons button{
+    padding: 4px 6px;
+    font-size: 0.7rem;
+  }
+  .urlForm{
+    row-gap: 0
+  }
+}
+@media (max-width:530px) {
+  .colorsForm , .urlBox{
+    width: 90%;
+    padding: 15px;
+  }
+  .confButtons{
+    padding-right: 2%;
+  }
+  .confButtons button{
+    padding: 3px 4px;
+    font-size: 0.6rem;
+  }
+  .colorsForm h4 , .urlBox h5{
+    font-size: 0.8rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.6rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.7rem;
+  }
+}
+@media (max-width:530px) {
+  .colorsForm , .urlBox{
+    padding: 10px;
+  }
+  .confButtons{
+    padding-right: 1%;
+  }
+  .confButtons button{
+    border-radius: 7px;
+    padding: 2px 3px;
+    font-size: 0.5rem;
+  }
+}

@@ -1,0 +1,377 @@
+.accueil{
+    background-size: cover;
+    width: 100%;
+    height: 90vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.accueilBoxes {
+    margin-top: 4%;
+    width: 80%;
+    height: 80%;
+    display: grid;
+    grid-template :auto auto auto;
+    gap: 20px;
+}
+.accueilBox{
+    box-shadow: 0 0 4px 2px rgb(0,0,0,0.1);
+    border-radius: 20px;
+}
+.bigBox {
+    grid-column: span 3;
+}
+.modifications{
+    background-color: white;
+    grid-row: span 7;
+    padding: 20px;
+    padding-bottom: 0;
+}
+.modificationsList{
+    padding: 10px;
+    padding-bottom: 0;
+}
+.modificationsHead {
+    display: flex;
+    justify-content: space-between;  
+}
+.modificationsList .type{
+    width: 18%;
+}
+.modificationsList .titre{
+    width: 24%;
+    margin-right: 5px;
+}
+.modificationsList .langue{
+    width: 18%;
+}
+.modificationsList .webApp{
+    width: 40%;
+    overflow-x: hidden;
+}
+.modificationsHead .modificationsTitle{
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #5356d0;
+    display: flex;
+}
+.modificationsHead .suivantIcon ,.modificationsTitle .precedentIcon{
+    color: #5356d0;
+    font-size: 1.5rem;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.modificationsTitle .precedentIcon{
+    margin-right: 20px;
+}
+
+.modificationsHeadList {
+    display: flex;
+    align-items: center;
+    font-family: 'Montserrat' , sans-serif;
+    font-weight: 500;
+}
+.modificationsLine {
+    font-weight: 400;
+}
+.isEntering{
+    animation: entrer 1s;
+}
+.isLeaving{
+    animation: sortir 1s;
+}
+.isEntering2{
+    animation: entrer2 1s;
+}
+.isLeaving2{
+    animation: sortir2 1s;
+}
+@keyframes sortir {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100px);
+        opacity: 0;
+        display: none;
+    }
+}
+@keyframes entrer {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+        display: none;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }   
+}
+@keyframes sortir2 {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(50px);
+        opacity: 0;
+        display: none;
+    }
+}
+@keyframes entrer2 {
+    from {
+        transform: translateX(-50px);
+        opacity: 0;
+        display: none;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+.citation{
+    background-image: url('./citationBack.png');
+    background-size:  cover;
+    background-position: center;
+    grid-row: span 10;
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-left: 4%;
+    padding-right: 4%
+}
+.citation .title{
+    color: white;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 3%;
+    text-align: center;
+}
+.citation .subtitle{
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.smallBox{
+    background-color: white;
+    grid-row: span 3;
+    display: flex;
+    padding: 10px 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+ .smallBox .stat{
+    font-family: "Montserrat", sans-serif;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.smallBox .stat .chiffres{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #5356d0;
+}
+.smallBox .statIcon img{
+    width: 60px;
+    height: 60px;
+} 
+
+@media (max-width: 1300px){
+    .citation .title{
+        font-size: 2.3rem;
+        font-weight: 600;
+    }
+    .citation .subtitle{
+        font-size: 1rem;
+    }
+}
+@media (max-width: 1250px) {
+    .accueilBoxes {
+        width: 90%;
+    }
+}
+@media (max-width: 1160px) {
+    .accueilBoxes {
+        width: 80%;
+    }
+}
+@media (max-width: 1050px) {
+    .accueilBoxes {
+        width: 90%;
+    }
+}
+@media (max-width: 950px) {
+    .modificationsHead .modificationsTitle{
+        font-size: 1.2rem;
+    }
+    .citation .title{
+        font-size: 2rem;
+    }
+    .smallBox .statIcon img{
+        width: 50px;
+        height: 50px;
+    }
+}
+@media (max-width: 800px) {
+    .citation .title{
+        font-size: 1.7rem;
+    }
+    .smallBox .statIcon img{
+        width: 40px;
+        height: 40px;
+    }
+    .smallBox .stat .chiffres{
+        font-size: 1.7rem;
+    }
+    .smallBox .stat .type{
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 730px) {
+    .modificationsHead .modificationsTitle{
+        font-size: 1.1rem;
+    }
+    .modificationsHeadList {
+        font-size: 0.9rem;
+    }
+    .modifications{
+        grid-row: span 5;
+    }
+}
+@media (max-width: 730px) {
+    .citation .title{
+        font-size: 1.5rem;
+    }
+    .citation .subtitle{
+        font-size: 0.9rem;
+    }
+    .smallBox .stat .chiffres{
+        font-size: 1.5rem;
+    }
+    .smallBox .stat .type{
+        font-size: 0.8rem;
+    }
+    .smallBox{
+        padding: 10px 15px;
+    }
+}
+@media (max-width: 570px) {
+    .accueilBoxes {
+        width: 95%;
+    }
+    .citation{
+        padding: 0 2%;
+    }
+    .modificationsHead .suivantIcon ,.modificationsTitle .precedentIcon{
+        font-size: 1.3rem;
+    }
+}
+@media (max-width: 520px) {
+    .smallBox .stat .chiffres{
+        font-size: 1.3rem;
+    }
+    .smallBox .stat .type{
+        font-size: 0.8rem;
+    }
+    .smallBox{
+        padding: 10px 10px;
+    }
+    .smallBox .statIcon img{
+        width: 35px;
+        height: 35px;
+    }
+    .citation .title{
+        font-size: 1.3rem;
+    }
+    .citation .subtitle{
+        font-size: 0.8rem;
+    }
+    .modificationsHead .modificationsTitle{
+        font-size: 1rem;
+    }
+    .modificationsHeadList {
+        font-size: 0.8rem;
+    }
+    .modifications{
+        padding: 15px;
+    }
+    .modificationsList .titre{
+        margin-right: 1px;
+    }
+    .modificationsTitle .precedentIcon{
+        margin-right: 10px;
+    }
+    .modificationsList .langue{
+        width: 15%;
+    }
+    .modificationsList .webApp{
+        width: 43%;
+        overflow-x: hidden;    }
+}
+@media (max-width: 480px) {
+    .modifications{
+        padding: 6px;
+    }
+    .modificationsList{
+        padding: 0;
+    }
+    .modificationsHead .suivantIcon ,.modificationsTitle .precedentIcon{
+        font-size: 0.9rem;
+    }
+    .accueilBoxes {
+        column-gap: 8px;
+        row-gap: 30px;
+        height: 70%;
+    }
+    .smallBox .stat .chiffres{
+        font-size: 1.1rem;
+    }
+    .smallBox .stat .type{
+        font-size: 0.7rem;
+    }
+    .smallBox{
+        padding: 5px;
+    }
+    .smallBox .statIcon img{
+        width: 30px;
+        height: 30px;
+    }
+    .citation .title{
+        font-size: 1.3rem;
+    }
+    .citation .subtitle{
+        font-size: 0.8rem;
+    }
+    .modifications{
+        margin-top: 20px;
+        grid-row: span 2;
+    }
+    .citation{
+        grid-row: span 7;
+    }
+    .smallBox{
+        grid-row: span 1;
+        border-radius: 10px;
+    }
+    .modificationsHead {
+        margin-bottom: 20px;
+    }
+    .modificationsLine {
+        margin-top: 5px;
+    }
+    .modificationsHeadList {
+        font-size: 0.6rem;
+    }
+    .modificationsHead .modificationsTitle{
+        font-size: 0.9rem;
+    }
+}

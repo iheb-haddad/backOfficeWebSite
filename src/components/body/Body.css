@@ -1,72 +1,59 @@
 .body{
     width: 82vw;
-  }
-  .navigation{
-    height: 6vh;
-    background-color: #232323;
-    display: flex;
-    align-items: center;
-    padding-left: 40px;
-  }
-  .path{
-    display: flex;
-    align-items: center;
-    color: #9d9d9d;
-  }
-  .path .pathName{
-    font-size: 1rem;
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  .path .pathName2{
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    margin-left: 20px;
-  }  
-  .path .icon::before {
-    content: ">";
-    font-size: 2.5rem;
-  }
-  .path .icon{
-    /* height: 5vh; */
-    font-weight: 100;
+    min-height: 100vh;
+    margin-left: 300px;
   }
   .headBody{
-    height: 12vh;
+    height: 10vh;
     color: black;
     display: flex;
     justify-content:flex-end;
     align-items: center;
     padding-left: 40px;
     padding-right: 40px;
-
+   }
+   .barIcon{
+    font-size: 1.8rem;
+    color: black;
+    cursor: pointer;
    }
    .user{
     position: relative;
-    height: 80px;
+    height: 70px;
     display: flex;
     align-items: center;
+    cursor: pointer;
    }
    .user span {
+    font-size: 0.9rem;
     font-family: "Montserrat",sans-serif;
     border-radius: 8px;
-    padding: 8px 12px 8px 40px;
+    padding: 6px 12px 6px 40px;
     border: 1px solid rgb(185, 176, 176,0.4);
     box-shadow: 2px 0px 2px rgb(185, 176, 176,0.4);
     font-weight: 600;
     position: relative;
+    background-color: white;
   }
   .user .rounded-image {
     background-color: white;
-    left: -15px;
-    top:15px;
+    left: -10px;
+    top:10px;
     position: absolute;
-    width: 45px; /* Adjust the width and height as needed */
-    height: 45px;
+    width: 40px; /* Adjust the width and height as needed */
+    height: 40px;
     border-radius: 50%; /* Makes the element circular */
     overflow: hidden; 
-    z-index: 9999;/* Ensures the content within the rounded area is hidden */
+    z-index: 9;/* Ensures the content within the rounded area is hidden */
+  }
+  .deconnectionBox {
+    position: absolute;
+    padding: 8px 20px 6px 20px;
+    border: 1px solid rgb(185, 176, 176,0.4);
+    box-shadow: 2px 0px 2px rgb(185, 176, 176,0.4);
+    left: 13px;
+    top : 50px;
+    background-color: white;
   }
   
   .user .rounded-image img {
@@ -74,11 +61,49 @@
     height: 120%;
     object-fit: cover; /* Ensures the image covers the rounded area */
   }
+@media (max-width: 1160px) {
+    .body{
+        margin-left: 0;
+        width: 100vw;
+    }
+    .headBody{
+      justify-content: space-between;
+      background-color: #f1f1fc;
+    }
+}
+
 @media (max-width: 850px){
-  .body{
-    width: 100vw;
+  .user span {
+    font-size: 0.8rem;
   }
+  .user .rounded-image {
+    height: 35px;
+    width: 35px;
+    top : 15px
+  }
+  .barIcon{
+    font-size: 1.5rem;
+   }
+}
+@media (max-width: 600px){
   .headBody{
-    justify-content: space-between;
+    padding: 0 20px;
+  }
+}
+@media (max-width: 500px){
+  .user span {
+    font-size: 0.7rem;
+  }
+  .user .rounded-image {
+    height: 32px;
+    width: 32px;
+    top : 18px;
+    left : -5px
+  }
+  .barIcon{
+    font-size: 1.3rem;
+   }
+   .headBody{
+    padding: 0 10px;
   }
 }  

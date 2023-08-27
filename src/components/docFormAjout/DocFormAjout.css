@@ -2,15 +2,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 81vh;
-    font-family: 'Montserrat', sans-serif;
+    /* height: 81vh; */
+    font-family: 'Montserrat', sans-serif;  
+    background-color: white;
+    width: 92%;
+    margin-left: 3%;
+    margin-top: 30px;
+    padding-left: 2%;
+    padding-bottom: 20px;
+    padding-top: 10px;
 }
 .entete,.configBox,.buttons{
-    width: 90%;
+    width: 100%;
 }
 .entete h1{
     font-size: 1.2rem;
-    color: #232323;
+    color: #222e54;
   }
 .configBox{
     display: grid;
@@ -32,6 +39,9 @@
   }
   .configLine input{
     width: 86%;
+  }
+  .configLine input:focus{
+    outline: none;
   }
   .buttons{
     margin-top: 40px;
@@ -55,6 +65,13 @@
     color: white;
     background-color: #5356d0;
 }
+.buttons .appliquer{
+  color: white;
+  background-color: #5356d0;
+}  
+.buttons .appliquer:active{
+    scale: 1.1;
+}
   .message{
     font-size: 1.2rem;
     display: flex;
@@ -66,53 +83,69 @@
     border: 1px solid red;
   }
 
-
-  @media (max-width: 1050px) {
-    .configBox , .entete , .buttons{
-      max-width: 500px;
-      min-width: 500px;
-    }
+@media (max-width:850px){
+  .entete h1{
+    font-size: 1.1rem;
   }
-  @media (max-width: 620px) {
-    .configBox , .entete , .buttons{
-      max-width: 400px;
-      min-width: 400px;
-      font-size: 90%;
-    }
-    .entete h1{
-      font-size: 1rem;
-    }
-    .message{
-      margin-left: 0;
-      margin-right: 0;
-      font-size: 0.9rem;
-    }
+  .configLine h3{
+    font-size: 0.9rem;
   }
-  @media (max-width: 450px) {
-    .configBox , .entete , .buttons{
-      max-width: 350px;
-      min-width: 350px;
-      font-size: 70%;
-    }
-    .buttons button{
-      height: 30px;
-      width: 60px;
-      font-size: 0.7rem;
-    }
-    .configLine input, .configLine .input, .configBox select{
-      height: 20px;
-    }
-    .entete h1{
-      font-size: 1rem;
-    }
-    .entete{
-      margin-top: 60px;
-      margin-bottom: 20px;
-    }
-    .configLine{
-      padding: 4px;
-    }
-    .configBox{
-      margin-bottom: 40px;
-    }
-  }      
+  .configLine input, .configLine select{
+    height: 28px;
+    padding:0 7px;
+    width: 90%;
+  }
+  .buttons{
+    margin-top: 30px;
+    margin-right: 7%;
+  }
+  .buttons button{
+    padding: 8px 13px;
+    font-size: 1rem;
+    margin-right: 20px;
+  }
+}
+@media (max-width:700px){
+  .entete h1{
+    font-size: 1rem;
+  }
+  .configLine h3{
+    font-size: 0.8rem;
+  }
+  .configLine input, .configLine select{
+    height: 25px;
+    padding:0 5px;
+    width: 90%;
+    font-size: 0.8rem;
+  }
+  .buttons{
+    margin-right: 5%;
+  }
+  .buttons button{
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    margin-right: 15px;
+  }
+}
+@media (max-width: 500px) {
+  .entete h1{
+    font-size: 0.9rem;
+  }
+  .configLine h3{
+    font-size: 0.7rem;
+  }
+  .configLine input, .configLine select{
+    height: 25px;
+    padding:0 5px;
+    width: 90%;
+    font-size: 0.7rem;
+  }
+  .buttons{
+    margin-right: 3%;
+  }
+  .buttons button{
+    padding: 4px 7px;
+    font-size: 0.8rem;
+    margin-right: 8px;
+  }
+}

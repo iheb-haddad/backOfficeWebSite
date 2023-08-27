@@ -10,12 +10,32 @@
     font-family: 'Montserrat' , sans-serif;
     font-weight: 500;
     border: 1px solid rgb(168, 168, 168);
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 .lineList{
     background-color: white;
     color: black;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+}
+.isEditing{
+    color: white;
+    background-color: rgb(181, 182, 236);
+}
+.isEditing input ,.isEditing select{
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    border: none;
+    color: white;
+    background-color: rgb(181, 182, 236);
+    box-shadow: 0 0 4px 2px rgb(0,0,0,0.1);
+    border-radius: 20px;
+    height: 30px;
+    padding-left: 10px;
+    margin-right: 20px;
+}
+.lineList input:focus{
+    outline : none
 }
 .type{
     width: 13%;
@@ -42,4 +62,67 @@
 .actions a {
     text-decoration: none;
 }
+@media (max-width: 950px) {
+    .headList{
+        font-size: 0.9rem;
+    }
+    .lineList{
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 810px) {
+    .headList{
+        font-size: 0.9rem;
+    }
+    .lineList{
+        font-size: 0.7rem;
+    }
+    .actions{
+        width: 17%;
+    }
+    .webApp{
+        width: 40%;
+    }
+}
+@media (max-width: 650px) {
+    .headList {
+        font-size: 0.8rem;
+    }
+    .lineList{
+        font-size: 0.7rem;
+    }
+}
+@media (max-width:620px){
+    .headList{
+        width: 95%;
+        margin-left: 2%;
+    }
+}
+@media (max-width: 580px) {
+    .headList {
+        font-size: 0.7rem;
+        padding-left: 4px;
+        width: 97%;
+        margin-left: 1%;
+    }
+    .lineList{
+        font-size: 0.6rem;
+    }
+    .webApp{
+        margin-right: 2px;
+        overflow-x: hidden;
+        width: 36%;
+    }
+    .titre{
+        margin-right: 2px;
+        overflow-x: hidden;
+        width: 19%;
+    }
+    .actions{
+        font-size: 0.5rem;
+    }
+    .type{
+        width: 16%;
+    }
+}    
 

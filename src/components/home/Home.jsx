@@ -1,150 +1,17 @@
 import './Home.css'
 import React, { useEffect,useState } from 'react';
 import { Navbar ,Body} from '../index'
-import {DocFormAjout ,DocsList ,Dashboard ,ProfilePage} from '../index';
+import {Dashboard ,ProfilePage ,Configurations , Accueil} from '../index';
 function Home(props) {
-
-  const handleAdd = () => {
-    const newObject = {
-      urlApp: urlApp,
-      urlDoc: urlDoc,
-      id: Math.random().toString(36).substring(7), // Generate a random id
-    };
-
-    fetch('https://urlsjsonserver.onrender.com/mappings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newObject),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('New object added:', data);
-        // You can update your UI or perform other actions here
-      })
-      .catch((error) => {
-        console.error('Error adding new object:', error);
-      });
-  };
-
-  const handleDelete = () => {
-    fetch('https://urlsjsonserver.onrender.com/mappings')
-      .then((response) => response.json())
-      .then((data) => {
-        // Find the object with the matching urlApp
-        const objectToDelete = data.find((obj) => obj.urlApp === urlApp);
-  
-        if (!objectToDelete) {
-          console.log('Object not found with the provided urlApp:', urlApp);
-          return;
-        }
-  
-        // Perform the delete operation using the object's id
-        fetch(`https://urlsjsonserver.onrender.com/mappings/${objectToDelete.id}`, {
-          method: 'DELETE',
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('Object deleted:', data);
-            // You can update your UI or perform other actions here
-          })
-          .catch((error) => {
-            console.error('Error deleting object:', error);
-          });
-      })
-      .catch((error) => {
-        console.error('Error fetching objects:', error);
-      });
-  };
-
-  const handleModify = () => {
-    fetch('https://urlsjsonserver.onrender.com/mappings')
-      .then((response) => response.json())
-      .then((data) => {
-        // Find the object with the matching urlApp
-        const objectToModify = data.find((obj) => obj.urlApp === urlApp);
-  
-        if (!objectToModify) {
-          console.log('Object not found with the provided urlApp:', urlApp);
-          return;
-        }
-  
-        // Modify the object's urlDoc property
-        objectToModify.urlDoc = urlDoc;
-  
-        // Perform the update operation using the object's id
-        fetch(`https://urlsjsonserver.onrender.com/mappings/${objectToModify.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(objectToModify),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('Object modified:', data);
-            // You can update your UI or perform other actions here
-          })
-          .catch((error) => {
-            console.error('Error modifying object:', error);
-          });
-      })
-      .catch((error) => {
-        console.error('Error fetching objects:', error);
-      });
-  };
-
-  const [operation , setOperation] = useState("AJOUT D'UN MAPPING")
-  const [buttonType,setButtonType] = useState(1);
-  const [buttonName,setButtonName] = useState("Ajouter")
-  const [urlDoc, setUrlDoc] = useState('');
-  const [urlApp, setUrlApp] = useState('');
-
-  const handleSubmit = () => {
-    // Call the appropriate handler based on the value of buttonType
-    if (buttonType === 1) {
-      handleAdd();
-    } else if (buttonType === 2) {
-      handleModify();
-    } else if (buttonType === 3) {
-      handleDelete();
-    }
-  };
-  const handleAnnuler = () => {
-    setUrlApp('');
-    setUrlDoc('');
-  };
-  const clickAdd = () => {
-    setOperation("AJOUT D'UN MAPPING");
-    setButtonType(1);
-    setButtonName('Ajouter')
-  };
-  const clickModify = () => {
-    setOperation("MODIFICATION D'UN MAPPING");
-    setButtonType(2);
-    setButtonName('Modifier')
-  };
-  const clickDelete = () => {
-    setOperation("SUPPRESSION D'UN MAPPING");
-    setButtonType(3);
-    setButtonName('Supprimer')
-  };
-  const handleDeconnect = () =>{
-    props.setConnectValide(false);
-    localStorage.removeItem('connectValide');
-    localStorage.removeItem('username');
-  }
-  
-  const [pathName, setPathName] = useState('');
-
+  const userConnected = JSON.parse(localStorage.getItem('userConnected'));
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [modBackground, setModBackground] = useState(true)
 
 
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
-      screenWidth > 700 && setnormalPanelExp(false);
+      // screenWidth > 700 && setnormalPanelExp(false);
     };
 
     // Attach the handleResize function to the 'resize' event
@@ -161,72 +28,56 @@ function Home(props) {
     setShowNavbar((prev) => { return !prev })
   };
 
-  ///////////////////////////////////////////////////////////////////////////////
-  const initialFilterParameteres = {
-    selectedType : 'tout',
-    selectedLanguage : 'tout',
-    selectedApp : 'tout'
-  }
-  const [filterParameters, setFilterParameters] = useState(initialFilterParameteres);
-  const [componentCharged , setComponentCharged] = useState(<DocsList filterParameters={filterParameters}/>);
-  const [displayBackbtn , setDisplayBackbtn] = useState(false);
-  const [addbtnIsClicked , setAddbtnIsClicked] = useState(false);
-  const [filterbtnIsClicked , setFilterbtnIsClicked] = useState(false);
-  const clickAddbtn = () => { 
-    setComponentCharged(<DocFormAjout/>)
-    setAddbtnIsClicked(true)
-    setDisplayBackbtn(true)
-    setFilterbtnIsClicked(false)
-  };
-  const clickFilterbtn = () => { 
-    setComponentCharged(<DocsList filterParameters={filterParameters}/>)
-    setAddbtnIsClicked(false)
-    setDisplayBackbtn(false)
-    setFilterbtnIsClicked(prev => !prev)
-    setFilterParameters(initialFilterParameteres)
-  };
-  const clickBackbtn = () => { 
-    setComponentCharged(<DocsList filterParameters={filterParameters}/>)
-    setAddbtnIsClicked(false)
-    setDisplayBackbtn(false)
-    setFilterbtnIsClicked(false)
-  };
 
-  useEffect(() =>{
-    setComponentCharged(<DocsList filterParameters={filterParameters}/>) 
-  },[filterParameters]);
+
+
+  const [navComponent, setNavComponent] = useState(<Accueil />)
+
+  const [navLineClicked,setNavLineClicked] = useState("home")
+
+    const handleClickDashboard = () => {
+      setModBackground(false)
+      setNavComponent(<Dashboard />)
+        setNavLineClicked("dashboard")
+        screenWidth < 1160 && setShowNavbar(false)
+    };
+    const handleClickHome = () => {
+      setModBackground(true)
+      setNavLineClicked("home")
+      setNavComponent(<Accueil />)
+      screenWidth < 1160 && setShowNavbar(false)
+    };
+    const handleClickProfile = () => {
+      setModBackground(false)
+      setNavComponent(<ProfilePage />)
+      setNavLineClicked("profile")
+      screenWidth < 1160 && setShowNavbar(false)
+    };
+    const handleClickSettings = () => {
+      setModBackground(true)
+      setNavComponent(<Configurations/>)
+      setNavLineClicked("settings")
+      screenWidth < 1160 && setShowNavbar(false)
+    };
 
   return (
     <>
-      <div className="container">          
-          {/* {(screenWidth > 850 || showNavbar) && <Navbar 
-          handleDeconnect={handleDeconnect} 
-           
-          handleChargeComponent={setComponentCharged}
-          setPathname={setPathName}
-          showNavbar={handleShowNavbar}/>}
-          {(!showNavbar || screenWidth > 450) 
-          && <Body componentCharged={componentCharged}
-           pathName={pathName}
+      <div className="container" style={{backgroundImage:modBackground && 'url(./backFilter.png)'}}>        
+            {(screenWidth > 1160 || showNavbar) &&
+            <Navbar 
             showNavbar={handleShowNavbar}
-            screenWidth={screenWidth}/>} */}
-            {(screenWidth > 850 || showNavbar) &&<Navbar showNavbar={handleShowNavbar}/>}
+            clickDashboard={handleClickDashboard}
+            clickHome={handleClickHome}
+            clickProfile={handleClickProfile}
+            clickSettings={handleClickSettings}
+            navLineClicked={navLineClicked}/>}
             {(!showNavbar || screenWidth > 450) 
            && <Body 
-            username={props.username}
             showNavbar={handleShowNavbar}
             screenWidth={screenWidth}
-            componentCharged={<ProfilePage />
-            // <Dashboard addbtnIsClicked={addbtnIsClicked}
-            // filterbtnIsClicked={filterbtnIsClicked} 
-            // displayBackbtn={displayBackbtn} 
-            // clickAddbtn = {clickAddbtn}
-            // clickFilterbtn = {clickFilterbtn}
-            // clickBackbtn = {clickBackbtn} 
-            // filterParameters = {filterParameters}
-            // setFilterParameters = {setFilterParameters}
-            // componentCharged={componentCharged} />
-          }/>}
+            clickProfile={handleClickProfile}
+            setConnectValide={props.setConnectValide}
+            componentCharged={navComponent}/>}
       </div>
     </>
   )

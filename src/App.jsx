@@ -8,13 +8,13 @@ function App() {
     const storedConnectValide = localStorage.getItem('connectValide') === 'true'
     return storedConnectValide ? storedConnectValide : false;
   });
-  const [username,setUsername] = useState(()=>{
-    const storedUsername = localStorage.getItem('username');
-    return storedUsername ? storedUsername : '';
+  const [userConnected,setUserConnected] = useState(()=>{
+    const storedUserConnected = JSON.parse(localStorage.getItem('userConnected'));
+    return storedUserConnected ? storedUserConnected : '';
   })
   return (
     <div>
-      {connectValide? <Home username={username} setConnectValide={setConnectValide}/>: <Registration setConnectValide={setConnectValide} setUsername={setUsername}/>}
+      {connectValide? <Home  setConnectValide={setConnectValide}/>: <Registration setConnectValide={setConnectValide} setUserConnected={setUserConnected}/>}
     </div>
   )
 }
