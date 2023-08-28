@@ -11,6 +11,24 @@ function DocsList(props) {
     const [isEditing,setIsEditing] = useState("")
     const [isModified , setIsModified] = useState('')
     const [isDeleting , setIsDeleting]  = useState("")
+    let [isChecked, setChecked] = useState({});
+
+    const handleChange = (event,docId) => {
+      if(isEditing === docId){
+      isChecked[docId] = event.target.checked
+        if(event.target.checked){
+          setFormData((prevData) => ({
+            ...prevData,
+            affichage : 'contenu'
+          }))
+        }else{
+          setFormData((prevData) => ({
+            ...prevData,
+            affichage : 'titre'
+          }))
+        }
+      }
+    };
 
     useEffect(() => {
         fetch('https://urlsjsonserver-p2nq.onrender.com/documentations')
@@ -26,6 +44,15 @@ function DocsList(props) {
               return typeMatch && languageMatch && appMatch && titleMatch;
             });
                 setFiltredDocuments(filteredData)
+                for (const key in isChecked) {
+                  if (isChecked.hasOwnProperty(key)) {
+                      delete isChecked[key];
+                  }
+              }
+                filteredData.forEach((document) => {
+                  let check = document.affichage === 'contenu' ? true : false;
+                  isChecked[document.id] = check
+                })
               })
           .catch((error) => {
             console.error('Error fetching documents:', error);
@@ -63,6 +90,15 @@ function DocsList(props) {
             return typeMatch && languageMatch && appMatch  && titleMatch;
           });
               setFiltredDocuments(filteredData)
+              for (const key in isChecked) {
+                if (isChecked.hasOwnProperty(key)) {
+                    delete isChecked[key];
+                }
+            }
+              filteredData.forEach((document) => {
+                let check = document.affichage === 'contenu' ? true : false;
+                isChecked[document.id] = check
+              })
               console.log(documents)
         },[props.filterParameters]);
 
@@ -147,6 +183,7 @@ function DocsList(props) {
             application : formData.application,
             statut : document.statut,
             urlDoc : document.urlDoc,
+            affichage : formData.affichage
           }
           if (!areObjectsEqual(documentModified,document)){
           fetch(`https://urlsjsonserver-p2nq.onrender.com/documentations/${document.id}`, {
@@ -181,6 +218,7 @@ function DocsList(props) {
             <div className="titre">Titre</div>
             <div className="langue">Langue</div>
             <div className="webApp">Application web</div>
+            <div className="affichage">Affichage</div>
             <div className="actions">Actions</div>
         </div>
         {
@@ -212,6 +250,14 @@ function DocsList(props) {
                   </select> 
                 :<>{document.application}</>
                 }</div>
+                <div className='affichage'>
+                      <input
+                      type="checkbox"
+                      checked={isChecked[document.id]}
+                      onChange={(event) => handleChange(event,document.id)}
+                      style={{height:'14px',width:'14px'}}
+                      />
+                </div>
                 <div className="actions">
                   {!(isEditing === document.id) ?<FontAwesomeIcon icon={faPen} style={{cursor:'pointer'}}onClick={()=>handleModify(document)}/>:<FontAwesomeIcon icon={faCircleCheck} style={{cursor:'pointer'}}onClick={() => handleModifyComplete(document)}/>}
                   <FontAwesomeIcon icon={faTrash} style={{cursor:'pointer'}} onClick={()=>handleDelete(document.id)}/>

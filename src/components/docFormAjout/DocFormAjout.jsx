@@ -2,13 +2,29 @@ import React,{useState,useEffect} from 'react'
 import './DocFormAjout.css'
 
 function DocFormAjout() {
+  const [generalUrl ,setGeneralUrl] = useState("")
+  const [msgErreur1Color, setMsgErreur1Color] = useState('white');
+
+  useEffect(()=> {
+    fetch('https://urlsjsonserver-p2nq.onrender.com/configurations')
+    .then((response) => response.json())
+    .then((data) => {
+      setGeneralUrl(data.generalUrl)
+    })
+    .catch((error) => {
+      console.error('Error connecting:', error);
+      // Handle any error that occurred during the fetch request
+    });
+  },[])
     const initialValues = {
+        urlType : 'normal',
         selectedApp: "",
         selectedLanguage: '',
         title: '',
         selectedType: '',
         selectedStatut: '',
         urlDocument: '',
+        affichage : 'titre'
       };
       const [formData, setFormData] = useState(initialValues);
       const [typeDocument ,setTypeDocument] = useState("");
@@ -18,6 +34,27 @@ function DocFormAjout() {
         setTypeDocument("");
       };
 
+      function handleUrlTypeChange(event) {
+        if(event.target.value === 'specifique'){
+          if(generalUrl){
+            setFormData((prevData) => ({
+              ...prevData,
+              urlType : event.target.value,
+              urlDocument : generalUrl
+            }));
+          }else{
+            setMsgErreur1Color("red")
+            setTimeout(() => {
+              setMsgErreur1Color("white")
+            }, 2000);
+          }
+        }else{
+        setFormData((prevData) => ({
+            ...prevData,
+            urlType : event.target.value
+          }));
+        }
+    }
     function handleAppChange(event) {
         setFormData((prevData) => ({
             ...prevData,
@@ -63,17 +100,25 @@ function DocFormAjout() {
             urlDocument: event.target.value,
           }));
     };
+    function handleAffichageChange(event) {
+      setFormData((prevData) => ({
+          ...prevData,
+          affichage : event.target.value
+        }));
+  }
   const [message ,setMessage] = useState("")
   const [messageColor , setMessageColor] = useState("black")
   const [showError,setShowError] = useState(false)
 
     const handleAddDocument = () => {
       const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
-        return key !== 'title' && value === '';
+        return (key !== 'selectedApp' && key !== 'title') && value === '';
       });
       const typeDocEmpty = formData.selectedType === 'document' && typeDocument === ''
-      setShowError(hasEmptyFields || typeDocEmpty);
-      if (hasEmptyFields || typeDocEmpty){
+      const appEmpty = formData.urlType === 'normal' && formData.selectedApp === ''
+      const titleEmpty = formData.affichage === 'titre' && formData.title === ''
+      setShowError(hasEmptyFields || typeDocEmpty || appEmpty || titleEmpty);
+      if (hasEmptyFields || typeDocEmpty ||appEmpty || titleEmpty) {
         setMessage("Il faut remplir tout les champs obligatoires *")
         setMessageColor("red")
         setTimeout(() => {
@@ -89,6 +134,7 @@ function DocFormAjout() {
           application: formData.selectedApp,
           statut: formData.selectedStatut,
           urlDoc: formData.urlDocument,
+          affichage: formData.affichage
         };
     
         fetch('https://urlsjsonserver-p2nq.onrender.com/documentations', {
@@ -140,6 +186,15 @@ function DocFormAjout() {
         </div>
         <div className="configBox">
         <div className="configLine">
+                <div className="adminErr" style={{margin:'16px 0 5px 0'}}>
+                <p style={{color:msgErreur1Color}}>Ajouter d'abord votre url géneral</p>
+                </div> 
+                <select value={formData.urlType} onChange={handleUrlTypeChange} >
+                    <option value="normal">Documentation normale</option>
+                    <option value="specifique">Documentation avec url spécifique</option>
+                </select>
+            </div>
+        <div className="configLine">
                 <h3>Type *</h3>
                 <select value={formData.selectedType} onChange={handleTypeChange} 
                 style={{border: (showError && !formData.selectedType) && "1px solid red"}}>
@@ -175,10 +230,10 @@ function DocFormAjout() {
                     value={formData.title}
                     onChange={handleTitleChange}
                     placeholder="Saisir titre "
-                    // style={{border: (showError && !formData.title) && "1px solid red"}}
+                    style={{border: (showError && !formData.title && formData.affichage === 'titre') && "1px solid red"}}
                     />
             </div>
-            <div className="configLine">
+            <div className="configLine" style={{display: formData.urlType === 'normal'? "block" : "none"}}>
                 <h3>Application Web *</h3>
                 <select value={formData.selectedApp} onChange={handleAppChange}
                 style={{border: (showError && !formData.selectedApp) && "1px solid red"}}>
@@ -207,6 +262,13 @@ function DocFormAjout() {
                     placeholder="Saisir Url du document"
                     style={{border: (showError && !formData.urlDocument) && "1px solid red"}}
                     />
+            </div>
+            <div className="configLine">
+              <h3>Affichage *</h3>
+                <select value={formData.affichage} onChange={handleAffichageChange} >
+                    <option value="contenu">Contenu affiché</option>
+                    <option value="titre">Seulement titre affiché</option>
+                </select>
             </div>                                   
         </div>
         <div className="buttons">
