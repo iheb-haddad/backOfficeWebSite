@@ -88,6 +88,7 @@
 .isLeaving2{
     animation: sortir2 1s;
 }
+
 @keyframes sortir {
     from {
         transform: translateX(0);
@@ -132,6 +133,7 @@
         opacity: 1;
     }
 }
+
 .citation{
     /* background-image: url('./citationBack.png'); */
     background-size:  cover;
@@ -376,3 +378,49 @@
         font-size: 0.9rem;
     }
 }
+@media (max-width: 768px){
+    @keyframes sortir {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(-5px);
+            opacity: 0;
+            display: none;
+        }
+    }
+    @keyframes entrer {
+        from {
+            transform: translateX(5px);
+            opacity: 0;
+            display: none;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }   
+    }
+    @keyframes sortir2 {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(5px);
+            opacity: 0;
+            display: none;
+        }
+    }
+    @keyframes entrer2 {
+        from {
+            transform: translateX(-5px);
+            opacity: 0;
+            display: none;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    }
