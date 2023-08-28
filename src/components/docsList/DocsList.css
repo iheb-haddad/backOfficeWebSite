@@ -66,15 +66,19 @@
     .headList{
         font-size: 0.9rem;
     }
-    .lineList{
+    .lineList,.isEditing input ,.isEditing select{
         font-size: 0.8rem;
+    }
+    .isEditing input ,.isEditing select{
+        padding-left: 5px;
+        margin-right: 5px;
     }
 }
 @media (max-width: 810px) {
     .headList{
         font-size: 0.9rem;
     }
-    .lineList{
+    .lineList,.isEditing input ,.isEditing select{
         font-size: 0.7rem;
     }
     .actions{
@@ -88,7 +92,7 @@
     .headList {
         font-size: 0.8rem;
     }
-    .lineList{
+    .lineList,.isEditing input ,.isEditing select{
         font-size: 0.7rem;
     }
 }
@@ -105,8 +109,12 @@
         width: 97%;
         margin-left: 1%;
     }
-    .lineList{
+    .lineList,.isEditing input ,.isEditing select{
         font-size: 0.6rem;
+    }
+    .isEditing input ,.isEditing select{
+        padding-left: 2px;
+        margin-right: 2px;
     }
     .webApp{
         margin-right: 2px;
@@ -129,7 +137,7 @@
     .headList {
         font-size: 0.6rem;
     }
-    .lineList{
+    .lineList,.isEditing input ,.isEditing select{
         font-size: 0.5rem;
         padding-left: 3px;
     }
