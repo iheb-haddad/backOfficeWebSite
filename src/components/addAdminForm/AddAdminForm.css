@@ -44,11 +44,21 @@
 
   }  
   @media (max-width: 580px) {
+    .addAdminLine h3{
+      font-size: 0.7rem;
+    }
     .addAdminLine input{
       font-size: 0.7rem;
+      padding: 0 5px;
+      width: 85%;
+      height: 24px;
     }
     .adminErr p{
       font-size: 0.6rem;
+    }
+    .addAdminForm{
+      row-gap: 3px;
+      column-gap: 5px;
     }
   }
 
