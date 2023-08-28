@@ -112,7 +112,7 @@ function Configurations() {
             memoColor : "#50e150"
           }));
         }
-        if(configurations.widthPanel != initialValues.widthPanel)
+        if(configurations.panelWidth != initialValues.panelWidth)
         {
           setInputColor((prevColor) => ({
             ...prevColor,
@@ -328,7 +328,7 @@ function Configurations() {
       </div>
       <div className="confButtons">
             <div>
-              <button >Réinitialiser</button>
+              <button onClick={handleAReinitialiser}>Réinitialiser</button>
               <button onClick={handleAnnuler1}>Annuler</button>
               <button className='appliquer' onClick={handleEnregistrer1}>Appliquer</button>
             </div>
@@ -345,7 +345,6 @@ function Configurations() {
               value={webApplicationForm.nom}
               onChange={handleNameAppChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.generalUrlColor}}
               />
             <div className="adminErr">
                 <p style={{color:msgErreur1Color}}>Nom app déjà existe</p>
@@ -358,7 +357,6 @@ function Configurations() {
               value={webApplicationForm.url}
               onChange={handleUrlAppChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.generalUrlColor}}
               />
             <div className="adminErr">
                 <p style={{color:msgErreur2Color}}>Url app déjà existe</p>
