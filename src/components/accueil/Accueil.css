@@ -77,16 +77,16 @@
     font-weight: 400;
 }
 .isEntering{
-    animation: entrer 0.5s;
+    animation: entrer 1s;
 }
 .isLeaving{
-    animation: sortir 0.5s;
+    animation: sortir 1s;
 }
 .isEntering2{
-    animation: entrer2 0.5s;
+    animation: entrer2 1s;
 }
 .isLeaving2{
-    animation: sortir2 0.5s;
+    animation: sortir2 1s;
 }
 @keyframes sortir {
     from {
