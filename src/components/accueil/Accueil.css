@@ -94,14 +94,14 @@
         opacity: 1;
     }
     to {
-        transform: translateX(-5px);
+        transform: translateX(-30px);
         opacity: 0;
         display: none;
     }
 }
 @keyframes entrer {
     from {
-        transform: translateX(5px);
+        transform: translateX(30px);
         opacity: 0;
         display: none;
     }
@@ -116,14 +116,14 @@
         opacity: 1;
     }
     to {
-        transform: translateX(5px);
+        transform: translateX(30px);
         opacity: 0;
         display: none;
     }
 }
 @keyframes entrer2 {
     from {
-        transform: translateX(-5px);
+        transform: translateX(-30px);
         opacity: 0;
         display: none;
     }
