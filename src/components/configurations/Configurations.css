@@ -179,7 +179,7 @@
     font-size: 0.7rem;
   }
   .urlForm,.colorsForm{
-    row-gap: 0;
+    row-gap: 5px;
     column-gap:0;
   }
 }
