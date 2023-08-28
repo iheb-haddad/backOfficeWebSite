@@ -175,7 +175,7 @@ function DocFormAjout() {
                     value={formData.title}
                     onChange={handleTitleChange}
                     placeholder="Saisir titre "
-                    style={{border: (showError && !formData.title) && "1px solid red"}}
+                    // style={{border: (showError && !formData.title) && "1px solid red"}}
                     />
             </div>
             <div className="configLine">
