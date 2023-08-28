@@ -10,6 +10,7 @@ function DocsList(props) {
     const [dataChanged , setDataChanged] = useState(0)
     const [isEditing,setIsEditing] = useState("")
     const [isModified , setIsModified] = useState('')
+    const [isDeleting , setIsDeleting]  = useState("")
 
     useEffect(() => {
         fetch('https://urlsjsonserver-p2nq.onrender.com/documentations')
@@ -32,7 +33,9 @@ function DocsList(props) {
 
       }, [dataChanged]);
 
-      const handleDelete = (documentId,path) => {
+      const handleDelete = (documentId) => {
+        console.log(documentId)
+        setIsDeleting(documentId);
         fetch(`https://urlsjsonserver-p2nq.onrender.com/documentations/${documentId}`, {
             method: 'DELETE',
           })
@@ -44,6 +47,9 @@ function DocsList(props) {
             .catch((error) => {
               console.error('Error deleting ', error);
             });
+            setTimeout(() => {
+              setIsDeleting("")
+          },1500); 
         };
 
         useEffect(() =>{
@@ -180,7 +186,7 @@ function DocsList(props) {
         {
             filtredDocuments.map((document)=>(
             <div className={`headList lineList ${isEditing === document.id && 'isEditing'}`} key={document.id} style={{backgroundColor: isModified === document.id && "#50e150"}}>
-                <div className="type">{isEditing === document.id ?
+                <div className={`type ${isDeleting === document.id && 'isDeleting'}`}>{isEditing === document.id ?
                   <select name="type" id="selectType"  value={formData.type} onChange={onChangeType}>
                       <option value="instruction" >instruction</option>
                       <option value="alerte" >alerte</option>
@@ -190,15 +196,15 @@ function DocsList(props) {
                   </select>
                 :<>{document.type}</>
                 }</div>
-                <div className="titre">{isEditing === document.id ?<input type="text"  value={formData.titre} onChange={onChangeTitle}/> :<>{document.titre}</>}</div>
-                <div className="langue">{isEditing === document.id ?
+                <div className={`titre ${isDeleting === document.id && 'isDeleting'}`}>{isEditing === document.id ?<input type="text"  value={formData.titre} onChange={onChangeTitle}/> :<>{document.titre}</>}</div>
+                <div className={`langue ${isDeleting === document.id && 'isDeleting'}`}>{isEditing === document.id ?
                   <select name="langue" id="selectLanguage"  value={formData.langue} onChange={onChangeLanguage}>
                       <option value="francais" >francais</option>
                       <option value="anglais" >anglais</option>
                   </select>
                 :<>{document.langue}</>
                 }</div>
-                <div className="webApp">{isEditing === document.id ?
+                <div className={`webApp ${isDeleting === document.id && 'isDeleting'}`}>{isEditing === document.id ?
                   <select name="app" id="selectApp" value={formData.application} onChange={onChangeApp}>
                     {webApplications.map((app) =>(
                       <option key={app.id} value={app.url}>{app.nom}</option>
@@ -208,7 +214,7 @@ function DocsList(props) {
                 }</div>
                 <div className="actions">
                   {!(isEditing === document.id) ?<FontAwesomeIcon icon={faPen} style={{cursor:'pointer'}}onClick={()=>handleModify(document)}/>:<FontAwesomeIcon icon={faCircleCheck} style={{cursor:'pointer'}}onClick={() => handleModifyComplete(document)}/>}
-                  <FontAwesomeIcon icon={faTrash} style={{cursor:'pointer'}} onClick={()=>handleDelete(document.id,"document")}/>
+                  <FontAwesomeIcon icon={faTrash} style={{cursor:'pointer'}} onClick={()=>handleDelete(document.id)}/>
                   <a href={document.urlDoc} about='_blank'>Ouvrir</a></div>
             </div>
             ))
