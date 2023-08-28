@@ -21,7 +21,7 @@ function Body(props) {
               <span className="username" onClick={() => setIsDeconnecting(prev => !prev)}>
                 {userConnected.username}
                 {isDeconnecting ? <FontAwesomeIcon icon={faChevronUp} style={{marginLeft:'5px'}} /> : <FontAwesomeIcon icon={faChevronDown} style={{marginLeft:'5px'}}/>}</span>
-              <div className="deconnectionBox" style={{display: !isDeconnecting && 'none'}} onClick={handleDeconnect}>Deconnection <FontAwesomeIcon style={{marginLeft:'5px'}} icon={faRightFromBracket} /></div>
+              <div className="deconnectionBox" style={{display: !isDeconnecting && 'none'}} onClick={handleDeconnect}>Deconnection <FontAwesomeIcon className='deconnectIcon' icon={faRightFromBracket} /></div>
             </div>
           </div>               
         {props.componentCharged}

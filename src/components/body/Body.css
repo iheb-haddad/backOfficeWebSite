@@ -89,11 +89,17 @@
     left : 20px;
     padding: 8px 15px 6px 15px;
    }
+   .deconnectIcon{
+    margin-left: 5px;
+   }
 }
 @media (max-width: 600px){
   .headBody{
     padding: 0 25px;
   }
+  .deconnectIcon{
+    margin-left: 2px;
+   }
 }
 @media (max-width: 500px){
   .user span {
