@@ -347,9 +347,9 @@ function Configurations() {
               placeholder="Saisir titre "
               style={{backgroundColor:inputColor.generalUrlColor}}
               />
-            <div className="adminErr">
+            {/* <div className="adminErr">
                 <p style={{color:msgErreur1Color}}>Nom app déjà existe</p>
-            </div> 
+            </div>  */}
         </div>
         <div className="urlLine" >
            <h3>Url de l'application</h3>
@@ -360,9 +360,9 @@ function Configurations() {
               placeholder="Saisir titre "
               style={{backgroundColor:inputColor.generalUrlColor}}
               />
-            <div className="adminErr">
+            {/* <div className="adminErr">
                 <p style={{color:msgErreur2Color}}>Url app déjà existe</p>
-            </div>   
+            </div>    */}
         </div>
       <div className="confButtons" >
             <div>
