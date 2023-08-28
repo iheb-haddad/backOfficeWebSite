@@ -364,11 +364,12 @@ function Configurations() {
                 <p style={{color:msgErreur2Color}}>Url app déjà existe</p>
             </div>   
         </div>
-      </div>
-      <div className="confButtons">
+        <div className="confButtons">
               <button onClick={handleAnnulerWebApp}>Annuler</button>
               <button className='appliquer' onClick={handleEnregistrerWebApp}>Appliquer</button>
       </div>
+      </div>
+
       </div>    
       <div className="urlBox" style={{marginBottom:'40px'}}>
         <h4>Si vous possedez un url général pour stocker les documentations , vous pouvez l'ajouter ici.</h4>
