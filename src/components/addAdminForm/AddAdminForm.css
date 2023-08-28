@@ -34,11 +34,17 @@
     font-weight: 500;
     font-size: 0.8rem;
   }
+  .message{
+    font-size: 0.8rem;
+  }
   @media (max-width: 800px) {
     .addAdminLine h3{
       font-size: 0.8rem;
     }
     .adminErr p{
+      font-size: 0.7rem;
+    }
+    .message{
       font-size: 0.7rem;
     }
 
@@ -59,6 +65,9 @@
     .addAdminForm{
       row-gap: 3px;
       column-gap: 5px;
+    }
+    .message{
+      font-size: 0.6rem;
     }
   }
 
