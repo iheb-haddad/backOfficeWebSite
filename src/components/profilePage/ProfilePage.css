@@ -281,4 +281,7 @@
         height: 70px;
         width: 50px;
     }
+    .socialLine input{
+        max-width: 30px;
+    }
 }
