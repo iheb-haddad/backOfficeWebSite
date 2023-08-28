@@ -146,6 +146,9 @@
         width: 9px;
         height: 9px;
     }
+    .affichage,.actions{
+        font-size: 0.6rem;
+    }
 }    
 @media (max-width: 420px) {
     .headList {
