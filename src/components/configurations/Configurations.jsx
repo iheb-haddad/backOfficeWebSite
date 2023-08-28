@@ -385,7 +385,7 @@ function Configurations() {
               style={{backgroundColor:inputColor.generalUrlColor}}
               />
         </div>
-      <div className="confUrlButtons">
+      <div className="confButtons">
             <div>
               <button onClick={handleAnnuler2}>Annuler</button>
               <button className='appliquer' onClick={handleEnregistrer2}>Appliquer</button>
