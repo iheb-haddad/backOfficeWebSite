@@ -101,9 +101,9 @@
   }
   .deconnectionBox {
     font-size: 0.7rem;
-    left : 22px;
+    left : 25px;
     top :48px;
-    padding: 8px 10px 6px 10px;
+    padding: 8px 12px 6px 12px;
    }
   .user .rounded-image {
     height: 32px;
