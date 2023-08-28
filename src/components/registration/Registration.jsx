@@ -47,7 +47,7 @@ function Registration(props) {
           props.setConnectValide(true);
           props.setUserConnected(user);
           localStorage.setItem('userConnected', JSON.stringify(user))
-          isChecked && localStorage.setItem('connectValide', true);
+          localStorage.setItem('connectValide', true);
           // You can perform further actions after successful login here
         }
       }
@@ -93,14 +93,14 @@ function Registration(props) {
               </div>
               <div className="optionsBox">
                   <div className="options">
-                            <label>
+                            {/* <label>
                                 <input
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={handleChange}
                                 />
                                 Rester connecté
-                            </label>
+                            </label> */}
                             <h4>MOT DE PASSE OUBLIE</h4>
                     </div>
               </div>  
