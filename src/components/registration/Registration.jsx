@@ -78,7 +78,7 @@ function Registration(props) {
                     </div>     
                     <div className="loginInput">
                             <input
-                            type="text"
+                            type="password"
                             value={motDePasse}
                             onChange={handleMotDePasseChange}
                             placeholder="Taper votre mot de passe"
