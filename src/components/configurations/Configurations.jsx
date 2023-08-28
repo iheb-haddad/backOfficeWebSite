@@ -365,7 +365,7 @@ function Configurations() {
             </div>   
         </div>
       </div>
-      <div className="crazyButtons">
+      <div className="confButtons">
               <button onClick={handleAnnulerWebApp}>Annuler</button>
               <button className='appliquer' onClick={handleEnregistrerWebApp}>Appliquer</button>
       </div>
