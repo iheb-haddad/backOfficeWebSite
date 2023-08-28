@@ -255,7 +255,6 @@ function DocsList(props) {
                       type="checkbox"
                       checked={isChecked[document.id]}
                       onChange={(event) => handleChange(event,document.id)}
-                      style={{height:'14px',width:'14px'}}
                       />
                 </div>
                 <div className="actions">

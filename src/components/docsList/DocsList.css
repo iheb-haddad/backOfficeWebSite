@@ -56,6 +56,10 @@
     display: flex;
     justify-content: center;
 }
+.affichage input{
+    width: 14px;
+    height: 14px;
+}
 .actions{
     width: 17%;
 }
@@ -137,6 +141,10 @@
     }
     .type{
         width: 16%;
+    }
+    .affichage input{
+        width: 9px;
+        height: 9px;
     }
 }    
 @media (max-width: 420px) {
