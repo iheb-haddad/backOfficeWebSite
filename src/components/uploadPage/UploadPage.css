@@ -94,6 +94,9 @@
     .uploadPage .title {
         font-size: 1.5rem;
     }
+    .dragDropZone .text{
+        font-size: 1.2rem;
+    }
 }
 @media (max-width:650px){
     .dragDropZone img{
@@ -117,6 +120,9 @@
     .fileName{
         font-size: 0.9rem;
     }
+    .dragDropZone .text{
+        font-size: 1rem;
+    }
 }
 @media (max-width:500px){
     .fileDropped img{
@@ -126,5 +132,12 @@
     .loadingBar{
         height: 8px;
         margin-top: 7px;
+    }
+    .fileDropped img{
+        width: 30px;
+        height: 40px;
+    }
+    .dragDropZone .text{
+        font-size: 0.9rem;
     }
 }

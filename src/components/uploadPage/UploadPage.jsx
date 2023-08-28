@@ -111,7 +111,7 @@ function UploadPage() {
             </div>
             <div className="loadingBox"> 
               <div style={{display:'flex',justifyContent:'space-between'}}>
-                <div className="fileName">classeur.csv</div>
+                <div className="fileName">{item}</div>
                 <div className="loadingChiffre">{loadingNumber[index]}%</div>
               </div>
               <div className="loadingBar" style={{width:barWidth[index]}}></div>  
