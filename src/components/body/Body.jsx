@@ -8,7 +8,9 @@ function Body(props) {
   const [isDeconnecting,setIsDeconnecting] = useState(false)
   const handleDeconnect = () => {
     props.setConnectValide(false)
+    props.setSessionValide(false)
     localStorage.setItem('connectValide', false);
+    sessionStorage.setItem('connectValide', false);
   }
   return (
     <div className="body">

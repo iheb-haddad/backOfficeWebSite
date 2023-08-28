@@ -45,9 +45,11 @@ function Registration(props) {
           setMsgErreur2Color('red');
         } else {
           props.setConnectValide(true);
+          props.setSessionValide(true)
           props.setUserConnected(user);
           localStorage.setItem('userConnected', JSON.stringify(user))
-          localStorage.setItem('connectValide', true);
+          sessionStorage.setItem('connectValide',true)
+          isChecked && localStorage.setItem('connectValide', true);
           // You can perform further actions after successful login here
         }
       }
@@ -93,14 +95,14 @@ function Registration(props) {
               </div>
               <div className="optionsBox">
                   <div className="options">
-                            {/* <label>
+                            <label>
                                 <input
                                 type="checkbox"
                                 checked={isChecked}
                                 onChange={handleChange}
                                 />
                                 Rester connecté
-                            </label> */}
+                            </label>
                             <h4>MOT DE PASSE OUBLIE</h4>
                     </div>
               </div>  

@@ -77,6 +77,7 @@ function Home(props) {
             screenWidth={screenWidth}
             clickProfile={handleClickProfile}
             setConnectValide={props.setConnectValide}
+            setSessionValide={props.setSessionValide}
             componentCharged={navComponent}/>}
       </div>
     </>

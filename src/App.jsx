@@ -4,6 +4,10 @@ import {Registration ,Home} from './components/index'
 
 
 function App() {
+  const [sessionValide ,setSessionValide] = useState(()=>{
+    const storedConnectValide = sessionStorage.getItem('connectValide') === 'true'
+    return storedConnectValide ? storedConnectValide : false;
+  });
   const [connectValide, setConnectValide] = useState(()=>{
     const storedConnectValide = localStorage.getItem('connectValide') === 'true'
     return storedConnectValide ? storedConnectValide : false;
@@ -14,7 +18,7 @@ function App() {
   })
   return (
     <div>
-      {connectValide? <Home  setConnectValide={setConnectValide}/>: <Registration setConnectValide={setConnectValide} setUserConnected={setUserConnected}/>}
+      {(connectValide || sessionValide )? <Home  setSessionValide={setSessionValide} setConnectValide={setConnectValide}/>: <Registration setConnectValide={setConnectValide} setSessionValide={setSessionValide} setUserConnected={setUserConnected}/>}
     </div>
   )
 }

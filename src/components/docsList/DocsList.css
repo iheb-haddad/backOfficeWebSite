@@ -95,10 +95,13 @@
         font-size: 0.7rem;
     }
     .actions{
-        width: 17%;
+        width: 14%;
+    }
+    .affichage{
+        width: 6%;
     }
     .webApp{
-        width: 40%;
+        width: 37%;
     }
 }
 @media (max-width: 650px) {
@@ -132,7 +135,7 @@
     .webApp{
         margin-right: 2px;
         overflow-x: hidden;
-        width: 36%;
+        width: 35%;
     }
     .titre{
         margin-right: 2px;
@@ -140,7 +143,7 @@
         width: 19%;
     }
     .type{
-        width: 16%;
+        width: 14%;
     }
     .affichage input{
         width: 9px;
