@@ -178,14 +178,15 @@
     padding: 4px 6px;
     font-size: 0.7rem;
   }
-  .urlForm{
-    row-gap: 0
+  .urlForm,.colorsForm{
+    row-gap: 0;
+    column-gap:0;
   }
 }
 @media (max-width:530px) {
   .colorsForm , .urlBox{
     width: 93%;
-    padding: 15px;
+    padding: 10px;
   }
   .confButtons{
     padding-right: 2%;
@@ -195,7 +196,7 @@
     font-size: 0.6rem;
   }
   .colorsForm h4 , .urlBox h5{
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   .colorsLine h3 , .urlLine h3{ 
     font-size: 0.6rem;
