@@ -364,7 +364,7 @@ function Configurations() {
                 <p style={{color:msgErreur2Color}}>Url app déjà existe</p>
             </div>   
         </div>
-      <div className="confButtons" style={{gridColumn:"span 2"}}>
+      <div className="confUrlButtons" style={{gridColumn:"span 2"}}>
             <div>
               <button onClick={handleAnnulerWebApp}>Annuler</button>
               <button className='appliquer' onClick={handleEnregistrerWebApp}>Appliquer</button>
@@ -385,7 +385,7 @@ function Configurations() {
               style={{backgroundColor:inputColor.generalUrlColor}}
               />
         </div>
-      <div className="confButtons">
+      <div className="confUrlButtons">
             <div>
               <button onClick={handleAnnuler2}>Annuler</button>
               <button className='appliquer' onClick={handleEnregistrer2}>Appliquer</button>
