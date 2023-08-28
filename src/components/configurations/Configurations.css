@@ -203,6 +203,11 @@
   .urlBox h4 ,.colorsLine input , .urlLine input{
     font-size: 0.7rem;
   }
+  .urlLine input{
+    height: 26px;
+    padding: 0 5px;
+    width: 80%;
+  }
 }
 @media (max-width:500px) {
   .colorsForm , .urlBox{
