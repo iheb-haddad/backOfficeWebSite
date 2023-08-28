@@ -39,6 +39,7 @@ function DocFormAjout() {
           if(generalUrl){
             setFormData((prevData) => ({
               ...prevData,
+              application : '',
               urlType : event.target.value,
               urlDocument : generalUrl
             }));
