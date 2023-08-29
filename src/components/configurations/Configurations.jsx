@@ -174,7 +174,8 @@ function Configurations() {
         alertColor : "red",
         docColor : "#d0cece",
         instColor : "#4472c4",
-        memoColor : "#ffc000"
+        memoColor : "#ffc000",
+        url : configurations.generalUrl
       }
 
       const handleAReinitialiser = () => {
@@ -184,6 +185,22 @@ function Configurations() {
           ...prevData,
           generalUrl: url
         }))
+        initialValues.generalUrl = configurations.generalUrl
+        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reinitialisedData),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log('Object modified:', data);
+              // You can update your UI or perform other actions here
+            })
+            .catch((error) => {
+              console.error('Error modifying object:', error);
+            });
       };
 
       const handleEnregistrer2 = () => {

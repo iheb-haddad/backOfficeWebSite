@@ -39,7 +39,7 @@ function DocFormAjout() {
           if(generalUrl){
             setFormData((prevData) => ({
               ...prevData,
-              application : '',
+              selectedApp : '',
               urlType : event.target.value,
               urlDocument : generalUrl
             }));
@@ -113,6 +113,7 @@ function DocFormAjout() {
 
     const handleAddDocument = () => {
       const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
+        if((key !== 'selectedApp' && key !== 'title') && value === ''){console.log(key)}
         return (key !== 'selectedApp' && key !== 'title') && value === '';
       });
       const typeDocEmpty = formData.selectedType === 'document' && typeDocument === ''
@@ -120,7 +121,7 @@ function DocFormAjout() {
       const titleEmpty = formData.affichage === 'titre' && formData.title === ''
       setShowError(hasEmptyFields || typeDocEmpty || appEmpty || titleEmpty);
       if (hasEmptyFields || typeDocEmpty ||appEmpty || titleEmpty) {
-        setMessage("Il faut remplir tout les champs obligatoires *")
+        setMessage("Il faut remplir touts les champs obligatoires *")
         setMessageColor("red")
         setTimeout(() => {
           setMessage("");
