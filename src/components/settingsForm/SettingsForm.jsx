@@ -1,5 +1,6 @@
 import React , {useState} from 'react'
 import './SettingsForm.css'
+import axios from 'axios';
 function SettingsForm() {
     const userConnected = JSON.parse(localStorage.getItem('userConnected'));
     const initialValues = {
@@ -113,10 +114,9 @@ function SettingsForm() {
       };
 
       const handleEnregistrer = () =>{
-        fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
-        .then((response) => response.json())
-        .then((data) => {
-          setAdmins(data) 
+        axios.get('http://localhost:3000/users')
+        .then((response) => {
+          setAdmins(response.data);
             })
         .catch((error) => {
           console.error('Error fetching documents:', error);

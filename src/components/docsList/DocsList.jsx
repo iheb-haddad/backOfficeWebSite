@@ -3,6 +3,7 @@ import { useState ,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen , faTrash ,faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import "./DocsList.css"
+import axios from 'axios';
 
 function DocsList(props) {
     const [documents , setDocuments] = useState([])
@@ -31,11 +32,10 @@ function DocsList(props) {
     };
 
     useEffect(() => {
-        fetch('https://urlsjsonserver-p2nq.onrender.com/documentations')
-          .then((response) => response.json())
-          .then((data) => {
-            setDocuments(data)
-            const filteredData = data.filter((document) => {
+      axios.get('http://localhost:3000/documentations')
+      .then((response) => {
+        setDocuments(response.data)
+            const filteredData = response.data.filter((document) => {
               const typeMatch = props.filterParameters.selectedType === 'tout' || document.type === props.filterParameters.selectedType;
               const languageMatch = props.filterParameters.selectedLanguage === 'tout' || document.langue === props.filterParameters.selectedLanguage;
               const appMatch = props.filterParameters.selectedApp === 'tout' || document.application === props.filterParameters.selectedApp;
@@ -104,15 +104,13 @@ function DocsList(props) {
 
         const [webApplications ,setWebApplications] = useState([])
         useEffect(() => {
-          fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
-            .then((response) => response.json())
-            .then((data) => {
-              setWebApplications(data) 
-                })
-            .catch((error) => {
-              console.error('Error fetching documents:', error);
-            });
-  
+          axios.get('http://localhost:3000/webApplications')
+          .then((data) => {
+            setWebApplications(data.data) 
+              })
+          .catch((error) => {
+            console.error('Error fetching documents:', error);
+          });
         }, []);
 
         const [formData ,setFormData] = useState()

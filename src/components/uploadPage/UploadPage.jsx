@@ -1,5 +1,6 @@
 import React , {useEffect ,useState} from 'react'
 import './UploadPage.css'
+import axios from 'axios';
 import {parse} from 'papaparse'
 function UploadPage() {
   const [data ,setData] = useState([])

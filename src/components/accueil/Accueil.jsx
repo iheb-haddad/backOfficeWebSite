@@ -1,9 +1,13 @@
 import React , {useState , useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowRight ,faCircleArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 import './Accueil.css'
 function Accueil() {
     const [documents , setDocuments] = useState([])
+    const [alertes , setAlertes] = useState([])
+    const [instructions , setInstructions] = useState([])
+    const [docs , setDocs] = useState([])
     const [page ,setPage ] = useState(0)
     const [isLeaving , setIsLeaving] = useState(false)
     const [isEntering , setIsEntering] = useState(false)
@@ -12,16 +16,21 @@ function Accueil() {
 
 
     useEffect(() => {
-        fetch('https://urlsjsonserver-p2nq.onrender.com/documentations')
-          .then((response) => response.json())
-          .then((data) => {
-            setDocuments(data) 
-            console.log("iheb"+documents)  
-              })
+        axios.get('http://localhost:3000/documentations')
+          .then((response) => {
+            setDocuments(response.data) 
+            setAlertes(response.data.filter((alerte) => {
+                return alerte.type === 'alerte'}))
+              setDocs(response.data.filter((document) => {
+                  return document.type === 'document'}))
+              setInstructions(response.data.filter((instruction) => {
+                    return instruction.type === 'instruction'}))
+            })
           .catch((error) => {
             console.error('Error fetching documents:', error);
           });
       }, []);
+
       const handleClickRights = () => {
         setIsEntering2(false)
         setIsLeaving2(false);
@@ -80,21 +89,21 @@ function Accueil() {
             </div>
             <div className="accueilBox smallBox">
                 <div className="stat">
-                    <div className="chiffres">76</div>
+                    <div className="chiffres">{docs.length}</div>
                     <div className="type">Documents</div>
                 </div>
                 <div className="statIcon"><img src="./documentIcon.png" alt="" /></div>
             </div>
             <div className="accueilBox smallBox">
             <div className="stat">
-                    <div className="chiffres">23</div>
+                    <div className="chiffres">{alertes.length}</div>
                     <div className="type">Alertes</div>
                 </div>
                 <div className="statIcon"><img src="./alerteIcon.png" alt="" /></div>
             </div>
             <div className="accueilBox smallBox">
                 <div className="stat">
-                    <div className="chiffres">61</div>
+                    <div className="chiffres">{instructions.length}</div>
                     <div className="type">Instructions</div>
                 </div>
                 <div className="statIcon"><img src="./instructionIcon.png" alt="" /></div>

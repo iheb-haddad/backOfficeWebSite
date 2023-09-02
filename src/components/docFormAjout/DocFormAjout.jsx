@@ -1,20 +1,19 @@
 import React,{useState,useEffect} from 'react'
 import './DocFormAjout.css'
+import axios from 'axios';
 
 function DocFormAjout() {
   const [generalUrl ,setGeneralUrl] = useState("")
   const [msgErreur1Color, setMsgErreur1Color] = useState('white');
 
   useEffect(()=> {
-    fetch('https://urlsjsonserver-p2nq.onrender.com/configurations')
-    .then((response) => response.json())
-    .then((data) => {
-      setGeneralUrl(data.generalUrl)
-    })
-    .catch((error) => {
-      console.error('Error connecting:', error);
-      // Handle any error that occurred during the fetch request
-    });
+    axios.get('http://localhost:3000/configurations')
+      .then((response) => {
+        setGeneralUrl(response.data[0].generalUrl)
+          })
+      .catch((error) => {
+        console.error('Error fetching documents:', error);
+      });
   },[])
     const initialValues = {
         urlType : 'normal',
@@ -171,15 +170,13 @@ function DocFormAjout() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
       const [webApplications ,setWebApplications] = useState([])
       useEffect(() => {
-        fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
-          .then((response) => response.json())
-          .then((data) => {
-            setWebApplications(data) 
-              })
-          .catch((error) => {
-            console.error('Error fetching documents:', error);
-          });
-
+        axios.get('http://localhost:3000/webApplications')
+        .then((data) => {
+          setWebApplications(data.data) 
+            })
+        .catch((error) => {
+          console.error('Error fetching documents:', error);
+        });
       }, []);
   return (
     <div className='docFormAjout'>

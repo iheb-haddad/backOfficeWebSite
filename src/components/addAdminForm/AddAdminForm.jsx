@@ -1,5 +1,6 @@
 import React , {useState} from 'react'
 import './AddAdminForm.css'
+import axios from 'axios';
 function AddAdminForm() { 
     const initialValues = {
         lastName : "",
@@ -14,6 +15,7 @@ function AddAdminForm() {
     const [admins , setAdmins] = useState([])
     const [msgErreur1Color, setMsgErreur1Color] = useState('white');
     const [msgErreur2Color, setMsgErreur2Color] = useState('white');
+
     const handleLastNameChange = (event) => {
         setFormData((prevData) => ({
             ...prevData,
@@ -48,13 +50,12 @@ function AddAdminForm() {
       };
 
       const handleEnregistrer = () => {
-        fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
-        .then((response) => response.json())
-        .then((data) => {
-          setAdmins(data) 
-            })
+      axios.get('http://localhost:3000/users')
+        .then((response) => {
+          setAdmins(response.data);
+        })
         .catch((error) => {
-          console.error('Error fetching documents:', error);
+          console.error('Error fetching items:', error);
         });
       if(!admins.some(admin => admin.email === formData.email)){
         if(formData.password === formData.confPassword){
@@ -69,45 +70,37 @@ function AddAdminForm() {
         }while(admins.some(admin => admin.username === name))
 
         const newAdmin = {
-            id: Math.random().toString(36).substring(7),
-            username: name,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email : formData.email,
-            pass : formData.password,
-            numTel : '',
-            country : '',
-            region : '',
-            github : '',
-            linkedin : '',
-          };
-
-          fetch('https://urlsjsonserver-p2nq.onrender.com/admins', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newAdmin),
+          id: Math.random().toString(36).substring(7),
+          username: name,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          pass: formData.password,
+          numTel: '',
+          country: '',
+          region: '',
+          github: '',
+          linkedin: '',
+        };
+        
+        axios.post('http://localhost:3000/users', JSON.stringify(newAdmin))
+          .then((response) => {
+            console.log('New admin added:', response.data); // Use response.data to access the server response
+            setFormData(initialValues);
+            setMessage("L'admin est ajouté avec succès");
+            setMessageColor("green");
+            setTimeout(() => {
+              setMessage("");
+            }, 4000);
           })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log('New admin added:', data);
-              setFormData(initialValues);
-              setMessage("L'admin est ajouté avec succés")
-              setMessageColor("green")
-              setTimeout(() => {
-                setMessage("");
-              }, 4000);
-              // You can update your UI or perform other actions here
-            })
-            .catch((error) => {
-              console.error('Error adding new admin:', error);
-              setMessage("Un problème effectue lors de l'ajout du l'admin")
-              setMessageColor("red")
-              setTimeout(() => {
-                setMessage("");
-              }, 4000);
-            });
+          .catch((error) => {
+            console.error('Error adding new admin:', error);
+            setMessage("Un problème s'est produit lors de l'ajout de l'admin");
+            setMessageColor("red");
+            setTimeout(() => {
+              setMessage("");
+            }, 4000);
+          });
           }else{
             setMsgErreur2Color("red")
           }

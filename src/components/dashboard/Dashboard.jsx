@@ -3,6 +3,7 @@ import "./Dashboard.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faFileCirclePlus, faUpload, faFilter } from '@fortawesome/free-solid-svg-icons';
 import {DocFormAjout ,DocsList ,UploadPage} from '../index';
+import axios from 'axios';
 
 const Dashboard = () => {
     const [motCle ,setMotCle] = useState("")
@@ -34,15 +35,13 @@ const Dashboard = () => {
 
         const [webApplications ,setWebApplications] = useState([])
         useEffect(() => {
-          fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
-            .then((response) => response.json())
-            .then((data) => {
-              setWebApplications(data) 
-                })
-            .catch((error) => {
-              console.error('Error fetching documents:', error);
-            });
-  
+          axios.get('http://localhost:3000/webApplications')
+          .then((data) => {
+            setWebApplications(data.data) 
+              })
+          .catch((error) => {
+            console.error('Error fetching documents:', error);
+          });
         }, []);
 
         const initialFilterParameteres = {

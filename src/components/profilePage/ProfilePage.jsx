@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck ,  faPen } from '@fortawesome/free-solid-svg-icons';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import './ProfilePage.css'
+import axios from 'axios';
 
 function ProfilePage(props) {
   const userConnected = JSON.parse(localStorage.getItem('userConnected'));

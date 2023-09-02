@@ -1,18 +1,18 @@
 import React , {useState ,useEffect} from 'react'
 import './Configurations.css'
+import axios from 'axios';
 function Configurations() {
-  const [configurations , setConfigurations] = useState([])
-  const [initialValues , setInitialValues] = useState([])
+  const [configurations , setConfigurations] = useState({})
+  const [initialValues , setInitialValues] = useState({})
   const [msgErreur1Color, setMsgErreur1Color] = useState('white');
   const [msgErreur2Color, setMsgErreur2Color] = useState('white');
   const [dataChanged , setDataChanged] = useState(0)
 
   useEffect(() => {
-    fetch('https://urlsjsonserver-p2nq.onrender.com/configurations')
-      .then((response) => response.json())
+    axios.get('http://localhost:3000/configurations')
       .then((data) => {
-        setConfigurations(data)
-        setInitialValues(data)
+        setConfigurations(data.data[0])
+        setInitialValues(data.data[0])
           })
       .catch((error) => {
         console.error('Error fetching documents:', error);
@@ -20,10 +20,9 @@ function Configurations() {
     },[]);
 
     useEffect(() => {
-      fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
-      .then((response) => response.json())
+      axios.get('http://localhost:3000/webApplications')
       .then((data) => {
-        setWebApplications(data) 
+        setWebApplications(data.data) 
           })
       .catch((error) => {
         console.error('Error fetching documents:', error);

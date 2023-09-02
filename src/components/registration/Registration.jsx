@@ -1,27 +1,37 @@
 import React from 'react'
 import {useState ,useEffect} from 'react'
+import axios from 'axios';
 import './Registration.css';
 
 function Registration(props) {
     const [isChecked, setChecked] = useState(false);
-    const [admins , setAdmins ] = useState()
+    const [admins , setAdmins ] = useState([])
 
     const [email, setEmail] = useState('');
     const [motDePasse, setMotDePasse] = useState('');
     const [msgErreur1Color, setMsgErreur1Color] = useState('white');
     const [msgErreur2Color, setMsgErreur2Color] = useState('white');
   
-    useEffect(()=> {
-      fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
-      .then((response) => response.json())
-      .then((data) => {
-        setAdmins(data)
+    // useEffect(()=> {
+    //   fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setAdmins(data)
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error connecting:', error);
+    //     // Handle any error that occurred during the fetch request
+    //   });
+    // },[])
+  useEffect(() => {
+    axios.get('http://localhost:3000/users')
+      .then((response) => {
+        setAdmins(response.data);
       })
       .catch((error) => {
-        console.error('Error connecting:', error);
-        // Handle any error that occurred during the fetch request
+        console.error('Error fetching items:', error);
       });
-    },[])
+  }, []);
 
     const handleChange = (event) => {
       setChecked(event.target.checked);
@@ -37,6 +47,7 @@ function Registration(props) {
       setMsgErreur2Color('white');
     };
     const handleConnect = () => {
+      console.log(admins)
       const user = admins.find((admin) => admin.email === email);
       if (!user) {
         setMsgErreur1Color('red');
@@ -54,6 +65,41 @@ function Registration(props) {
         }
       }
     };
+//     const nodemailer = require('nodemailer');
+//     const transporter = nodemailer.createTransport({
+//       service: 'your-email-service-provider', // e.g., 'Gmail'
+//       auth: {
+//         user: 'hadediheb5@gmail.com',
+//         pass: 'Ihebhaded123',
+//       },
+//     });
+    
+//     // Function to send the email
+//     const sendPasswordEmail = (toEmail, password) => {
+//       // Email content
+//       const mailOptions = {
+//         from: 'hadediheb5@gmail.com',
+//         to: toEmail,
+//         subject: 'Password Reset',
+//         text: `Your new password is: ${password}`,
+//       };
+    
+//       // Send the email
+//       transporter.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//           console.error('Error sending email:', error);
+//         } else {
+//           console.log('Email sent:', info.response);
+//         }
+//       });
+//     };
+//     const forgetPassword = () => {
+     
+// const email = 'hadediheb9@gmail.com'; // Replace with the recipient's email address
+// const password = 'uhgyuihgbiujkh'; // Replace with the password
+
+// sendPasswordEmail(email, password);
+//     }
   
   return (
     <div className='registration'>
