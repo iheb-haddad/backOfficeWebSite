@@ -1,6 +1,6 @@
 import React , {useState ,useEffect} from 'react'
 import './Configurations.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
 function Configurations() {
   const [configurations , setConfigurations] = useState({})
   const [initialValues , setInitialValues] = useState({})
@@ -9,7 +9,7 @@ function Configurations() {
   const [dataChanged , setDataChanged] = useState(0)
 
   useEffect(() => {
-    axios.get('http://localhost:3000/configurations')
+    Axios.get('/configurations')
       .then((data) => {
         setConfigurations(data.data[0])
         setInitialValues(data.data[0])
@@ -17,10 +17,10 @@ function Configurations() {
       .catch((error) => {
         console.error('Error fetching documents:', error);
       });
-    },[]);
+    },[dataChanged]);
 
     useEffect(() => {
-      axios.get('http://localhost:3000/webApplications')
+      Axios.get('/webApplications')
       .then((data) => {
         setWebApplications(data.data) 
           })
@@ -140,18 +140,13 @@ function Configurations() {
       }, 2000);
       };
       const handleEnregistrer1 = () =>{
+        console.log("updating", configurations._id)
             changeInputColors();
             configurations.generalUrl = initialValues.generalUrl
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(configurations),
-          })
-            .then((response) => response.json())
+            Axios.put(`/configurations/${configurations._id}`, configurations)
             .then((data) => {
               setInitialValues(configurations)
+              setDataChanged(prev => prev + 1)
               console.log('Object modified:', data);
               // You can update your UI or perform other actions here
             })
@@ -180,21 +175,11 @@ function Configurations() {
       const handleAReinitialiser = () => {
         const url = configurations.generalUrl
         setConfigurations(reinitialisedData)
-        setConfigurations((prevData)=>({
-          ...prevData,
-          generalUrl: url
-        }))
-        initialValues.generalUrl = configurations.generalUrl
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reinitialisedData),
-          })
-            .then((response) => response.json())
+        
+            Axios.put(`/configurations/${configurations._id}`, reinitialisedData)
             .then((data) => {
               console.log('Object modified:', data);
+              setDataChanged(prev => prev + 1)
               // You can update your UI or perform other actions here
             })
             .catch((error) => {
@@ -205,15 +190,9 @@ function Configurations() {
       const handleEnregistrer2 = () => {
         changeGeneralUrlInputColor();
         initialValues.generalUrl = configurations.generalUrl
-    fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(initialValues),
-      })
-        .then((response) => response.json())
+        Axios.put(`/configurations/${configurations._id}`, initialValues)
         .then((data) => {
+          setInitialValues(configurations)
           console.log('Object modified:', data);
           // You can update your UI or perform other actions here
         })
@@ -261,14 +240,7 @@ function Configurations() {
             nom : webApplicationForm.nom,
             url : webApplicationForm.url
           };
-          fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newApp),
-          })
-            .then((response) => response.json())
+          Axios.post("/webapplications",newApp)
             .then((data) => {
               console.log('New app added:', data);
               setWebApplicationForm(initialApp);

@@ -1,6 +1,7 @@
 import React , {useState} from 'react'
 import './AddAdminForm.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
+
 function AddAdminForm() { 
     const initialValues = {
         lastName : "",
@@ -50,7 +51,7 @@ function AddAdminForm() {
       };
 
       const handleEnregistrer = () => {
-      axios.get('http://localhost:3000/users')
+      Axios.get('/users')
         .then((response) => {
           setAdmins(response.data);
         })
@@ -83,7 +84,8 @@ function AddAdminForm() {
           linkedin: '',
         };
         
-        axios.post('http://localhost:3000/users', JSON.stringify(newAdmin))
+        console.log("data" , newAdmin)
+        Axios.post('/users', newAdmin)
           .then((response) => {
             console.log('New admin added:', response.data); // Use response.data to access the server response
             setFormData(initialValues);

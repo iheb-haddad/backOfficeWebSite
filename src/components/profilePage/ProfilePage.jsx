@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck ,  faPen } from '@fortawesome/free-solid-svg-icons';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import './ProfilePage.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
 
 function ProfilePage(props) {
   const userConnected = JSON.parse(localStorage.getItem('userConnected'));
@@ -34,15 +34,8 @@ function ProfilePage(props) {
     setGithubIsEdited(false)
     userConnected.github = github
     localStorage.setItem('userConnected', JSON.stringify(userConnected))
-    fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userConnected),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    Axios.put(`/users/${userConnected.id}`, userConnected)
+    .then((data) => {
         console.log('Object modified:', data);
         // You can update your UI or perform other actions here
       })
@@ -57,15 +50,8 @@ function ProfilePage(props) {
     setLinkedinIsEdited(false)
     userConnected.linkedin = linkedin
     localStorage.setItem('userConnected', JSON.stringify(userConnected))
-    fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userConnected),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    Axios.put(`/users/${userConnected.id}`, userConnected)
+    .then((data) => {
         console.log('Object modified:', data);
         // You can update your UI or perform other actions here
       })

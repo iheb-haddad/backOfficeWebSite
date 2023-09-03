@@ -3,7 +3,7 @@ import { useState ,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen , faTrash ,faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import "./DocsList.css"
-import axios from 'axios';
+import Axios from '../../services/Axios';
 
 function DocsList(props) {
     const [documents , setDocuments] = useState([])
@@ -32,7 +32,7 @@ function DocsList(props) {
     };
 
     useEffect(() => {
-      axios.get('http://localhost:3000/documentations')
+      Axios.get('/documentations')
       .then((response) => {
         setDocuments(response.data)
             const filteredData = response.data.filter((document) => {
@@ -63,11 +63,8 @@ function DocsList(props) {
       const handleDelete = (documentId) => {
         console.log(documentId)
         setIsDeleting(documentId);
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/documentations/${documentId}`, {
-            method: 'DELETE',
-          })
-            .then((response) => response.json())
-            .then((data) => {
+        Axios.delete(`/documentations/${documentId}`)
+        .then((data) => {
             setDataChanged(prev => prev +1)
               // You can update your UI or perform other actions here
             })
@@ -76,7 +73,7 @@ function DocsList(props) {
             });
             setTimeout(() => {
               setIsDeleting("")
-          },1500); 
+          },1500);
         };
 
         useEffect(() =>{
@@ -104,7 +101,7 @@ function DocsList(props) {
 
         const [webApplications ,setWebApplications] = useState([])
         useEffect(() => {
-          axios.get('http://localhost:3000/webApplications')
+          Axios.get('/webApplications')
           .then((data) => {
             setWebApplications(data.data) 
               })
@@ -117,7 +114,7 @@ function DocsList(props) {
         const onChangeType = (event) => {
           setFormData((prevData) => ({
             ...prevData,
-            type : event.target.value
+            typeDoc : event.target.value
           }))
         }
         const onChangeTitle = (event) => {
@@ -141,57 +138,32 @@ function DocsList(props) {
 
         const handleModify = (document) => {
           setIsEditing(document.id)
+          console.log("heere"+JSON.stringify(document))
           setFormData(document)
-          if(document.type === 'document'){
-            setFormData((prevData) => ({
-              ...prevData,
-              type : document.typeDoc
-            }))
-          }
         }
         function areObjectsEqual(objA, objB) {
           // Get the keys of both objects
-          const keysA = Object.keys(objA);
-          const keysB = Object.keys(objB);
-        
-          // Check if the number of keys is the same
-          if (keysA.length !== keysB.length) {
-            return false;
-          }
-        
-          // Check if all keys and their values are the same
-          for (const key of keysA) {
-            if (objA[key] !== objB[key]) {
-              return false;
-            }
-          }
-        
-          return true;
+          return objA.type === objB.type && objA.typeDoc === objB.typeDoc && objA.titre === objB.titre && objA.application === objB.application && objA.langue === objB.langue && objA.affichage === objB.affichage 
         }
         const handleModifyComplete = (document) => {
           setIsEditing("")
-          let type = ''
-          type = (formData.type === 'commun' || formData.type === 'fiche métier' || formData.type === 'autre') ? 'document' : formData.type
+
+          let type = (formData.typeDoc === 'commun' || formData.typeDoc === 'fiche métier' || formData.typeDoc === 'autre') ? 'document' : formData.typeDoc
           const documentModified = {
+            _id : document._id,
             id : document.id,
             type : type,
             langue : formData.langue,
             titre : formData.titre,
-            ...(type === 'document' && { typeDoc: formData.type }),
+            typeDoc : formData.typeDoc,
             application : formData.application,
             statut : document.statut,
             urlDoc : document.urlDoc,
             affichage : formData.affichage
           }
+          console.log("mooooood"+JSON.stringify(documentModified))
           if (!areObjectsEqual(documentModified,document)){
-          fetch(`https://urlsjsonserver-p2nq.onrender.com/documentations/${document.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(documentModified),
-          })
-            .then((response) => response.json())
+            Axios.put(`/documentations/${document.id}`, documentModified)
             .then((data) => {
               console.log('Object modified:', data);
               setDataChanged(prev => prev +1)
@@ -202,7 +174,7 @@ function DocsList(props) {
             });
             setTimeout(() => {
               setIsModified(document.id)
-          },1000);
+          },500);
             setTimeout(() => {
               setIsModified("")
           }, 3000);
@@ -223,7 +195,7 @@ function DocsList(props) {
             filtredDocuments.map((document)=>(
             <div className={`headList lineList ${isEditing === document.id && 'isEditing'}`} key={document.id} style={{backgroundColor: isModified === document.id && "#50e150"}}>
                 <div className={`type ${isDeleting === document.id && 'isDeleting'}`}>{isEditing === document.id ?
-                  <select name="type" id="selectType"  value={formData.type} onChange={onChangeType}>
+                  <select name="type" id="selectType"  value={formData.typeDoc} onChange={onChangeType}>
                       <option value="instruction" >instruction</option>
                       <option value="alerte" >alerte</option>
                       <option value="commun" >doc commun</option>

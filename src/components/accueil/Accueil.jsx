@@ -1,7 +1,7 @@
 import React , {useState , useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowRight ,faCircleArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+import Axios from '../../services/Axios';
 import './Accueil.css'
 function Accueil() {
     const [documents , setDocuments] = useState([])
@@ -14,9 +14,8 @@ function Accueil() {
     const [isLeaving2 , setIsLeaving2] = useState(false)
     const [isEntering2 , setIsEntering2] = useState(false)
 
-
     useEffect(() => {
-        axios.get('http://localhost:3000/documentations')
+        Axios.get('/documentations')
           .then((response) => {
             setDocuments(response.data) 
             setAlertes(response.data.filter((alerte) => {

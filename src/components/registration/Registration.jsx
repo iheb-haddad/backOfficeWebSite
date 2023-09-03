@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState ,useEffect} from 'react'
-import axios from 'axios';
+import Axios from '../../services/Axios';
 import './Registration.css';
 
 function Registration(props) {
@@ -12,19 +12,8 @@ function Registration(props) {
     const [msgErreur1Color, setMsgErreur1Color] = useState('white');
     const [msgErreur2Color, setMsgErreur2Color] = useState('white');
   
-    // useEffect(()=> {
-    //   fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setAdmins(data)
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error connecting:', error);
-    //     // Handle any error that occurred during the fetch request
-    //   });
-    // },[])
   useEffect(() => {
-    axios.get('http://localhost:3000/users')
+    Axios.get('/users')
       .then((response) => {
         setAdmins(response.data);
       })

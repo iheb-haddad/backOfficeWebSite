@@ -1,13 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import './DocFormAjout.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
 
 function DocFormAjout() {
   const [generalUrl ,setGeneralUrl] = useState("")
   const [msgErreur1Color, setMsgErreur1Color] = useState('white');
 
   useEffect(()=> {
-    axios.get('http://localhost:3000/configurations')
+    Axios.get('/configurations')
       .then((response) => {
         setGeneralUrl(response.data[0].generalUrl)
           })
@@ -131,23 +131,16 @@ function DocFormAjout() {
           type: formData.selectedType,
           langue: formData.selectedLanguage,
           titre: formData.title,
-          ...(formData.selectedType === 'document' && { typeDoc: typeDocument }),
+          ...(formData.selectedType === 'document' ? { typeDoc: typeDocument } : { typeDocument: formData.selectedType}),
           application: formData.selectedApp,
           statut: formData.selectedStatut,
           urlDoc: formData.urlDocument,
           affichage: formData.affichage
         };
     
-        fetch('https://urlsjsonserver-p2nq.onrender.com/documentations', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newDocument),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log('New document added:', data);
+        Axios.post('/documentations', newDocument )
+          .then((response) => {
+            console.log('New document added:', response.data);
             setFormData(initialValues);
             setTypeDocument("")
             setMessage("La documentation est ajouté avec succés")
@@ -170,7 +163,7 @@ function DocFormAjout() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
       const [webApplications ,setWebApplications] = useState([])
       useEffect(() => {
-        axios.get('http://localhost:3000/webApplications')
+        Axios.get('/webApplications')
         .then((data) => {
           setWebApplications(data.data) 
             })

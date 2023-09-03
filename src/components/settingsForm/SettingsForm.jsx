@@ -1,6 +1,7 @@
 import React , {useState} from 'react'
 import './SettingsForm.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
+
 function SettingsForm() {
     const userConnected = JSON.parse(localStorage.getItem('userConnected'));
     const initialValues = {
@@ -114,7 +115,7 @@ function SettingsForm() {
       };
 
       const handleEnregistrer = () =>{
-        axios.get('http://localhost:3000/users')
+        Axios.get('/users')
         .then((response) => {
           setAdmins(response.data);
             })
@@ -130,14 +131,7 @@ function SettingsForm() {
             userConnected.region = formData.region
             localStorage.setItem('userConnected', JSON.stringify(userConnected))
             changeInputColors();
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userConnected),
-          })
-            .then((response) => response.json())
+            Axios.put(`/users/${userConnected.id}`, userConnected)
             .then((data) => {
               console.log('Object modified:', data);
               // You can update your UI or perform other actions here

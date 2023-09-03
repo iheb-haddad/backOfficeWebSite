@@ -1,6 +1,7 @@
 import React ,{useState}from 'react'
 import './PasswordForm.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
+
 function PasswordForm() {
   const userConnected = JSON.parse(localStorage.getItem('userConnected'));
   const initialValues = {
@@ -41,15 +42,8 @@ function PasswordForm() {
         userConnected.pass = formData.newPassword
         localStorage.setItem('userConnected', JSON.stringify(userConnected))
         setFormData(initialValues)
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userConnected),
-          })
-            .then((response) => response.json())
-            .then((data) => {
+        Axios.put(`/users/${userConnected.id}`, userConnected)
+        .then((data) => {
               console.log('Object modified:', data);
               // You can update your UI or perform other actions here
             })

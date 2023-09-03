@@ -3,7 +3,7 @@ import "./Dashboard.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faFileCirclePlus, faUpload, faFilter } from '@fortawesome/free-solid-svg-icons';
 import {DocFormAjout ,DocsList ,UploadPage} from '../index';
-import axios from 'axios';
+import Axios from '../../services/Axios';
 
 const Dashboard = () => {
     const [motCle ,setMotCle] = useState("")
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
         const [webApplications ,setWebApplications] = useState([])
         useEffect(() => {
-          axios.get('http://localhost:3000/webApplications')
+          Axios.get('/webApplications')
           .then((data) => {
             setWebApplications(data.data) 
               })

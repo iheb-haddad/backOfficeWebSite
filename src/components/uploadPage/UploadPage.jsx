@@ -1,6 +1,6 @@
 import React , {useEffect ,useState} from 'react'
 import './UploadPage.css'
-import axios from 'axios';
+import Axios from '../../services/Axios';
 import {parse} from 'papaparse'
 function UploadPage() {
   const [data ,setData] = useState([])
@@ -61,16 +61,9 @@ function UploadPage() {
         statut: document.statut,
         urlDoc: document.urlDocument,
       };
-      fetch('https://urlsjsonserver-p2nq.onrender.com/documentations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newDocument),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('New document added:', data);
+      Axios.post('/documentations', newDocument )
+      .then((response) => {
+          console.log('New document added:', response.data);
           // You can update your UI or perform other actions here
         })
         .catch((error) => {
