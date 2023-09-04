@@ -15,7 +15,32 @@ function Registration(props) {
   useEffect(() => {
     Axios.get('/users')
       .then((response) => {
-        setAdmins(response.data);
+        if(response.data.length !== 0){
+          setAdmins(response.data)
+          console.log(response.data)
+        }else{
+          console.log(2)
+          const newAdmin = {
+            id: Math.random().toString(36).substring(7),
+            username: '',
+            firstName: '',
+            lastName: '',
+            email: 'flexiDoc@admin.com',
+            pass: 'flexiDocadmin123',
+            numTel: '',
+            country: '',
+            region: '',
+            github: '',
+            linkedin: '',
+          };
+          Axios.post('/users', newAdmin)
+          .then((response) => {
+            console.log('New admin added:', response.data);
+            setAdmins([newAdmin]) // Use response.data to access the server response
+          })
+          .catch((error) => {console.log('Error:', error)
+          });
+        }
       })
       .catch((error) => {
         console.error('Error fetching items:', error);

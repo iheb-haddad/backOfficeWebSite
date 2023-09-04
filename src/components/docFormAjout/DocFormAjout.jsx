@@ -126,12 +126,13 @@ function DocFormAjout() {
           setMessage("");
         }, 4000);
       }else{
+        const typed = (typeDocument === 'commun' || typeDocument === 'fiche métier' || typeDocument === 'autre') ? typeDocument : formData.selectedType
         const newDocument = {
           id: Math.random().toString(36).substring(7),
           type: formData.selectedType,
           langue: formData.selectedLanguage,
           titre: formData.title,
-          ...(formData.selectedType === 'document' ? { typeDoc: typeDocument } : { typeDocument: formData.selectedType}),
+          typeDoc: typed,
           application: formData.selectedApp,
           statut: formData.selectedStatut,
           urlDoc: formData.urlDocument,

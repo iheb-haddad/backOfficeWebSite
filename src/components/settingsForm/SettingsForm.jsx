@@ -3,7 +3,7 @@ import './SettingsForm.css'
 import Axios from '../../services/Axios';
 
 function SettingsForm() {
-    const userConnected = JSON.parse(localStorage.getItem('userConnected'));
+    let userConnected = JSON.parse(localStorage.getItem('userConnected'));
     const initialValues = {
         lastName : userConnected.lastName,
         firstName : userConnected.firstName,
@@ -123,6 +123,16 @@ function SettingsForm() {
           console.error('Error fetching documents:', error);
         });
       if(!admins.some(admin => (admin.email === formData.email) && (admin.id != userConnected.id ))){
+        if(userConnected.username === ''){
+          const randomChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+          let name ;
+          const randomDigitsOrLetters = Array.from({ length: 2 }, () =>
+            randomChars[Math.floor(Math.random() * randomChars.length)]
+          ).join('');
+        
+           name =`${formData.firstName}_${formData.lastName}${randomDigitsOrLetters}`;
+           userConnected.username = name
+        }
             userConnected.firstName = formData.firstName
             userConnected.lastName = formData.lastName
             userConnected.email = formData.email
@@ -131,6 +141,7 @@ function SettingsForm() {
             userConnected.region = formData.region
             localStorage.setItem('userConnected', JSON.stringify(userConnected))
             changeInputColors();
+            userConnected = JSON.parse(localStorage.getItem('userConnected'));
             Axios.put(`/users/${userConnected.id}`, userConnected)
             .then((data) => {
               console.log('Object modified:', data);
