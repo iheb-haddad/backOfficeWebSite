@@ -1,7 +1,6 @@
 import React , {useState , useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleArrowRight ,faCircleArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import Axios from '../../services/Axios';
 import './Accueil.css'
 function Accueil() {
     const [documents , setDocuments] = useState([])
@@ -15,14 +14,15 @@ function Accueil() {
     const [isEntering2 , setIsEntering2] = useState(false)
 
     useEffect(() => {
-        Axios.get('/documentations')
-          .then((response) => {
-            setDocuments(response.data) 
-            setAlertes(response.data.filter((alerte) => {
+        fetch('https://urlsjsonserver-p2nq.onrender.com/documentations')
+        .then((response) => response.json())
+        .then((data) => {
+            setDocuments(data) 
+            setAlertes(data.filter((alerte) => {
                 return alerte.type === 'alerte'}))
-              setDocs(response.data.filter((document) => {
+              setDocs(data.filter((document) => {
                   return document.type === 'document'}))
-              setInstructions(response.data.filter((instruction) => {
+              setInstructions(data.filter((instruction) => {
                     return instruction.type === 'instruction'}))
             })
           .catch((error) => {

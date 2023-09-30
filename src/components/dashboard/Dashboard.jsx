@@ -3,10 +3,8 @@ import "./Dashboard.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faFileCirclePlus, faUpload, faFilter } from '@fortawesome/free-solid-svg-icons';
 import {DocFormAjout ,DocsList ,UploadPage} from '../index';
-import Axios from '../../services/Axios';
 
 const Dashboard = () => {
-    const [motCle ,setMotCle] = useState("")
     const handleInputSearch = (event) => {
       setFilterParameters((prevData) => ({
         ...prevData,
@@ -35,9 +33,10 @@ const Dashboard = () => {
 
         const [webApplications ,setWebApplications] = useState([])
         useEffect(() => {
-          Axios.get('/webApplications')
+          fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
+          .then((response) => response.json())
           .then((data) => {
-            setWebApplications(data.data) 
+            setWebApplications(data) 
               })
           .catch((error) => {
             console.error('Error fetching documents:', error);

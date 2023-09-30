@@ -23,11 +23,11 @@ function Navbar(props) {
         </div>
         <div className={`navLine ${props.navLineClicked === 'profile' ? 'navClicked' : 'notClicked'}`} onClick={props.clickProfile}>
             <FontAwesomeIcon icon={faUser} />
-            <div className="title" >Gestiond de profil</div>
+            <div className="title" >Gestion de profil</div>
         </div>
         <div className={`navLine ${props.navLineClicked === 'settings' ? 'navClicked' : 'notClicked'}`} onClick={props.clickSettings}>
             <FontAwesomeIcon icon={faGear} />
-            <div className="title" >Configurations</div>
+            <div className="title" >Configuration</div>
         </div>
         </div>      
     </div>

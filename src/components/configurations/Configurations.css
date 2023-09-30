@@ -127,6 +127,26 @@
 .urlLine input:focus{
   outline-color: rgb(83,86,208,0.6) ;
 }
+.application {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+.applicationName{
+  flex: 2;
+}
+.applicationKeyword{
+  flex: 2;
+}
+.application button{
+  flex: 1;
+  background-color: white;
+  border: none;
+  text-decoration: underline;
+  color: #5356d0;
+  cursor: pointer;
+}
+
 @media (max-width: 1160px) {
   .colorsForm{
       margin-top: 40px;

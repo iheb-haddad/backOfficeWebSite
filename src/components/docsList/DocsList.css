@@ -42,7 +42,7 @@
 }
 .titre{
     width: 18%;
-    margin-right: 5px;
+    margin-right: 7px;
 }
 .langue{
     width: 12%;
@@ -55,6 +55,11 @@
     width: 7%;
     display: flex;
     justify-content: center;
+}
+.type , .titre , .langue , .webApp{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
 }
 .affichage input{
     width: 14px;

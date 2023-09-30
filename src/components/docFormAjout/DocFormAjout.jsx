@@ -113,7 +113,7 @@ function DocFormAjout() {
     const handleAddDocument = () => {
       const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
         if((key !== 'selectedApp' && key !== 'title') && value === ''){console.log(key)}
-        return (key !== 'selectedApp' && key !== 'title') && value === '';
+        return (key !== 'selectedApp' && key !== 'title' && key !== 'urlDocument') && value === '';
       });
       const typeDocEmpty = formData.selectedType === 'document' && typeDocument === ''
       const appEmpty = formData.urlType === 'normal' && formData.selectedApp === ''
@@ -253,13 +253,13 @@ function DocFormAjout() {
                     value={formData.urlDocument}
                     onChange={handleUrlDocumentChange}
                     placeholder="Saisir Url du document"
-                    style={{border: (showError && !formData.urlDocument) && "1px solid red"}}
+                    // style={{border: (showError && !formData.urlDocument) && "1px solid red"}}
                     />
             </div>
             <div className="configLine">
               <h3>Affichage *</h3>
                 <select value={formData.affichage} onChange={handleAffichageChange} >
-                    <option value="contenu">Contenu affiché</option>
+                 {formData.urlDocument &&<option value="contenu">Contenu affiché</option>}
                     <option value="titre">Seulement titre affiché</option>
                 </select>
             </div>                                   

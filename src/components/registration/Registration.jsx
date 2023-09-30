@@ -13,11 +13,12 @@ function Registration(props) {
     const [msgErreur2Color, setMsgErreur2Color] = useState('white');
   
   useEffect(() => {
-    Axios.get('/users')
-      .then((response) => {
-        if(response.data.length !== 0){
-          setAdmins(response.data)
-          console.log(response.data)
+    fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
+    .then((response) => response.json())
+    .then((data) => {
+        if(data.length !== 0){
+          setAdmins(data)
+          console.log(data)
         }else{
           console.log(2)
           const newAdmin = {
@@ -33,9 +34,16 @@ function Registration(props) {
             github: '',
             linkedin: '',
           };
-          Axios.post('/users', newAdmin)
-          .then((response) => {
-            console.log('New admin added:', response.data);
+          fetch('https://urlsjsonserver-p2nq.onrender.com/admins', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newAdmin),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+            console.log('New admin added:', data);
             setAdmins([newAdmin]) // Use response.data to access the server response
           })
           .catch((error) => {console.log('Error:', error)
@@ -79,41 +87,6 @@ function Registration(props) {
         }
       }
     };
-//     const nodemailer = require('nodemailer');
-//     const transporter = nodemailer.createTransport({
-//       service: 'your-email-service-provider', // e.g., 'Gmail'
-//       auth: {
-//         user: 'hadediheb5@gmail.com',
-//         pass: 'Ihebhaded123',
-//       },
-//     });
-    
-//     // Function to send the email
-//     const sendPasswordEmail = (toEmail, password) => {
-//       // Email content
-//       const mailOptions = {
-//         from: 'hadediheb5@gmail.com',
-//         to: toEmail,
-//         subject: 'Password Reset',
-//         text: `Your new password is: ${password}`,
-//       };
-    
-//       // Send the email
-//       transporter.sendMail(mailOptions, (error, info) => {
-//         if (error) {
-//           console.error('Error sending email:', error);
-//         } else {
-//           console.log('Email sent:', info.response);
-//         }
-//       });
-//     };
-//     const forgetPassword = () => {
-     
-// const email = 'hadediheb9@gmail.com'; // Replace with the recipient's email address
-// const password = 'uhgyuihgbiujkh'; // Replace with the password
-
-// sendPasswordEmail(email, password);
-//     }
   
   return (
     <div className='registration'>

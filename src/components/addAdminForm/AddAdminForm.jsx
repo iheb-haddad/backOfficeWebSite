@@ -1,6 +1,5 @@
 import React , {useState} from 'react'
 import './AddAdminForm.css'
-import Axios from '../../services/Axios';
 
 function AddAdminForm() { 
     const initialValues = {
@@ -10,7 +9,7 @@ function AddAdminForm() {
         password : "",
         confPassword : ""
       };
-      const [formData, setFormData] = useState(initialValues);  
+    const [formData, setFormData] = useState(initialValues);  
     const [message , setMessage] = useState("")
     const [messageColor , setMessageColor] = useState("")
     const [admins , setAdmins] = useState([])
@@ -51,9 +50,10 @@ function AddAdminForm() {
       };
 
       const handleEnregistrer = () => {
-      Axios.get('/users')
-        .then((response) => {
-          setAdmins(response.data);
+        fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
+        .then((response) => response.json())
+        .then((data) => {
+          setAdmins(data);
         })
         .catch((error) => {
           console.error('Error fetching items:', error);
@@ -83,11 +83,17 @@ function AddAdminForm() {
           github: '',
           linkedin: '',
         };
-        
-        console.log("data" , newAdmin)
-        Axios.post('/users', newAdmin)
-          .then((response) => {
-            console.log('New admin added:', response.data); // Use response.data to access the server response
+
+        fetch('https://urlsjsonserver-p2nq.onrender.com/admins', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newAdmin),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('New admin added:', data); // Use response.data to access the server response
             setFormData(initialValues);
             setMessage("L'admin est ajouté avec succès");
             setMessageColor("green");
@@ -117,69 +123,69 @@ function AddAdminForm() {
       };
   return (
     <>
-    <div className="settingsBody">
-    <div className="addAdminForm">
-    <div className="addAdminLine">
-           <h3>Nom</h3>
-          <input
-              type="text"
-              value={formData.lastName}
-              onChange={handleLastNameChange}
-              placeholder="Saisir titre "
-              />
-      </div>
-      <div className="addAdminLine">
-           <h3>Prénom</h3>
-          <input
-              type="text"
-              value={formData.firstName}
-              onChange={handlefirstNameChange}
-              placeholder="Saisir titre "
-              />
-      </div>
-      <div className="addAdminLine">
-           <h3>Adresse Email</h3>
-          <input
-              type="text"
-              value={formData.email}
-              onChange={handleemailChange}
-              placeholder="Saisir titre "
-              />
-            <div className="adminErr">
-                <p style={{color:msgErreur1Color}}>adresse déjà utilisé</p>
-            </div>     
-      </div>
-      <div className="addAdminLine">
-           <h3>Mot de passe</h3>
-          <input
-              type="text"
-              value={formData.password}
-              onChange={handlePasswordChange}
-              placeholder="Saisir titre "
-              />
-      </div>
-      <div className="addAdminLine">
-           <h3>Confirmer mot de passe</h3>
-          <input
-              type="text"
-              value={formData.confPassword}
-              onChange={handleConfPasswordChange}
-              placeholder="Saisir titre "
-              />
+      <div className="settingsBody">
+        <div className="addAdminForm">
+          <div className="addAdminLine">
+            <h3>Nom</h3>
+            <input
+                type="text"
+                value={formData.lastName}
+                onChange={handleLastNameChange}
+                placeholder="Saisir titre "
+                />
+          </div>
+          <div className="addAdminLine">
+            <h3>Prénom</h3>
+            <input
+                type="text"
+                value={formData.firstName}
+                onChange={handlefirstNameChange}
+                placeholder="Saisir titre "
+                />
+          </div>
+          <div className="addAdminLine">
+              <h3>Adresse Email</h3>
+              <input
+                  type="text"
+                  value={formData.email}
+                  onChange={handleemailChange}
+                  placeholder="Saisir titre "
+                  />
+              <div className="adminErr">
+                  <p style={{color:msgErreur1Color}}>adresse déjà utilisé</p>
+              </div>     
+          </div>
+          <div className="addAdminLine">
+              <h3>Mot de passe</h3>
+              <input
+                  type="text"
+                  value={formData.password}
+                  onChange={handlePasswordChange}
+                  placeholder="Saisir titre "
+                  />
+          </div>
+          <div className="addAdminLine">
+              <h3>Confirmer mot de passe</h3>
+              <input
+                  type="text"
+                  value={formData.confPassword}
+                  onChange={handleConfPasswordChange}
+                  placeholder="Saisir titre "
+                  />
               <div className="adminErr">
                   <p style={{color:msgErreur2Color}}>Mot de passe ne correspond pas</p>
               </div> 
-      </div>
-      </div>
+          </div>
+        </div>
       </div>
       <div className="settingsButton">
-            <div className="message" style={{color:messageColor}}>{message}</div>
-                <div>
-                    <button onClick={handleAnnuler}>Annuler</button>
-                    <button className='enregistrer' onClick={handleEnregistrer}>Enregistrer</button>
-                </div>
-    </div>
-      </>
+          <div className="message" style={{color:messageColor}}>{message}</div>
+          <div>
+             <button onClick={handleAnnuler}>Annuler</button>
+             <button className='enregistrer' onClick={handleEnregistrer}>Enregistrer</button>
+          </div>
+      </div>
+    </>
   )
 }
 
