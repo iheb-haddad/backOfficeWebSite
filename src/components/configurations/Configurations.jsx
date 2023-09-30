@@ -30,6 +30,7 @@ function Configurations() {
   }}
 
   const defaultData = {
+    id : 'ugfyujhbjk',
     panelColor: "white",
     panelWidth : "300px",
     alertColor : "red",
@@ -226,7 +227,7 @@ function Configurations() {
         console.log("updating", configurations._id)
             changeInputColors();
             configurations.docGeneralUrl = initialValues.docGeneralUrl
-            fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations._id}`, {
+            fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations.id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -254,6 +255,7 @@ function Configurations() {
       };
 
       const reinitialisedData = {
+        id : 'ugfyujhbjk',
         panelColor : 'white',
         panelWidth : "300px",
         alertColor : "red",
@@ -267,7 +269,7 @@ function Configurations() {
         const url = configurations.docGeneralUrl
         setConfigurations(reinitialisedData)
         
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations._id}`, {
+        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -289,7 +291,7 @@ function Configurations() {
         changeDocGeneralUrlInputColor();
         initialValues.docGeneralUrl = configurations.docGeneralUrl
         console.log(initialValues.docGeneralUrl);
-        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations._id}`, {
+        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
