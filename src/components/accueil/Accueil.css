@@ -42,6 +42,7 @@
 .modificationsList .titre{
     width: 24%;
     margin-right: 5px;
+    overflow-x: hidden;
 }
 .modificationsList .langue{
     width: 18%;
