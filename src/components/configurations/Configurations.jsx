@@ -224,7 +224,7 @@ function Configurations() {
       };
 
       const handleEnregistrer1 = () =>{
-        console.log("updating", configurations._id)
+        console.log("updating", configurations.id)
             changeInputColors();
             configurations.docGeneralUrl = initialValues.docGeneralUrl
             fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations.id}`, {
@@ -386,7 +386,7 @@ function Configurations() {
               value={configurations.panelColor}
               onChange={handlePanelColorChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.panelColor}}
+              style={{backgroundColor:inputColor.panelFieldColor}}
               />
       </div>
     <div className="colorsLine">
@@ -396,7 +396,7 @@ function Configurations() {
               value={configurations.alertColor}
               onChange={handleAlertBoxColorChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.alertColor}}
+              style={{backgroundColor:inputColor.alertFieldColor}}
               />
       </div>
       <div className="colorsLine">
@@ -406,7 +406,7 @@ function Configurations() {
               value={configurations.docColor}
               onChange={handleDocsBoxColorChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.docColor}}
+              style={{backgroundColor:inputColor.docFieldColor}}
               />
       </div>
       <div className="colorsLine">
@@ -416,7 +416,7 @@ function Configurations() {
               value={configurations.instColor}
               onChange={handleInstructionsBoxColorChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.instColor}}
+              style={{backgroundColor:inputColor.instFieldColor}}
               />
       </div>
       <div className="colorsLine">
@@ -426,7 +426,7 @@ function Configurations() {
               value={configurations.memoColor}
               onChange={handleMemoBoxColorChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.memoColor}}
+              style={{backgroundColor:inputColor.memoFieldColor}}
               />
       </div>
       <div className="colorsLine">
@@ -509,7 +509,7 @@ function Configurations() {
               value={configurations.docGeneralUrl}
               onChange={handleDocGeneralUrlChange}
               placeholder="Saisir titre "
-              style={{backgroundColor:inputColor.docGeneralUrlColor}}
+              style={{backgroundColor:inputColor.docGeneralUrlFieldColor}}
               />
         </div>
       </div>
