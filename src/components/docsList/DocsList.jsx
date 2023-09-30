@@ -168,7 +168,7 @@ function DocsList(props) {
           }
           console.log("mooooood"+JSON.stringify(documentModified))
           if (!areObjectsEqual(documentModified,document)){
-            fetch(`https://urlsjsonserver-p2nq.onrender.com/documentaions/${document.id}`, {
+            fetch(`https://urlsjsonserver-p2nq.onrender.com/documentations/${document.id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
