@@ -10,7 +10,7 @@ function DocFormAjout() {
     fetch('https://urlsjsonserver-p2nq.onrender.com/configurations')
     .then((response) => response.json())
     .then((data) => {
-        setGeneralUrl(data[0].generalUrl)
+        setGeneralUrl(data[0].docGeneralUrl)
           })
       .catch((error) => {
         console.error('Error fetching documents:', error);
