@@ -385,7 +385,7 @@ function Configurations() {
               type="text"
               value={configurations.panelColor}
               onChange={handlePanelColorChange}
-              placeholder="Saisir titre "
+              placeholder="Saisir couleur "
               style={{backgroundColor:inputColor.panelFieldColor}}
               />
       </div>
@@ -395,7 +395,7 @@ function Configurations() {
               type="text"
               value={configurations.alertColor}
               onChange={handleAlertBoxColorChange}
-              placeholder="Saisir titre "
+              placeholder="Saisir couleur "
               style={{backgroundColor:inputColor.alertFieldColor}}
               />
       </div>
@@ -405,7 +405,7 @@ function Configurations() {
               type="text"
               value={configurations.docColor}
               onChange={handleDocsBoxColorChange}
-              placeholder="Saisir titre "
+              placeholder="Saisir couleur "
               style={{backgroundColor:inputColor.docFieldColor}}
               />
       </div>
@@ -415,7 +415,7 @@ function Configurations() {
               type="text"
               value={configurations.instColor}
               onChange={handleInstructionsBoxColorChange}
-              placeholder="Saisir titre "
+              placeholder="Saisir couleur "
               style={{backgroundColor:inputColor.instFieldColor}}
               />
       </div>
@@ -425,7 +425,7 @@ function Configurations() {
               type="text"
               value={configurations.memoColor}
               onChange={handleMemoBoxColorChange}
-              placeholder="Saisir titre "
+              placeholder="Saisir couleur "
               style={{backgroundColor:inputColor.memoFieldColor}}
               />
       </div>
@@ -435,7 +435,7 @@ function Configurations() {
               type="text"
               value={configurations.panelWidth}
               onChange={handlePanelWidthChange}
-              placeholder="Saisir titre "
+              placeholder="Saisir couleur "
               style={{backgroundColor:inputColor.widthPanelFieldColor}}
               />
       </div>
