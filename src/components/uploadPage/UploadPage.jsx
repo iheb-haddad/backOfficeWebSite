@@ -61,9 +61,16 @@ function UploadPage() {
         statut: document.statut,
         urlDoc: document.urlDocument,
       };
-      Axios.post('/documentations', newDocument )
-      .then((response) => {
-          console.log('New document added:', response.data);
+      fetch('https://urlsjsonserver-p2nq.onrender.com/documentations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newDocument),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('New document added:', data);
           // You can update your UI or perform other actions here
         })
         .catch((error) => {

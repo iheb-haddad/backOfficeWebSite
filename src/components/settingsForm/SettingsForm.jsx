@@ -115,9 +115,10 @@ function SettingsForm() {
       };
 
       const handleEnregistrer = () =>{
-        Axios.get('/users')
-        .then((response) => {
-          setAdmins(response.data);
+        fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
+        .then((response) => response.json())
+        .then((data) => {
+          setAdmins(data);
             })
         .catch((error) => {
           console.error('Error fetching documents:', error);
@@ -142,8 +143,15 @@ function SettingsForm() {
             localStorage.setItem('userConnected', JSON.stringify(userConnected))
             changeInputColors();
             userConnected = JSON.parse(localStorage.getItem('userConnected'));
-            Axios.put(`/users/${userConnected.id}`, userConnected)
-            .then((data) => {
+            fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(userConnected),
+            })
+              .then((response) => response.json())
+              .then((data) => {
               console.log('Object modified:', data);
               // You can update your UI or perform other actions here
             })

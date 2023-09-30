@@ -16,8 +16,11 @@ function Configurations() {
 
   const handleDeleteApp = (urlApp,appId) => {
     if(!documentations.some((doc)=> doc.application === urlApp)){
-    Axios.delete(`/webapplications/${appId}`)
-    .then((data) => {
+      fetch(`https://urlsjsonserver-p2nq.onrender.com/webApplications/${appId}`, {
+        method: 'DELETE',
+      })
+        .then((response) => response.json())
+        .then((data) => {
         setDataChanged(prev => prev +1)
           // You can update your UI or perform other actions here
         })
@@ -25,6 +28,7 @@ function Configurations() {
           console.error('Error deleting ', error);
         });
   }}
+
   const defaultData = {
     panelColor: "white",
     panelWidth : "300px",
@@ -222,8 +226,15 @@ function Configurations() {
         console.log("updating", configurations._id)
             changeInputColors();
             configurations.docGeneralUrl = initialValues.docGeneralUrl
-            Axios.put(`/configurations`, configurations)
-            .then((data) => {
+            fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations._id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(configurations),
+            })
+              .then((response) => response.json())
+              .then((data) => {
               setInitialValues(configurations)
               setDataChanged(prev => prev + 1)
               console.log('Object modified:', data);
@@ -256,8 +267,15 @@ function Configurations() {
         const url = configurations.docGeneralUrl
         setConfigurations(reinitialisedData)
         
-            Axios.put(`/configurations`, reinitialisedData)
-            .then((data) => {
+        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reinitialisedData),
+        })
+          .then((response) => response.json())
+          .then((data) => {
               console.log('Object modified:', data);
               setDataChanged(prev => prev + 1)
               // You can update your UI or perform other actions here
@@ -271,8 +289,15 @@ function Configurations() {
         changeDocGeneralUrlInputColor();
         initialValues.docGeneralUrl = configurations.docGeneralUrl
         console.log(initialValues.docGeneralUrl);
-        Axios.put(`/configurations`, initialValues)
-        .then((data) => {
+        fetch(`https://urlsjsonserver-p2nq.onrender.com/configurations/${configurations._id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(initialValues),
+        })
+          .then((response) => response.json())
+          .then((data) => {
           // setInitialValues(configurations)
           console.log('Object modified:', data);
           // You can update your UI or perform other actions here
@@ -321,7 +346,14 @@ function Configurations() {
             nom : webApplicationForm.nom,
             url : webApplicationForm.url
           };
-          Axios.post("/webapplications",newApp)
+          fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newApp),
+          })
+            .then((response) => response.json())
             .then((data) => {
               console.log('New app added:', data);
               setWebApplicationForm(initialApp);

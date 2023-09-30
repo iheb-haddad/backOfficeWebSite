@@ -34,8 +34,15 @@ function ProfilePage(props) {
     setGithubIsEdited(false)
     userConnected.github = github
     localStorage.setItem('userConnected', JSON.stringify(userConnected))
-    Axios.put(`/users/${userConnected.id}`, userConnected)
-    .then((data) => {
+    fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userConnected),
+    })
+      .then((response) => response.json())
+      .then((data) => {
         console.log('Object modified:', data);
         // You can update your UI or perform other actions here
       })
@@ -50,8 +57,15 @@ function ProfilePage(props) {
     setLinkedinIsEdited(false)
     userConnected.linkedin = linkedin
     localStorage.setItem('userConnected', JSON.stringify(userConnected))
-    Axios.put(`/users/${userConnected.id}`, userConnected)
-    .then((data) => {
+    fetch(`https://urlsjsonserver-p2nq.onrender.com/admins/${userConnected.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userConnected),
+    })
+      .then((response) => response.json())
+      .then((data) => {
         console.log('Object modified:', data);
         // You can update your UI or perform other actions here
       })

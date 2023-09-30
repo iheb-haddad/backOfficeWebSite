@@ -32,10 +32,11 @@ function DocsList(props) {
     };
 
     useEffect(() => {
-      Axios.get('/documentations')
-      .then((response) => {
-        setDocuments(response.data)
-            const filteredData = response.data.filter((document) => {
+      fetch('https://urlsjsonserver-p2nq.onrender.com/documentations')
+        .then((response) => response.json())
+        .then((data) => {
+        setDocuments(data)
+            const filteredData = data.filter((document) => {
               const typeMatch = props.filterParameters.selectedType === 'tout' || document.type === props.filterParameters.selectedType;
               const languageMatch = props.filterParameters.selectedLanguage === 'tout' || document.langue === props.filterParameters.selectedLanguage;
               const appMatch = props.filterParameters.selectedApp === 'tout' || document.application === props.filterParameters.selectedApp;
@@ -63,8 +64,11 @@ function DocsList(props) {
       const handleDelete = (documentId) => {
         console.log(documentId)
         setIsDeleting(documentId);
-        Axios.delete(`/documentations/${documentId}`)
-        .then((data) => {
+          fetch(`https://urlsjsonserver-p2nq.onrender.com/documentations/${documentId}`, {
+            method: 'DELETE',
+          })
+            .then((response) => response.json())
+            .then((data) => {
             setDataChanged(prev => prev +1)
               // You can update your UI or perform other actions here
             })
@@ -101,9 +105,10 @@ function DocsList(props) {
 
         const [webApplications ,setWebApplications] = useState([])
         useEffect(() => {
-          Axios.get('/webApplications')
+          fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
+          .then((response) => response.json())
           .then((data) => {
-            setWebApplications(data.data) 
+            setWebApplications(data) 
               })
           .catch((error) => {
             console.error('Error fetching documents:', error);
@@ -163,8 +168,15 @@ function DocsList(props) {
           }
           console.log("mooooood"+JSON.stringify(documentModified))
           if (!areObjectsEqual(documentModified,document)){
-            Axios.put(`/documentations/${document.id}`, documentModified)
-            .then((data) => {
+            fetch(`https://urlsjsonserver-p2nq.onrender.com/documentaions/${document.id}`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(documentModified),
+            })
+              .then((response) => response.json())
+              .then((data) => {
               console.log('Object modified:', data);
               setDataChanged(prev => prev +1)
               // You can update your UI or perform other actions here

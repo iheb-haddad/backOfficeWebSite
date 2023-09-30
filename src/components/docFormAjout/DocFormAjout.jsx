@@ -7,9 +7,10 @@ function DocFormAjout() {
   const [msgErreur1Color, setMsgErreur1Color] = useState('white');
 
   useEffect(()=> {
-    Axios.get('/configurations')
-      .then((response) => {
-        setGeneralUrl(response.data[0].generalUrl)
+    fetch('https://urlsjsonserver-p2nq.onrender.com/configurations')
+    .then((response) => response.json())
+    .then((data) => {
+        setGeneralUrl(data[0].generalUrl)
           })
       .catch((error) => {
         console.error('Error fetching documents:', error);
@@ -139,9 +140,16 @@ function DocFormAjout() {
           affichage: formData.affichage
         };
     
-        Axios.post('/documentations', newDocument )
-          .then((response) => {
-            console.log('New document added:', response.data);
+        fetch('https://urlsjsonserver-p2nq.onrender.com/documentations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newDocument),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log('New document added:', data);
             setFormData(initialValues);
             setTypeDocument("")
             setMessage("La documentation est ajouté avec succés")
@@ -164,9 +172,10 @@ function DocFormAjout() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
       const [webApplications ,setWebApplications] = useState([])
       useEffect(() => {
-        Axios.get('/webApplications')
+        fetch('https://urlsjsonserver-p2nq.onrender.com/webApplications')
+        .then((response) => response.json())
         .then((data) => {
-          setWebApplications(data.data) 
+          setWebApplications(data) 
             })
         .catch((error) => {
           console.error('Error fetching documents:', error);
