@@ -1,0 +1,290 @@
+.profilePage{
+    width: 100%;
+    height: 90vh;
+}
+.profilePage .profileCover{
+    height: 35%;
+    /* background-color: #3354cc; */
+    /* background-image : url("./couverture.jpg"); */
+    background-size: cover;
+}
+.profilePage .profileBody{
+    position: relative;
+    background-color: white;
+    height: 75%;
+}
+.profilePage .boxes{
+    display: flex;
+    justify-content: center;     
+    position: absolute;
+    top:-120px;
+    left: 5%;
+    width: 90%;
+    /* height: 100%; */
+}
+.profileBody .sideBox{
+    width: 27%;
+    border: 1px solid rgb(194, 184, 184);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sideBox .profilePhoto{
+    padding-top: 15%;
+    flex:1;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+.sideBox .profilePhoto img {
+    width: 100px;
+    height: 110px;
+    object-fit: cover; 
+  }
+  .sideBox .profileInfo{
+    flex:2;
+    width: 100%;  
+}
+.sideBox .profileInfo .infoLine{
+    text-align: center;
+    font-weight: 400;
+    border-top: 1px solid rgb(194, 184, 184);
+    border-bottom: 1px solid rgb(194, 184, 184);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.profileBody .settingsBox{
+    width: 100%;
+    /* height: 100%; */
+    border: 1px solid rgb(194, 184, 184);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+.profileBody .gap{
+    width: 3%;
+}
+ .settingsBox .settingsHead{
+    height: 70px;
+    padding-left: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid rgb(194, 184, 184);
+}
+.settingsHead h4{
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: "Montserrat", sans-serif;
+    margin-right: 5%;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #babfc4;
+}
+.settingsHead .clicked{
+    border-bottom: 2px solid #5356d0;
+    color: #222e54;
+}
+.settingsBody{
+    font-family: "Montserrat", sans-serif;
+    width: 90%;
+    margin-left: 5%;
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+.settingsBox .settingsButton{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 30px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-top: 1px solid rgb(194, 184, 184);
+}
+.settingsBox .settingsButton button{
+    background-color: white;
+    color: #5356d0;
+    border : 2px solid rgb(83,86,208,0.6);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-family: 'Montserrat' , sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.settingsBox .settingsButton .enregistrer {
+    color: white;
+    background-color: #5356d0;
+}  
+.settingsBox .settingsButton button:active{
+    scale: 0.9;
+}
+.socialMedia{
+    width: 90%;
+    margin: 40px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.socialLine{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.socialLine input{
+    width: 60%;
+    margin: 0 3px;
+}
+.socialLine .social-icon{
+    margin-right: 3px;
+}
+
+@media (max-width: 1250px) and (min-width: 1160px) {
+    .profilePage .boxes{
+        width: 95%;
+        left: 2.5%;
+    }
+    .settingsBox .settingsHead{
+        padding-left: 20px;
+    }
+    .settingsHead h4{
+        margin-right: 2%;
+    }
+}
+@media (max-width: 950px) {
+    .profilePage .boxes{
+        width: 95%;
+        left: 2.5%;
+    }
+    .settingsBox .settingsHead{
+        padding-left: 20px;
+    }
+    .settingsHead h4{
+        margin-right: 3%;
+    }
+}
+@media (max-width: 880px) {
+    .sideBox .profilePhoto img {
+        height: 100px;
+        width: 80px;
+    }
+    .sideBox .profileInfo .infoLine{
+        font-size: 0.9rem;
+    }
+    .settingsHead h4{
+        font-size: 0.8rem;
+    }
+    .settingsBox .settingsButton button{
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        margin-right: 15px;
+    }
+    .socialLine{
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 800px) {
+    .settingsBox .settingsButton{
+        padding-right: 10px;
+    }
+    .settingsBox .settingsButton button{
+        font-size: 0.8rem;
+        padding: 6px 8px;
+    }
+}
+@media (max-width:750px){
+    .infoBox{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .profilePage .boxes{
+        flex-direction: column;
+        top : -200px
+    }
+    .profileBody .sideBox{
+        width: 100%;
+        flex-direction: row;
+        margin-bottom: 20px;
+    }
+    .profileBody .settingsBox{
+        width: 100%;
+    }
+    .sideBox .profilePhoto{
+        padding: 10px 0;
+        flex: 1;
+    }
+    .sideBox .profileInfo{
+        flex: 3;
+    }
+    .sideBox .profileInfo .infoLine{
+        border: none;
+        font-size: 1.1rem;
+    }
+    .socialMedia{
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin: 0;
+        margin-bottom: 10px;
+    }
+    .socialLine{
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+}
+@media (max-width: 680px){
+    .socialLine{
+        font-size: 1rem;
+    }
+    .sideBox .profileInfo .infoLine{
+        font-size: 1rem;
+    }
+}
+@media (max-width: 580px){
+    .socialLine{
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    .sideBox .profileInfo .infoLine{
+        font-size: 0.9rem;
+    }
+
+    .settingsBody{
+        width: 95%;
+        margin-left: 2%;
+    }
+}
+@media (max-width: 500px){
+    .socialLine{
+        font-size: 0.8rem;
+    }
+    .sideBox .profileInfo .infoLine{
+        font-size: 0.8rem;
+    }
+    .settingsBox .settingsButton{
+        padding-right: 5px;
+    }
+    .settingsBox .settingsButton button{
+        font-size: 0.6rem;
+        padding: 3px 6px;
+        margin-right: 7px;
+    }
+    .settingsHead h4{
+        font-size: 0.7rem;
+    }
+    .sideBox .profilePhoto img {
+        height: 70px;
+        width: 50px;
+    }
+    .socialLine input{
+        max-width: 50px;
+        height: 20px;
+    }
+}

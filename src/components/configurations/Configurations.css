@@ -1,0 +1,303 @@
+.colorsForm{
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 20px;
+    column-gap: 10px;
+    width: 80%;
+    margin-left: 8%;
+    margin-bottom: 60px;
+    padding: 20px;
+    height: 100%;
+    border: 1px solid rgb(194, 184, 184);
+    position: relative;
+    font-family: "Montserrat",sans-serif;
+    font-weight: 500;
+    color: #222e54;
+    margin-top: 20px;
+    background-color: white;
+}
+.colorsForm h4{
+  margin: 0;
+  padding: 0 5px;
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  background-color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.colorsLine h3{
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #222e54;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .colorsLine input ,  .colorsLine select{
+    border:1px solid rgb(214, 214, 214);
+    background-color: white;
+    height: 30px;
+    padding:0 10px;
+    width: 90%;
+  }
+  .colorsLine input:focus, .colorsLine select:focus{
+    outline-color: rgb(83,86,208,0.6) ;
+  }
+.confButtons{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10%;
+  padding-top: 3%;
+}
+  .confButtons button{
+    background-color: white;
+    color:#5356d0;
+    border : 2px solid rgb(83,86,208,0.6);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-family: 'Montserrat' , sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.confButtons button:hover{
+  color: white;
+  background-color: #5356d0;
+}
+.confButtons .appliquer{
+  color: white;
+  background-color: #5356d0;
+}  
+.confButtons .appliquer:active{
+    scale: 1.1;
+}
+.urlBox{
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(194, 184, 184);
+  justify-content: center;
+  padding: 20px;
+  margin-left: 8%;
+  margin-top: 30px;
+  width: 80%;
+  font-family: "Montserrat",sans-serif;
+  font-weight: 500;
+  color: #222e54;
+  position: relative;
+  background-color: white;
+}
+.urlForm{
+  /* display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 20px;
+  column-gap: 10px;  */
+  display: flex;
+  height: 100%;
+  font-family: "Montserrat",sans-serif;
+  font-weight: 500;
+}
+.urlLine{
+  flex : 1
+}
+.urlBox h4{
+  margin-bottom: 30px;
+  font-weight: 500
+}
+.urlBox h5{
+  margin: 0;
+  padding: 0 5px;
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  background-color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.urlLine h3{
+  margin-top: 0;
+  margin-bottom: 5px;
+  color:#222e54;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.urlLine input{
+  border:1px solid rgb(214, 214, 214);
+  background-color: white;
+  height: 30px;
+  padding:0 10px;
+  width: 90%;
+}
+.urlLine input:focus{
+  outline-color: rgb(83,86,208,0.6) ;
+}
+.application {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+.applicationName{
+  flex: 3;
+}
+.applicationKeyword{
+  flex: 3;
+}
+.application button{
+  flex: 1;
+  background-color: white;
+  border: none;
+  text-decoration: underline;
+  color: #5356d0;
+  cursor: pointer;
+}
+.languageLine{
+  border: 1px solid rgb(214, 214, 214);
+  margin: 0 50px;
+  padding: 10px 50px 10px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addLine:hover{
+  background-color: #ddd0d0;
+  color: black !important;
+}
+.infoContainer{
+  position: absolute;
+  top: 0;
+  right: 40px;
+}
+.infoContainer .infoIcon{
+  font-size: 2.4rem;
+  color: #5356d0;
+  cursor: pointer;
+}
+
+@media (max-width: 1160px) {
+  .colorsForm{
+      margin-top: 40px;
+  }
+}
+@media (max-width:850px) {
+  .colorsForm h4 , .urlBox h5{
+    font-size: 1rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.8rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.9rem;
+  }
+  .colorsForm , .urlBox{
+    width: 90%;
+    margin-left: 3%;
+  }
+}
+@media (max-width:700px) {
+  .confButtons{
+    padding-right: 5%;
+  }
+  .confButtons button{
+    padding: 6px 8px;
+    margin-left: 5px;
+  }
+  .colorsForm h4 , .urlBox h5{
+    top:-10px;
+    font-size: 0.9rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.7rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.8rem;
+  }
+  .colorsForm , .urlBox{
+    width: 90%;
+    margin-left: 1%;
+  }
+}
+@media (max-width:600px) {
+  .confButtons{
+    padding-right: 3%;
+  }
+  .confButtons button{
+    padding: 4px 6px;
+    font-size: 0.7rem;
+  }
+  .urlForm,.colorsForm{
+    row-gap: 5px;
+    column-gap:0;
+  }
+}
+@media (max-width:530px) {
+  .colorsForm , .urlBox{
+    width: 93%;
+    padding: 10px;
+  }
+  .confButtons{
+    padding-right: 2%;
+  }
+  .confButtons button{
+    padding: 3px 3px;
+    font-size: 0.6rem;
+    margin-left: 3px;
+  }
+  .colorsForm h4 , .urlBox h5{
+    font-size: 0.7rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.6rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.7rem;
+  }
+  .urlLine input ,.colorsLine input{
+    height: 26px;
+    padding: 0 5px;
+    width: 85%;
+  }
+}
+@media (max-width:500px) {
+  .colorsForm , .urlBox{
+    padding: 10px;
+  }
+  .confButtons{
+    padding-right: 0;
+  }
+  .confButtons button{
+    border-radius: 7px;
+    padding: 2px 3px;
+    font-size: 0.5rem;
+  }
+}
+@media (max-width:400px) {
+  .colorsForm {
+    padding: 8px;
+  }
+  .urlBox{
+    padding: 8px;
+  }
+}
+@media (max-width:370px) {
+  .colorsForm {
+    padding: 7px;
+  }
+  .urlBox{
+    padding: 7px;
+  }
+  .confButtons{
+    padding-right: 0;
+  }
+  .confButtons button{
+    border-radius: 7px;
+    padding: 2px 1px;
+    font-size: 0.3rem;
+  }
+  .colorsLine h3 , .urlLine h3{ 
+    font-size: 0.5rem;
+  }
+  .urlBox h4 ,.colorsLine input , .urlLine input{
+    font-size: 0.6rem;
+  }
+}

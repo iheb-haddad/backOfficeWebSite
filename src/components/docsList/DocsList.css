@@ -1,0 +1,185 @@
+.loading{
+    width: 10vw;
+    margin-left: 38vw;
+    margin-top: 30vh;
+}
+.headList{
+    display: flex;
+    width: 90%;
+    margin-left: 5%;
+    background-color: #f1f1fc;
+    height: 38px;
+    align-items: center;
+    padding-left: 10px;
+    color:#5356d0;
+    font-family: 'Montserrat' , sans-serif;
+    font-weight: 500;
+    border: 1px solid rgb(168, 168, 168);
+    font-size: 1rem;
+}
+.lineList{
+    background-color: white;
+    color: black;
+    font-size: 0.9rem;
+}
+.isEditing{
+    color: white;
+    background-color: rgb(181, 182, 236);
+}
+.isEditing input ,.isEditing select{
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    border: 1px solid rgb(168, 168, 168);
+    color: white;
+    background-color: rgb(181, 182, 236);
+    box-shadow: 0 0 4px 2px rgb(0,0,0,0.1);
+    border-radius: 20px;
+    height: 30px;
+    padding-left: 10px;
+    margin-right: 20px;
+}
+.lineList input:focus{
+    outline : none
+}
+.lineList:hover{
+    background-color: #dbd8d8;
+}
+.isEditing:hover{
+    background-color: rgb(181, 182, 236);
+}
+.type{
+    width: 14%;
+}
+.titre{
+    width: 25%;
+    margin-right: 7px;
+}
+.langue{
+    width: 12%;
+}
+.webApp{
+    width: 25%;
+    margin-right: 5px;
+}
+.affichage{
+    width: 7%;
+    display: flex;
+    justify-content: center;
+}
+.lineList .type ,.lineList .titre ,.lineList .langue ,.lineList .webApp{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+.lineList .type ,.lineList .titre ,.lineList .langue ,.lineList .webApp{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+.affichage input{
+    width: 14px;
+    height: 14px;
+}
+.actions{
+    width: 17%;
+}
+.actions{
+    color :#5356d0;
+    display: flex;
+    justify-content: space-evenly;
+}
+.actions a {
+    text-decoration: none;
+}
+.headList .isDeleting{
+    text-decoration: line-through;
+    color: rgba(62, 60, 60, 0.5);
+}
+@media (max-width: 950px) {
+    .headList{
+        font-size: 0.9rem;
+    }
+    .lineList,.isEditing input ,.isEditing select{
+        font-size: 0.8rem;
+    }
+    .isEditing input ,.isEditing select{
+        padding-left: 5px;
+        margin-right: 5px;
+    }
+}
+@media (max-width: 810px) {
+    .headList{
+        font-size: 0.9rem;
+    }
+    .lineList,.isEditing input ,.isEditing select{
+        font-size: 0.7rem;
+    }
+    .actions{
+        width: 14%;
+    }
+    .affichage{
+        width: 6%;
+    }
+    .webApp{
+        width: 37%;
+    }
+}
+@media (max-width: 650px) {
+    .headList {
+        font-size: 0.8rem;
+    }
+    .lineList,.isEditing input ,.isEditing select{
+        font-size: 0.7rem;
+    }
+}
+@media (max-width:620px){
+    .headList{
+        width: 91%;
+        margin-left: 4%;
+    }
+}
+@media (max-width: 580px) {
+    .headList {
+        font-size: 0.7rem;
+        padding-left: 4px;
+        width: 97%;
+        margin-left: 1%;
+    }
+    .lineList,.isEditing input ,.isEditing select{
+        font-size: 0.6rem;
+    }
+    .isEditing input ,.isEditing select{
+        padding-left: 2px;
+        margin-right: 2px;
+    }
+    .webApp{
+        margin-right: 2px;
+        overflow-x: hidden;
+        width: 35%;
+    }
+    .titre{
+        margin-right: 2px;
+        overflow-x: hidden;
+        width: 19%;
+    }
+    .type{
+        width: 14%;
+    }
+    .affichage input{
+        width: 9px;
+        height: 9px;
+    }
+    .affichage,.actions{
+        font-size: 0.6rem;
+    }
+}    
+@media (max-width: 420px) {
+    .headList {
+        font-size: 0.6rem;
+    }
+    .lineList,.isEditing input ,.isEditing select{
+        font-size: 0.5rem;
+        padding-left: 3px;
+    }
+}  

@@ -1,0 +1,21 @@
+export {default as Registration} from './registration/Registration';
+export {default as Home } from './home/Home';
+export {default as Navbar} from './navbar/Navbar';
+export {default as Body} from './body/Body';
+export {default as DocFormAjout} from './docFormAjout/DocFormAjout';
+export {default as DocsList} from './docsList/DocsList';
+export {default as GestionMapping} from './gestionMapping/GestionMapping';
+export {default as ProfilePage} from './profilePage/ProfilePage';
+export {default as SettingsForm} from './settingsForm/SettingsForm';
+export {default as PasswordForm} from './passwordForm/PasswordForm';
+export {default as AddAdminForm} from './addAdminForm/AddAdminForm';
+export {default as Configurations} from './configurations/Configurations';
+export {default as Dashboard } from './dashboard/Dashboard';
+export {default as UploadPage} from './uploadPage/UploadPage';
+export {default as GestionSections} from './gestionSections/GestionSections';
+export {default as ModifiedSection} from './modifiedSection/ModifiedSection'
+export {default as GestionSources} from './gestionSources/GestionSources';
+export {default as GestionDocuments} from './gestionDocuments/GestionDocuments';
+export {default as ModifiedDocument} from './modifiedDocument/ModifiedDocument';
+export {default as MappingAdd} from './mappingAdd/MappingAdd';
+export {default as ConfLine} from './confLine/ConfLine';

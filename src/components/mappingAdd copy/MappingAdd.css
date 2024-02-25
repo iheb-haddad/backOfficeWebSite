@@ -1,0 +1,79 @@
+.mappingAddBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    margin-left: 4%;
+    margin-top: 30px;
+    width: 90%;
+    font-family: "Montserrat",sans-serif;
+    font-weight: 500;
+    color: #222e54;
+    background-color: white;
+}
+.enteteTitle {
+    margin-bottom: 20px;
+}
+.mappingAddEntete input{
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.mappingList {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #5356d0;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.column {
+    flex: 1;
+    width: 20%;
+    border: 1px solid #5356d0;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.cell , .headerCol{
+    padding: 10px;
+    border-top: 2px solid #5356d0;
+    background-color: #fff;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.headerCol {
+    /* border-bottom: 2px solid #5356d0; */
+    text-align: center;
+    border-top: none;
+    background-color: #f3f3fa;
+}
+.cell{
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+/* .activeButton{
+    background-color: #222e54;
+    color: white;
+    border-top: 2px solid #222e54;
+} */
+.activeButton {
+    padding: 11px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #222e54;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.activeButton:hover {
+    transform: scale(1.03);
+}
+
+.activeButton:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

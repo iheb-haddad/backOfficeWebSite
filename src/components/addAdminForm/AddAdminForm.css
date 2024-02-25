@@ -1,0 +1,78 @@
+.addAdminForm{
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 10px;
+    column-gap: 10px;
+    width: 100%;
+    height: 100%;
+}
+.addAdminLine h3{
+    margin-bottom: 5px;
+    color: #222e54;;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  .addAdminLine input{
+    border:1px solid rgb(214, 214, 214);
+    background-color: white;
+    height: 30px;
+    padding:0 10px;
+    width: 90%;
+  }
+  .addAdminLine input:focus{
+    outline-color: rgb(83,86,208,0.6) ;
+  }
+  .addAdminLine input::placeholder{
+    color: #222e54;
+  }
+  .adminErr p{
+    margin: 0;
+    padding: 0;
+    padding-left: 10px;
+    margin-top: 5px;
+    font-family: "Montserrat",sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+  }
+  .message{
+    font-size: 1.2rem;
+    margin-right: 40px;
+  }
+  @media (max-width: 800px) {
+    .addAdminLine h3{
+      font-size: 0.8rem;
+    }
+    .adminErr p{
+      font-size: 0.7rem;
+    }
+    .message{
+      font-size: 1rem;
+      margin-right: 35px;
+    }
+
+  }  
+  @media (max-width: 580px) {
+    .addAdminLine h3{
+      font-size: 0.7rem;
+    }
+    .addAdminLine input{
+      font-size: 0.7rem;
+      padding: 0 5px;
+      width: 85%;
+      height: 24px;
+    }
+    .adminErr p{
+      font-size: 0.6rem;
+    }
+    .addAdminForm{
+      row-gap: 3px;
+      column-gap: 5px;
+    }
+    .message{
+      font-size: 0.7rem;
+      margin-right: 20px;
+    }
+  }
+
+
+  

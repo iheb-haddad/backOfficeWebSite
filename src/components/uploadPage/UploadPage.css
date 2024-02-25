@@ -1,0 +1,143 @@
+.uploadPage{
+    height: 81vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+.uploadPage .title {
+    font-size: 2rem;
+    font-family: "Montserrat",sans-serif;
+    color: #5356d0;
+}
+.uploadPage .remarque {
+    margin-top: 10px;
+    font-family: "Montserrat",sans-serif;
+}
+.dragDropZone{
+    height: 40vh;
+    border: dashed 2px #5356d0;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #f9fcfe;
+    margin-top: 20px;
+    position: relative;
+}
+.greenBorder{
+    border: dashed 4px black;
+    background-color: rgba(72, 145, 223, 0.3);
+}
+.dragDropZone img{
+    height: 90px;
+    width: 90px;
+}
+.dragDropZone .text{
+    font-size: 1.5rem;
+    color: #afb1b3;
+    font-weight: 600;
+}
+.uploadResult{
+    width: 80%;
+    margin-top: 20px;
+}
+.uploadResult .resultTitle{
+    color: black;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: "Montserrat",sans-serif;
+}
+.fileDropped {
+    display: flex;
+    margin-top: 20px;
+}
+.fileName{
+    font-family: 'Montserrat',sans-serif;
+}
+.fileDropped .imageLoad{
+    flex: 1;
+}
+.fileDropped img{
+    width: 50px;
+    height: 60px;
+}
+.fileDropped .loadingBox {
+    flex : 9
+}
+.loadingBar{
+    border-radius: 20px;
+    background-color: green;
+    transition: width 0.5s ease;
+    height: 10px;
+    margin-top: 20px;
+}
+@media (max-width:900px){
+    .uploadPage .title {
+        font-size: 1.8rem;
+        margin-top: 10px;
+    }
+    .fileDropped img{
+        width: 40px;
+        height: 50px;
+    }
+    .loadingBar{
+        margin-top: 20;
+    }
+}
+@media (max-width:750px){
+    .dragDropZone , .uploadResult{
+        width: 90%;
+    }
+    .uploadPage .title {
+        font-size: 1.5rem;
+    }
+    .dragDropZone .text{
+        font-size: 1.2rem;
+    }
+}
+@media (max-width:650px){
+    .dragDropZone img{
+        width: 70px;
+        height: 70px;
+    }
+    .uploadPage .title {
+        font-size: 1.3rem;
+    }
+    .fileDropped img{
+        width: 35px;
+        height: 40px;
+    }
+    .uploadResult .resultTitle{
+        font-size: 0.9rem;
+    }
+    .loadingBar{
+        height: 10px;
+        margin-top: 10px;
+    }
+    .fileName{
+        font-size: 0.9rem;
+    }
+    .dragDropZone .text{
+        font-size: 1rem;
+    }
+}
+@media (max-width:500px){
+    .fileDropped img{
+        width: 30px;
+        height: 35px;
+    }
+    .loadingBar{
+        height: 8px;
+        margin-top: 7px;
+    }
+    .fileDropped img{
+        width: 30px;
+        height: 40px;
+    }
+    .dragDropZone .text{
+        font-size: 0.9rem;
+    }
+}

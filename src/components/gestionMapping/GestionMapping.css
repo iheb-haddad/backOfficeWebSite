@@ -1,0 +1,128 @@
+
+.buttonsBox{
+    margin-left: 50px;
+    margin-bottom: 20px;
+    display: flex;
+}
+.buttonsBox button , .buttonsBox input ,.filterBox select{
+    background-color: white;
+    color:#5356d0;
+    border : 2px solid rgb(83,86,208,0.6);
+    border-radius: 8px;
+    padding: 9px 15px;
+    font-family: 'Montserrat' , sans-serif;
+    font-size: 1rem;
+    margin: 7px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.buttonsBox input{
+    background-color: #f3f3fa;
+    border : 1px solid rgb(83,86,208,0.6);
+    cursor: text;
+    padding-right: 35px;
+}
+.buttonsBox input::placeholder {
+    color: #5356d0;
+}
+.buttonsBox input:focus,select:focus{
+    outline: none;
+}
+.filterBox{
+    margin-left: 100px;
+    margin-bottom: 20px;
+    animation: filterBoxEnter 1s ;
+} 
+.filterBox select{
+    background-color: #f3f3fa;
+    border : 1px solid rgb(83,86,208,0.6);
+    padding-right: 35px;
+} 
+ 
+.buttonsBox button:hover{
+    color: white;
+    background-color: #5356d0;
+}
+.buttonsBox .clicked{
+    color: white;
+    background-color: #5356d0;
+}
+.buttonsBox button span{
+    margin-left: 15px;
+}
+
+@keyframes filterBoxEnter {
+    from {
+        transform: translateY(-10px);
+    }
+    to{
+        transform: translateY(0);
+    }
+}
+@media (max-width: 1160px) {
+    .buttonsBox{
+        margin-top: 20px;
+    }
+}
+@media (max-width: 950px) {
+    .buttonsBox button , .buttonsBox input ,.filterBox select{
+        font-size: 0.9rem;
+    }
+}
+@media (max-width: 790px) {
+    .buttonsBox{
+        margin-left: 30px;
+        margin-bottom: 10px;
+    }
+    .buttonsBox button , .buttonsBox input ,.filterBox select{
+        font-size: 0.8rem;
+        padding: 9px 10px;
+    }
+}
+@media (max-width: 660px) {
+    .buttonsBox{
+        margin-left: 20px;
+    }
+    .buttonsBox button , .buttonsBox input ,.filterBox select{
+        margin: 5px;
+    }
+    .buttonsBox button span{
+        margin-left: 12px;
+    }
+}
+@media (max-width: 620px) {
+    .buttonsBox{
+        margin-left: 20px;
+    }
+    .buttonsBox button , .buttonsBox input ,.filterBox select{
+        padding: 7px;
+        margin: 4px;
+    }
+}
+@media (max-width: 580px) {
+    .buttonsBox{
+        margin-left: 10px;
+    }
+    .buttonsBox button , .buttonsBox input ,.filterBox select{
+        font-size: 0.7rem;
+        padding: 5px;
+        margin: 3px;
+    }
+    .buttonsBox button span{
+        margin-left: 10px;
+    }
+}
+@media (max-width: 500px) {
+    .buttonsBox{
+        margin-top: 30px;
+        flex-direction: column;
+    }
+    .filterBox{
+        margin-left: 40px;
+    }
+}
+@media (max-width: 400px) {
+    .filterBox{
+        margin-left: 20px;
+    }
+}

@@ -1,0 +1,9 @@
+
+.container{
+  display: flex;
+  position: relative;
+  background-size: cover;
+  /* background-image: url("./backFilter.png"); */
+}
+
+
