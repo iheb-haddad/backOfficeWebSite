@@ -1,61 +1,73 @@
 import React ,{useState}from 'react'
 import './PasswordForm.css'
 import Axios from '../../services/Axios';
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'sonner';
 
 function PasswordForm() {
-  const userConnected = JSON.parse(localStorage.getItem('userConnected'));
+  const { auth } = useAuth();
   const initialValues = {
-    actuelPassword : "",
+    actualPassword : "",
     newPassword : "",
-    confPassword : "",
+    confirmationPassword : "",
   };
   const [formData, setFormData] = useState(initialValues);
-  const [message , setMessage] = useState("")
-  const [messageColor , setMessageColor] = useState("")
-  const [msgErreur1Color, setMsgErreur1Color] = useState('white');
-  const [msgErreur2Color, setMsgErreur2Color] = useState('white');
+  const [msgErreur1, setMsgErreur1] = useState('');
+  const [msgErreur2, setMsgErreur2] = useState('');
+  const [emptyFileds , setEmptyFileds] = useState(false)
 
   const handleActuelPasswordChange = (event) => {
-    setMsgErreur1Color("white")
+    setMsgErreur1("")
+    setMsgErreur2("");
+    setEmptyFileds(false)
     setFormData((prevData) => ({
         ...prevData,
-        actuelPassword : event.target.value,
+        actualPassword : event.target.value,
       }));
   };
   const handleNewPasswordChange = (event) => {
+    setMsgErreur1("")
+    setMsgErreur2("");
+    setEmptyFileds(false)
     setFormData((prevData) => ({
         ...prevData,
         newPassword : event.target.value,
       }));
   };
   const handleConfPasswordChange = (event) => {
-    setMsgErreur2Color("white");
+    setMsgErreur1("")
+    setMsgErreur2("");
+    setEmptyFileds(false)
     setFormData((prevData) => ({
         ...prevData,
-        confPassword : event.target.value,
+        confirmationPassword : event.target.value,
       }));
   };
 
   const handleEnregistrer = () =>{
-    if(formData.actuelPassword === userConnected.pass){
-      if(formData.newPassword === formData.confPassword){
-        userConnected.pass = formData.newPassword
-        localStorage.setItem('userConnected', JSON.stringify(userConnected))
-        setFormData(initialValues)
-        Axios.put(`/users/${userConnected._id}`, userConnected)
+    if(formData.actualPassword === "" || formData.newPassword === "" || formData.confirmationPassword === ""){
+      setEmptyFileds(true)
+      toast.error('Veuillez remplir tous les champs')
+      return
+    }
+        Axios.put(`/users/password/${auth.user._id}`, {
+          actualPassword: formData.actualPassword,
+          newPassword: formData.newPassword,
+          confirmationPassword: formData.confirmationPassword,
+        })
         .then((data) => {
-              console.log('Object modified:', data);
-              // You can update your UI or perform other actions here
+              console.log('Object modified:');
+              setFormData(initialValues)
+              toast.success('Mot de passe modifié avec succès')
+              setEmptyFileds(false)
+              setMsgErreur1("")
+              setMsgErreur2("")
             })
             .catch((error) => {
               console.error('Error modifying object:', error);
+              error.response.status === 401 && setMsgErreur1("Mot de passe incorrect") 
+              error.response.status === 403 && setMsgErreur2("vérifier la confirmation")
         });
-      }else{
-        setMsgErreur2Color("red");
-      }
-    }else{
-        setMsgErreur1Color("red")
-    }
 };
 
 const handleAnnuler = () => {
@@ -72,12 +84,13 @@ const handleAnnuler = () => {
            <h3>Mot de passe actuel</h3>
           <input
               type="text"
-              value={formData.actuelPassword}
+              value={formData.actualPassword}
               onChange={handleActuelPasswordChange}
               placeholder="Saisir titre "
+              style={{ border : emptyFileds && formData.actualPassword === '' && '2px solid red'}}
               />
              <div className="messageErr">
-                  <p style={{color:msgErreur1Color}}>Mot de passe incorrect</p>
+                  <p style={{color:"red"}}>{msgErreur1}</p>
               </div>   
       </div>
       <div className="passwordLine">
@@ -87,28 +100,27 @@ const handleAnnuler = () => {
               value={formData.newPassword}
               onChange={handleNewPasswordChange}
               placeholder="Saisir titre "
+              style={{ border : emptyFileds && formData.newPassword === '' && '2px solid red'}}
               />
       </div>
       <div className="passwordLine">
            <h3>Confirmer mot de passe</h3>
           <input
               type="text"
-              value={formData.confPassword}
+              value={formData.confirmationPassword}
               onChange={handleConfPasswordChange}
               placeholder="Saisir titre "
+              style={{ border : emptyFileds && formData.confirmationPassword === '' && '2px solid red'}}  
               />
             <div className="messageErr">
-                  <p style={{color:msgErreur2Color}}>mot ne correspond pas</p>
+                  <p style={{color:"red"}}>{msgErreur2}</p>
             </div> 
       </div>
       </div>
       </div>
       <div className="settingsButton">
-        <div className="message" style={{color:messageColor}}>{message}</div>
-            <div>
-              <button onClick={handleAnnuler}>Annuler</button>
-              <button onClick={handleEnregistrer} className='enregistrer'>Enregistrer</button>
-            </div>
+          <button onClick={handleAnnuler}>Annuler</button>
+          <button onClick={handleEnregistrer} className='enregistrer'>Enregistrer</button>
       </div>
     </>
 

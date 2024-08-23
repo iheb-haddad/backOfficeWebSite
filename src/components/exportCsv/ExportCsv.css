@@ -1,0 +1,20 @@
+.exportBox{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.exportBox button{
+    background-color: #5356d0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    margin: 7px;
+    font-weight: 500;
+    cursor: pointer;
+}

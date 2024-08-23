@@ -25,6 +25,13 @@
   .addAdminLine input::placeholder{
     color: #222e54;
   }
+  .addAdminLine select{
+    border:1px solid rgb(214, 214, 214);
+    background-color: white;
+    height: 34px;
+    padding:0 10px;
+    width: 90%;
+  }
   .adminErr p{
     margin: 0;
     padding: 0;
@@ -73,6 +80,38 @@
       margin-right: 20px;
     }
   }
-
+.addAdmin .settingsButton{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 70px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    /* border-top: 1px solid rgb(194, 184, 184); */
+}
+.addAdmin .settingsButton button{
+    background-color: white;
+    color: #5356d0;
+    border : 2px solid rgb(83,86,208,0.6);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-family: 'Montserrat' , sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.addAdmin .settingsButton .enregistrer {
+    color: white;
+    background-color: #5356d0;
+}  
+.addAdmin .settingsButton button:active{
+    scale: 0.9;
+}
+.addAdminLine option span{
+  margin-left: 20%;
+  font-size: 80%;
+  color: gray;
+}
 
   

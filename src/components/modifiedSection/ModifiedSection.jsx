@@ -5,8 +5,10 @@ function ModifiedSection(props) {
     const initialValues = {
         titleFr : props.section.titleFr,
         titleEn : props.section.titleEn,
-        fontFamily : props.section.fontFamily,
+        titlePolice : props.section.titlePolice,
+        textPolice : props.section.textPolice,
         titleColor : props.section.titleColor,
+        textColor : props.section.textColor,
         backgroundColor : props.section.backgroundColor,
         fontSizeTitle : props.section.fontSizeTitle,
         fontSizeText : props.section.fontSizeText,
@@ -20,16 +22,28 @@ function ModifiedSection(props) {
             titleEn : props.sectionsTitles.filter((section) => section.titleFr === event.target.value)[0].titleEn
         }))
     }
-    const handleFontFamilyChange = (event) => {
+    const handleTitlePoliceChange = (event) => {
         props.setModifiedData((prevData) => ({
             ...prevData ,
-            fontFamily : event.target.value
+            titlePolice : event.target.value
+        }))
+    }
+    const handleTextPoliceChange = (event) => {
+        props.setModifiedData((prevData) => ({
+            ...prevData ,
+            textPolice : event.target.value
         }))
     }
     const handleTitleColorChange = (event) => {
         props.setModifiedData((prevData) => ({
             ...prevData ,
             titleColor : event.target.value
+        }))
+    }
+    const handleTextColorChange = (event) => {
+        props.setModifiedData((prevData) => ({
+            ...prevData ,
+            textColor : event.target.value
         }))
     }
     const handleBackgroundColorChange = (event) => {
@@ -59,12 +73,21 @@ function ModifiedSection(props) {
 
     const confLines = [
         {
-            label : 'FontFamily',
+            label : 'Police du titre',
             type : 'input',
-            value : props.modifiedData.fontFamily,
-            handle : handleFontFamilyChange,
-            holder : 'FontFamily',
-            style : {border: (props.showError && !props.modifiedData.fontFamily) && "1px solid red"},
+            value : props.modifiedData.titlePolice,
+            handle : handleTitlePoliceChange,
+            holder : 'Saisir police',
+            style : {border: (props.showError && !props.modifiedData.titlePolice) && "1px solid red"},
+            options : []
+        },
+        {
+            label : 'Police du texte',
+            type : 'input',
+            value : props.modifiedData.textPolice,
+            handle : handleTextPoliceChange,
+            holder : 'Saisir police',
+            style : {border: (props.showError && !props.modifiedData.textPolice) && "1px solid red"},
             options : []
         },
         {
@@ -74,6 +97,15 @@ function ModifiedSection(props) {
             handle : handleTitleColorChange,
             holder : 'Couleur du titre',
             style : {border: (props.showError && !props.modifiedData.titleColor) && "1px solid red"},
+            options : []
+        },
+        {
+            label : 'Couleur du texte',
+            type : 'input',
+            value : props.modifiedData.textColor,
+            handle : handleTextColorChange,
+            holder : 'Couleur du texte',
+            style : {border: (props.showError && !props.modifiedData.textColor) && "1px solid red"},
             options : []
         },
         {
@@ -120,20 +152,12 @@ function ModifiedSection(props) {
                 <select value={props.modifiedData.titleFr} onChange={handleTitleChange}
                 style={{border: (props.showError && !props.modifiedData.titleFr) && "1px solid red"}}>
                     <option value="">----</option>
+                    <option value={props.modifiedData.titleFr}>{props.modifiedData.titleFr}</option>
                     {props.sectionsTitles.map((section) =>(
                       <option key={section._id} value={section.titleFr}>{section.titleFr}</option>
                     ))}
                 </select>
     </div> 
-    {/* <div className="colorsLine">
-            <h3>Langue</h3>
-            <select value={props.modifiedData.language} onChange={handleLanguageChange}
-                style={{border: (props.showError && !props.modifiedData.language) && "1px solid red"}}>
-                    <option value="">----</option>
-                    <option value="francais">Francais</option>
-                    <option value="anglais">Anglais</option>
-            </select>
-    </div> */}
     {
         confLines.map((line,index) => {
             return <ConfLine
@@ -148,36 +172,6 @@ function ModifiedSection(props) {
             />
         })
     }
-    {/* <div className="colorsLine">
-        <h3>FontFamily</h3>
-        <input
-            type="text"
-            value={props.modifiedData.fontFamily}
-            onChange={handleFontFamilyChange}
-            placeholder={initialValues.fontFamily}
-            style={{border: (props.showError && !props.modifiedData.fontFamily) && "1px solid red"}}
-            />
-    </div>
-    <div className="colorsLine">
-        <h3>Couleur du titre</h3>
-        <input
-            type="text"
-            value={props.modifiedData.titleColor}
-            onChange={handleTitleColorChange}
-            placeholder={initialValues.titleColor}
-            style={{border: (props.showError && !props.modifiedData.titleColor) && "1px solid red"}}
-            />
-    </div>
-    <div className="colorsLine">
-        <h3>Couleur du background</h3>
-        <input
-            type="text"
-            value={props.modifiedData.backgroundColor}
-            onChange={handleBackgroundColorChange}
-            placeholder={initialValues.backgroundColor}
-            style={{border: (props.showError && !props.modifiedData.backgroundColor) && "1px solid red"}}
-            />
-    </div> */}
 </div>
   )
 }

@@ -2,11 +2,24 @@ import React , {useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faX} from '@fortawesome/free-solid-svg-icons'
 
+
 function ModifiedSource(props) {
     const [motCle , setMotCle] = useState('')
+
     const initialValues = {
-        nom : props.source.nom,
-        url : props.source.url
+        idProject : props.source.idProject._id,
+        subProject: props.source.idSubProject._id,
+        nom : props.source.name,
+        url : props.source.keywords
+    }
+
+    const handleProjectChange = (event) => {
+        props.setModifiedProject(event.target.value)
+        props.setModifiedSubProject('')
+    }
+
+    const handleSubProjectChange = (event) => {
+        props.setModifiedSubProject(event.target.value)
     }
 
     const handleNameAppChange = (event) => {
@@ -15,7 +28,6 @@ function ModifiedSource(props) {
 
     const handleMotCleChange = (event) => {
         if (event.key === "Enter") {
-          console.log("Enter key pressed");
           props.setModifiedUrls((prevData) => [...prevData, motCle]);
           setMotCle('')
         } else { 
@@ -28,8 +40,33 @@ function ModifiedSource(props) {
     }  
 
   return (
-        <div className="modifiedForm">
-            <div className="urlLine">
+        <div className="configBox" style={{backgroundColor : "#EEEEEE", padding:"0px 10px 15px 10px", marginTop:"15px", width:"95%"}}>
+            <div className="configLine">
+                <h3>Projet correspondant</h3>
+                <select value={props.modifiedProject} onChange={handleProjectChange}
+                    style={{border: (props.showError && !props.modifiedProject) && "1px solid red"}}>
+                    <option value="" disabled hidden>----</option>
+                    {
+                        props.projects.map((project) => (
+                            <option key={project._id} value={project._id}>{project.name}</option>
+                        ))
+                    }
+                </select>
+            </div>
+            <div className="configLine">
+                <h3>Sous-Projet correspondant</h3>
+                <select value={props.modifiedSubProject} onChange={handleSubProjectChange}
+                    style={{border: (props.showError && !props.modifiedSubProject) && "1px solid red"}}>
+                    <option value="" disabled hidden>----</option>
+                    {
+                        props.subProjects.map((subProject) => (
+                            subProject.idProject._id === props.modifiedProject &&
+                            <option key={subProject._id} value={subProject._id}>{subProject.name}</option>
+                        ))
+                    }
+                </select>
+            </div>
+            <div className="configLine">
             <h3>Nom de l'application</h3>
             <input
                 type="text"
@@ -42,7 +79,7 @@ function ModifiedSource(props) {
                     <p style={{color:props.msgErreurColor}}>Nom app déjà existe</p>
                 </div> 
             </div>
-            <div className="urlLine" >
+            <div className="configLine" >
             <h3>URL / Mots-clés</h3>
             <input
                 type="text"

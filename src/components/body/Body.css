@@ -45,18 +45,20 @@
     height: 40px;
     border-radius: 50%; /* Makes the element circular */
     overflow: hidden; 
-    z-index: 9;/* Ensures the content within the rounded area is hidden */
+    z-index: 7;/* Ensures the content within the rounded area is hidden */
   }
   .deconnectionBox {
     position: absolute;
     padding: 8px 10px 6px 10px;
     border: 1px solid rgb(185, 176, 176,0.4);
     box-shadow: 2px 0px 2px rgb(185, 176, 176,0.4);
-    left: 13px;
+    right: 0;
     top : 50px;
     background-color: white;
   }
-  
+  .deconnectionBox:hover{
+    color: red;
+  }
   .user .rounded-image img {
     width: 100%;
     height: 120%;
@@ -87,7 +89,6 @@
    }
    .deconnectionBox {
     font-size: 0.9rem;
-    left : 20px;
    }
    .deconnectIcon{
     margin-left: 5px;

@@ -7,7 +7,7 @@ function ConfLine(props) {
         {props.type === 'input' ?
             <input
                 type="text"
-                value={props.value}
+                value={props.value || ''}
                 onChange={props.handle}
                 placeholder={props.holder}
                 style={props.style}

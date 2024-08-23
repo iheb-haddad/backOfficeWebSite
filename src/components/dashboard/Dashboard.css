@@ -181,9 +181,22 @@
     font-weight: bold;
     color: #5356d0;
 }
+.smallBox .statIcon{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
 .smallBox .statIcon img{
     width: 60px;
     height: 60px;
+}
+.smallBox .statIcon .imgBox{
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .docsList{
     flex: 1;
@@ -200,6 +213,13 @@
     font-size: 0.9rem;
     font-weight: 600;
 }
+.docsHead input{
+    border-top: none;
+    border-left: none;
+}
+.docsHead input:focus{
+    outline: none;
+}
 .docsLine{
     padding-top: 5px;
     padding-bottom: 5px;
@@ -211,19 +231,19 @@
     background-color: #dbd8d8;
 }
 .docsTitle {
-    width: 20%;
+    width: 24%;
 }
 .creationDate {
     width: 20%
 }
 .consultNumber {
-    width: 20%
+    width: 16%
 }
 .lastConsult {
     width: 24%
 }
 .docsLineTitle {
-    width: 20%;
+    width: 24%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -234,8 +254,10 @@
     cursor: default;
 }
 .consultNumberLine {
-    width: 20%;
+    width: 16%;
     cursor: default;
+    display: flex;
+    justify-content: space-between;
 }
 .lastConsultLine {
     width: 24%;

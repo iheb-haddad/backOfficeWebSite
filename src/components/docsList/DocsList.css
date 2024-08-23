@@ -5,11 +5,13 @@
 }
 .headList{
     display: flex;
+    align-items: flex-start;
     width: 90%;
     margin-left: 5%;
     background-color: #f1f1fc;
-    height: 38px;
-    align-items: center;
+    min-height: 38px;
+    padding-top: 6px;
+    padding-bottom: 3px;
     padding-left: 10px;
     color:#5356d0;
     font-family: 'Montserrat' , sans-serif;

@@ -1,34 +1,57 @@
 import React, { useState , useEffect} from 'react'
 import {DocFormAjout} from '../index';
 import Axios from '../../services/Axios';
+import useAuth from '../../hooks/useAuth';
+import useRessources from '../../hooks/useRessources';
+import useStore from '../../globalState/UseStore';
+import { toast } from 'sonner';
+
 function GestionDocuments() {
-  const [configurations , setConfigurations] = useState({generalUrl : ''})
+  const {confSelected , setConfSelected} = useRessources();
   const [initialDocGeneralUrl , setInitialDocGeneralUrl] = useState('')
   const [docGeneralUrlFieldColor , setDocGeneralUrlFieldColor ] = useState('white')
   const [dataChanged , setDataChanged] = useState(0)
+  const { setNavLineClicked , auth } = useAuth();
+
+  const { projects , fetchProjects } = useStore();
+  const [project, setProject] = useState();
+  const [configurations, setConfigurations] = useState([]);
+
+  const handleProjectChange = (event) => {
+    setProject(event.target.value);
+    const conf = configurations.find(c => c.idProject === event.target.value);
+    setConfSelected(conf);
+    console.log(conf);
+    setInitialDocGeneralUrl(conf.generalUrl);
+  };
 
   useEffect(() => {
+    setNavLineClicked("documents")
     Axios.get('/configurations')
       .then((response) => {
         if(response.data.length > 0){
-        setConfigurations(response.data[0])
+        setConfigurations(response.data)
+        setConfSelected(response.data.find((conf) => conf.idProject === project ) || response.data[0])
         setInitialDocGeneralUrl(response.data[0].generalUrl)
         }
           })
       .catch((error) => {
         console.error('Error fetching documents:', error);
+        toast.error('Erreur lors du chargement des données')
       });
+      const user = auth?.user?._id || '';
+      fetchProjects(user);
     },[dataChanged]);
 
   const handleDocGeneralUrlChange = (event) => {
-    setConfigurations((prevData) => ({
+    setConfSelected((prevData) => ({
         ...prevData,
         generalUrl : event.target.value,
     }))
   }
 
   const changeDocGeneralUrlInputColor = () => {
-    if(configurations.generalUrl != initialDocGeneralUrl)
+    if(confSelected.generalUrl != initialDocGeneralUrl)
     {
       setDocGeneralUrlFieldColor("#50e150");
     }
@@ -39,13 +62,12 @@ function GestionDocuments() {
 
   const handleEnregistrer = () => {
     changeDocGeneralUrlInputColor();
-    console.log(initialDocGeneralUrl);
-    Axios.put(`/configurations`, configurations)
+    Axios.put(`/configurations/${confSelected._id}`, confSelected)
     .then((data) => {
-      setInitialDocGeneralUrl(configurations.generalUrl)
+      setInitialDocGeneralUrl(confSelected.generalUrl)
       console.log('Object modified:', data);
       setDataChanged(prev => prev +1)
-      // You can update your UI or perform other actions here
+      toast.success('General URL modifié avec succès')
     })
     .catch((error) => {
       console.error('Error modifying object:', error);
@@ -53,20 +75,34 @@ function GestionDocuments() {
   };
 
   const handleAnnuler = () => {
-    setDocGeneralUrl(initialDocGeneralUrl)
+    setConfSelected((prevData) => ({
+      ...prevData,
+      generalUrl : initialDocGeneralUrl,
+    }))
   };
 
   return (
       <div>
-          <DocFormAjout generalUrl={initialDocGeneralUrl}/>
-          <div className="urlBox" style={{marginBottom:'40px'}}>
+          <DocFormAjout />
+          {(auth?.user?.role === 'admin' || projects.length > 0 ) && <div className="urlBox" style={{marginBottom:'40px'}}>
               <h4>Si vous possedez un url général pour stocker les documentations , vous pouvez l'ajouter ici.</h4>
               <div className='urlForm'>
+              <div className="urlLine configLine">
+                <h3>Projet correspondant</h3>
+                    <select value={project} onChange={handleProjectChange}>
+                        <option value="" disabled hidden>----</option>
+                        {
+                          projects.map((project) => (
+                            <option key={project._id} value={project._id}>{project.name}</option>
+                          ))
+                        }
+                    </select>
+              </div>
                 <div className="urlLine">
                   <h3>Url général de documentation</h3>
                   <input
                       type="text"
-                      value={configurations.generalUrl}
+                      value={confSelected.generalUrl}
                       onChange={handleDocGeneralUrlChange}
                       placeholder={initialDocGeneralUrl}
                       style={{backgroundColor : docGeneralUrlFieldColor}}
@@ -77,7 +113,7 @@ function GestionDocuments() {
                       <button onClick={handleAnnuler}>Annuler</button>
                       <button className='appliquer' onClick={handleEnregistrer}>Appliquer</button>
               </div>
-        </div> 
+        </div> }
       </div>
   )
 }

@@ -4,15 +4,18 @@ import { faArrowRight ,faArrowLeft}  from '@fortawesome/free-solid-svg-icons';
 import './MappingAdd.css'
 import Axios from '../../services/Axios';
 import useStore from '../../globalState/UseStore';
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'sonner';
 
 function MappingAdd(props) {
-  const {mappings , fetchMappings} = useStore();
+  const { auth } = useAuth();
+  const { mappings , fetchMappings , userProjects , fetchUserProjects , subProjects , fetchSubProjects } = useStore();
   const [mappingDirection, setMappingDirection] = useState('')
   const [checkedSource, setCheckedSource] = useState(false)
   const [checkedDoc, setCheckedDoc] = useState(false)
   const [sourceClicked, setSourceClicked] = useState('')
   const [docClicked, setDocClicked] = useState('')
-  const [sectionClicked, setSectionClicked] = useState(props.data.sections[0]._id)
+  const [sectionClicked, setSectionClicked] = useState(props.data.sections[0]?._id)
   const [sourcesListInc, setSourcesListInc] = useState([])
   const [sourcesListExc, setSourcesListExc] = useState([])
   const [docsListInc, setDocsListInc] = useState([])
@@ -30,22 +33,26 @@ function MappingAdd(props) {
   const [allDocumentations , setAllDocumentations] = useState(props.data.documentations)
 
   useEffect(() => {
-    fetchMappings();
+    const user = auth?.user?._id || '';
+    fetchMappings(user);
+    fetchUserProjects(user);
+    fetchSubProjects(user);
   }, [dataChanged]);
 
-  function categorizeDocuments(sourceId) {
-    const mappedDocs = mappings.filter(mapping => mapping.idSource._id === sourceId).map(mapping => mapping.idDocument);
+  function categorizeDocuments(source) {
+    const mappedDocs = mappings.filter(mapping => mapping.idSource._id === source._id).map(mapping => mapping.idDocument);
     const idMappedDocs = mappedDocs.map(doc => doc._id);
-    const unmappedDocs = props.data.documentations.filter(doc => !idMappedDocs.includes(doc._id));
+    const unmappedDocs = props.data.documentations.filter(doc => !idMappedDocs.includes(doc._id) && doc.idSubProject._id === source.idSubProject._id);
     setDocsDansMapping(mappedDocs);
     setAllDansMapping(mappedDocs);
     setDocsHorsMapping(unmappedDocs);
     setAllHorsMapping(unmappedDocs);
   }
-  function categorizeSources(docId) {
-    const mappedSources = mappings.filter(mapping => mapping.idDocument._id === docId).map(mapping => mapping.idSource);
+
+  function categorizeSources(doc) {
+    const mappedSources = mappings.filter(mapping => mapping.idDocument._id === doc._id).map(mapping => mapping.idSource);
     const idMappedSources = mappedSources.map(source => source._id);
-    const unmappedSources = props.data.sources.filter(source => !idMappedSources.includes(source._id));
+    const unmappedSources = props.data.sources.filter(source => !idMappedSources.includes(source._id) && source.idSubProject._id === doc.idSubProject._id);
     setSourcesDansMapping(mappedSources);
     setSourcesHorsMapping(unmappedSources);
   }
@@ -69,8 +76,9 @@ function MappingAdd(props) {
         setDocsDansMapping([])
         setDocsHorsMapping([])
       }else{
+        const source = props.data.sources.filter((source) => source._id === event.target.value)[0];
         setSourceClicked(event.target.value) ;
-        categorizeDocuments(event.target.value);
+        categorizeDocuments(source);
       }
       setDocsListInc([]);
       setDocsListExc([]);
@@ -87,6 +95,13 @@ function MappingAdd(props) {
 
   const clickDocExc = (docId) => { 
     if (sourceClicked) {
+      if(docsListExc.length === 0 || (docsListExc.some((doc) => doc === docId) && docsListExc.length === 2)){
+        const document = docsListExc.length === 0 ? docId : docsListExc.filter((doc) => doc !== docId)[0];
+        const section = mappings.filter((mapping) => mapping.idDocument._id === document && mapping.idSource._id === sourceClicked)[0]?.idSection._id;
+        section && setSectionClicked(section)
+      }else{
+        setSectionClicked("")
+      } 
       docsListInc.length > 0 && setDocsListInc([]);
       docsListExc.some((doc) => doc === docId) ? setDocsListExc(docsListExc.filter((doc) => doc !== docId)) : setDocsListExc([...docsListExc , docId])
     }
@@ -99,8 +114,9 @@ function MappingAdd(props) {
         setSourcesDansMapping([])
         setSourcesHorsMapping([])
       }else{
+        const doc = props.data.documentations.filter((doc) => doc._id === docId)[0];
         setDocClicked(docId) ;
-        categorizeSources(docId);
+        categorizeSources(doc);
       }
       setSourcesListInc([]);
       setSourcesListExc([]);
@@ -117,6 +133,13 @@ function MappingAdd(props) {
 
   const clickSourceExc = (sourceId) => {
     if (docClicked) {
+      if(sourcesListExc.length === 0 || (sourcesListExc.some((source) => source === sourceId) && sourcesListExc.length === 2)){
+        const source = sourcesListExc.length === 0 ? sourceId : sourcesListExc.filter((source) => source !== sourceId)[0];
+        const section = mappings.filter((mapping) => mapping.idDocument._id === docClicked && mapping.idSource._id === source)[0]?.idSection._id;
+        section && setSectionClicked(section)
+      }else{
+        setSectionClicked("")
+      } 
       sourcesListInc.length > 0 && setSourcesListInc([]);
       sourcesListExc.some((source) => source === sourceId) ? setSourcesListExc(sourcesListExc.filter((source) => source !== sourceId)) : setSourcesListExc([...sourcesListExc , sourceId])
     }
@@ -125,20 +148,56 @@ function MappingAdd(props) {
   const clickSection = (event) => {
     if (docsListInc.length !== 0 || sourcesListInc.length !== 0) {
       sectionClicked === event.target.value ? setSectionClicked('') : setSectionClicked(event.target.value)
+    }else if(docsListExc.length !== 0 || sourcesListExc.length !== 0){
+      setSectionClicked('')
+      sectionClicked === event.target.value ? setSectionClicked('') : setSectionClicked(event.target.value)
+      if(docsListExc.length !== 0){
+        docsListExc.map((doc) => {
+          const idmapping = mappings.filter((mapping) => mapping.idDocument._id === doc && mapping.idSource._id === sourceClicked)[0]._id
+          Axios.put(`/mappings/${idmapping}`, {idSection : event.target.value})
+          .then((data) => {
+            console.log('Object modified:', data);
+            setDataChanged(prev => prev + 1)
+            toast.success('Mapping modifié avec succès')
+          })
+          .catch((error) => {
+            console.error('Error modifying object:', error);
+          });
+        })
+        setDocsListExc([])
+        setSectionClicked('')
+        setDataChanged(prev => prev + 1)
+      }else if(sourcesListExc.length !== 0){
+        sourcesListExc.map((source) => {
+          const idmapping = mappings.filter((mapping) => mapping.idDocument._id === docClicked && mapping.idSource._id === source)[0]._id
+          Axios.put(`/mappings/${idmapping}`, {idSection : event.target.value})
+          .then((data) => {
+            console.log('Object modified:', data);
+            setDataChanged(prev => prev + 1)
+            toast.success('Mapping modifié avec succès')
+          })
+          .catch((error) => {
+            console.error('Error modifying object:', error);
+          });
+        })
+        setSourcesListExc([])
+        setSectionClicked('')
+        setDataChanged(prev => prev + 1)
+      }
     }
   }
 
   const handleInput1Search = (event) => {
     setHorsMappingSearching(event.target.value)
-    setDocsHorsMapping(allHorsMapping.filter((doc) => doc.titre.toLowerCase().startsWith(event.target.value.toLowerCase())))
+    setDocsHorsMapping(allHorsMapping.filter((doc) => doc.title.toLowerCase().startsWith(event.target.value.toLowerCase())))
   }
   const handleInput2Search = (event) => {
     setDansMappingSearching(event.target.value)
-    setDocsDansMapping(allDansMapping.filter((doc) => doc.titre.toLowerCase().startsWith(event.target.value.toLowerCase())))
+    setDocsDansMapping(allDansMapping.filter((doc) => doc.title.toLowerCase().startsWith(event.target.value.toLowerCase())))
   }
   const handleInput3Search = (event) => {
     setDocumentationsSearching(event.target.value)
-    setAllDocumentations(props.data.documentations.filter((doc) => doc.titre.toLowerCase().startsWith(event.target.value.toLowerCase())))
+    setAllDocumentations(props.data.documentations.filter((doc) => doc.title.toLowerCase().startsWith(event.target.value.toLowerCase())))
   }
 
   const handleAnnuler = () => {
@@ -163,6 +222,8 @@ function MappingAdd(props) {
       let docsToADD = props.data.documentations.filter(docs => docsListInc.includes(docs._id));
       docsListInc.map((doc) => {
         const newMapping = {
+          idProject : projectSelected,
+          idSubProject : subProjectSelected,
           idDocument : doc,
           idSection : sectionClicked,
           idSource : sourceClicked
@@ -174,6 +235,7 @@ function MappingAdd(props) {
         })
         .catch((error) => {
           console.error('Error modifying object:', error);
+          toast.error('Erreur lors de l\'ajout du mapping')
         });
      })
       setDocsHorsMapping(docsHorsMapping.filter((docs) => !docsListInc.includes(docs._id))) 
@@ -194,6 +256,7 @@ function MappingAdd(props) {
         })
         .catch((error) => {
           console.error('Error deleting object:', error);
+          toast.error('Erreur lors de la suppression du mapping')
         });
       })
       setDocsDansMapping(docsDansMapping.filter((docs) => !docsListExc.includes(docs._id))) 
@@ -207,6 +270,8 @@ function MappingAdd(props) {
       let sourcesToADD = props.data.sources.filter(source => sourcesListInc.includes(source._id));
       sourcesListInc.map((source) => {
         const newMapping = {
+          idProject : projectSelected,
+          idSubProject : subProjectSelected,
           idDocument : docClicked,
           idSection : sectionClicked,
           idSource : source
@@ -218,6 +283,7 @@ function MappingAdd(props) {
         })
         .catch((error) => {
           console.error('Error modifying object:', error);
+          toast.error('Erreur lors de l\'ajout du mapping')
         });
      })
       setSourcesHorsMapping(sourcesHorsMapping.filter((source) => !sourcesListInc.includes(source._id))) 
@@ -238,6 +304,7 @@ function MappingAdd(props) {
         })
         .catch((error) => {
           console.error('Error deleting object:', error);
+          toast.error('Erreur lors de la suppression du mapping')
         });
       })
       setSourcesDansMapping(sourcesDansMapping.filter((source) => !sourcesListExc.includes(source._id))) 
@@ -246,9 +313,47 @@ function MappingAdd(props) {
     }
   }
 
+  const [projectSelected, setProjectSelected] = useState('')
+  const [subProjectSelected, setSubProjectSelected] = useState('')
+
+
+  const handleProjectChange = (event) => {
+    setProjectSelected(event.target.value)
+    setSubProjectSelected('')
+  }
+
+  const handleSubProjectChange = (event) => {
+    setSubProjectSelected(event.target.value)
+  }
+    
+
   return (
     <div className="mappingAddBox">
         <div className="mappingAddEntete">
+        <div className='configBox' style={{padding : '20px'}}>
+        <div className="configLine" style={{padding : '20px'}}>
+              <h3>Projet correspondant</h3>
+              <select value={projectSelected} onChange={handleProjectChange}>
+                  <option value="" disabled hidden>----</option>
+                  {
+                    userProjects.map((project) => (
+                      <option key={project._id} value={project._id}>{project.name}</option>
+                    ))
+                  }
+              </select>
+        </div>  
+      <div className="configLine" style={{padding : '20px'}}>
+        <h3>Sous-projet correspondant</h3>
+              <select value={subProjectSelected} onChange={handleSubProjectChange}>
+                  <option value="" disabled hidden>----</option>
+                  {
+                    subProjects.filter((subProject) => subProject.idProject._id === projectSelected).map((project) => (
+                      <option key={project._id} value={project._id}>{project.name}</option>
+                    ))
+                  }
+              </select>
+      </div>
+      </div>
           <div className="enteteTitle">Configurations basées sur :</div>
             <input type="radio" name='source' value='sourceToDoc' checked = {checkedSource} onChange={handleChangeToSource}/>
             <span style={{marginRight : '30px'}}>Sources</span>
@@ -262,7 +367,7 @@ function MappingAdd(props) {
                 <select name="app" id="selectApp" value={sourceClicked} onChange={clickSource}>
                   <option value="" disabled>- - - - - - -</option>
                   {props.data.sources.map((source) =>(
-                      <option key={source._id} value={source._id}>{source.nom}</option>
+                    subProjectSelected === source.idSubProject._id && <option key={source._id} value={source._id}>{source.name}</option>
                             ))}
                 </select>
             </div>
@@ -270,7 +375,7 @@ function MappingAdd(props) {
                       {sourceClicked && <div className="headerCol">Documentations/Notes<br/>  (hors mapping )</div>}
                       {sourceClicked && <input type='text' className='cell' placeholder='Chercher avec le titre ...' value={horsMappingSearching} onChange={handleInput1Search}/>}
                         {docsHorsMapping.map((doc) => (
-                          <div key={doc._id} className={`cell ${docsListInc.some((docc) => docc === doc._id) && 'activeCell'}`} onClick={() => clickDocInc(doc._id)}>{doc.titre}</div>
+                          <div key={doc._id} className={`cell ${docsListInc.some((docc) => docc === doc._id) && 'activeCell'}`} onClick={() => clickDocInc(doc._id)}>{doc.title}</div>
                         ))}
                   </div>
                   { sourceClicked && <div className="column" style={{flex : '2'}}>
@@ -282,14 +387,14 @@ function MappingAdd(props) {
                       {sourceClicked && <div className="headerCol">Documentations/Notes<br/>  (dans le mapping )</div>}
                       {sourceClicked && <input type='text' className='cell' placeholder='Chercher avec le titre ...' value={dansMappingSearching} onChange={handleInput2Search}/>}
                         {docsDansMapping.map((doc) => (
-                          <div key={doc._id} className={`cell ${docsListExc.some((docc) => docc === doc._id) && 'activeCell'}`} onClick={() => clickDocExc(doc._id)}>{doc.titre}</div>
+                          <div key={doc._id} className={`cell ${docsListExc.some((docc) => docc === doc._id) && 'activeCell'}`} onClick={() => clickDocExc(doc._id)}>{doc.title}</div>
                         ))}
                           </div>
                   { sourceClicked &&<div className="emptyColumn">
                     <div className="headerEmptyCol">Sections</div>
                       <select name="app" id="selectApp" value={sectionClicked} onChange={clickSection}>
                           <option value="" disabled>- - - - - - -</option>
-                          { docsListInc.length > 0 && props.data.sections.map((section) =>(
+                          { (docsListInc.length > 0 || docsListExc.length > 0) && props.data.sections.map((section) =>(
                                   <option key={section._id} value={section._id}>{section.titleFr}</option>
                                     ))}
                       </select>
@@ -303,13 +408,13 @@ function MappingAdd(props) {
                       <div className="headerEmptyCol">Documentations/Notes</div>
                       <input type='text' className='cell' placeholder='Chercher avec le titre ...' value={documentationsSearching} onChange={handleInput3Search}/>
                         {allDocumentations.map((doc) => (
-                          <div key={doc._id} className={`cell ${docClicked === doc._id && 'activeCell'}`} onClick={() => clickDoc2(doc._id)}>{doc.titre}</div>
+                          subProjectSelected === doc.idSubProject._id && <div key={doc._id} className={`cell ${docClicked === doc._id && 'activeCell'}`} onClick={() => clickDoc2(doc._id)}>{doc.title}</div>
                         ))}
                   </div>
                   { docClicked && <div className="column" style={{flex : '4'}}>
                       <div className="headerCol">Sources<br/>(hors mapping)</div>
                       {sourcesHorsMapping.map((app) => (
-                        <div key={app._id} className={`cell ${sourcesListInc.some((source) => source === app._id) && 'activeCell'}`} onClick={() => clickSourceInc(app._id)}>{app.nom}</div>
+                        <div key={app._id} className={`cell ${sourcesListInc.some((source) => source === app._id) && 'activeCell'}`} onClick={() => clickSourceInc(app._id)}>{app.name}</div>
                       ))}
                   </div>}
                   { docClicked && <div className="column" style={{flex : '2'}}>
@@ -320,39 +425,20 @@ function MappingAdd(props) {
                   { docClicked && <div className="column" style={{flex : '4'}}>
                       <div className="headerCol">Sources<br/>(dans le mapping)</div>
                         {sourcesDansMapping.map((app) => (
-                          <div key={app._id} className={`cell ${sourcesListExc.some((source) => source === app._id) && 'activeCell'}`} onClick={() => clickSourceExc(app._id)}>{app.nom}</div>
+                          <div key={app._id} className={`cell ${sourcesListExc.some((source) => source === app._id) && 'activeCell'}`} onClick={() => clickSourceExc(app._id)}>{app.name}</div>
                         ))}
                   </div>}
-                  {/* <div className="column">
-                      <div className="headerCol">Sections<br/><span style={{color:'white'}}>s</span></div>
-                        { sourcesListInc.length > 0 && props.data.sections.map((section) => (
-                          <div key={section._id} className='cell' style={{backgroundColor : sectionClicked === section._id && "#d7d7d7"}} onClick={(event) => clickSection(section._id)}>{section.titleFr}</div>
-                        ))}
-                        {Array.from({ length: sourcesListInc.length > 0 ? maxRows2 - props.data.sections.length : maxRows2}, (v, i) => (
-                          <div key={i} className='cell' style={{color : 'white'}}>cellule</div>
-                        ))}
-                  </div> */}
                   { docClicked &&<div className="emptyColumn">
                     <div className="headerEmptyCol">Sections</div>
                       <select name="app" id="selectApp" value={sectionClicked} onChange={clickSection}>
                           <option value="" disabled>- - - - - - -</option>
-                          { sourcesListInc.length > 0 && props.data.sections.map((section) =>(
+                          { (sourcesListInc.length > 0|| sourcesListExc.length > 0 ) && props.data.sections.map((section) =>(
                                   <option key={section._id} value={section._id}>{section.titleFr}</option>
                                     ))}
                       </select>
                   </div>
                   }
         </div>}        
-        {/* <div className="buttons">
-            <div></div>
-           <div>
-              <button onClick={handleAnnuler}>Annuler</button>
-              <button onClick={handleAddMapping} className='appliquer' 
-              style={{backgroundColor :  !(sectionClicked || docsListExc.length > 0 || sourcesListExc.length > 0) && '#d7d7d7',
-              borderColor :  !(sectionClicked || docsListExc.length > 0 || sourcesListExc.length > 0) && '#d7d7d7'
-              }}>Envoyer</button>
-            </div>
-        </div> */}
     </div>
   )
 }

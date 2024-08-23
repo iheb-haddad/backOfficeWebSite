@@ -54,7 +54,7 @@
     margin-top: 40px;
     margin-right: 10%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
   .buttons button{
     background-color: white;

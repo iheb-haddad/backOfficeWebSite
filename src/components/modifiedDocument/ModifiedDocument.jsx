@@ -6,12 +6,29 @@ function ModifiedDocument(props) {
 
     const [keyword , setKeyword] = useState('')
     const initialValues = {
-        selectedLanguage: props.document.langue,
-        title: props.document.titre,
-        selectedStatut: props.document.statut,
+        project : props.document.idProject._id,
+        subProject: props.document.idSubProject._id,
+        selectedLanguage: props.document.language,
+        title: props.document.title,
+        selectedStatut: props.document.status,
         urlDocument: props.document.urlDoc,
-        affichage : props.document.affichage,
+        affichage : props.document.display,
         expiration : props.document.expiration
+    }
+
+    const handleProjectChange = (event) => {
+        props.setModifiedData((prevData) => ({
+            ...prevData ,
+            project : event.target.value,
+            subProject : ''
+        }))
+    }
+
+    const handleSubProjectChange = (event) => {
+        props.setModifiedData((prevData) => ({
+            ...prevData ,
+            subProject : event.target.value
+        }))
     }
 
     const handleTitleChange = (event) => {
@@ -81,13 +98,34 @@ function ModifiedDocument(props) {
 
   return (
     <div className="configBox" style={{backgroundColor : "#EEEEEE", padding:"0px 10px 15px 10px", marginTop:"15px", width:"95%"}}>
-    <div className="configLine">
+        <div className="configLine">
+            <h3>Projet correspondant</h3>
+            <select value={props.modifiedData.project} onChange={handleProjectChange}
+            style={{border: (props.showError && !props.modifiedData.project) && "1px solid red"}}>
+                <option value="">----</option>
+                {props.projects.map((project, index) => (
+                    <option key={index} value={project._id}>{project.name}</option>
+                ))}
+            </select>
+        </div>
+        <div className="configLine">
+            <h3>Sous-Projet correspondant</h3>
+            <select value={props.modifiedData.subProject} onChange={handleSubProjectChange}
+            style={{border: (props.showError && !props.modifiedData.subProject) && "1px solid red"}}>
+                <option value="">----</option>
+                {props.subProjects.map((subProject, index) => (
+                    subProject.idProject._id === props.modifiedData.project &&
+                    <option key={index} value={subProject._id}>{subProject.name}</option>
+                ))}
+            </select>
+        </div>
+        <div className="configLine">
             <h3>Langue *</h3>
             <select value={props.modifiedData.selectedLanguage} onChange={handleLanguageChange}
             style={{border: (props.showError && !props.modifiedData.selectedLanguage) && "1px solid red"}}>
                 <option value="">----</option>
-                <option value="francais">Francais</option>
-                <option value="anglais">Anglais</option>
+                <option value="fr">Francais</option>
+                <option value="en">Anglais</option>
             </select>
         </div> 
         <div className="configLine">
@@ -158,7 +196,6 @@ function ModifiedDocument(props) {
                 onChange={handleKeywordsChange}
                 onKeyDown={handleKeywordsChange}
                 placeholder="Saisir titre "
-                style={{border: (props.showError && props.modifiedData.keywords.length === 0) && "1px solid red"}}
                 />
                 <div className='indication'>Cliquer Entrée pour ajouter encore</div>  
                 <div className="urlBlock">

@@ -6,21 +6,27 @@ const useStore = create((set) => ({
   sources: [],
   sections: [],
   mappings: [],
+  languages : [],
+  projects : [],
+  userProjects : [],
+  subProjects : [],
+  configurations : [],
+  users : [],
   mappingIsLoaded: false,
   documentIsLoaded: false,
 
-  fetchDocumentations: async () => {
+  fetchDocumentations: async (user) => {
     try {
-      const response = await Axios.get('/documentations');
+      const response = await Axios.get(`/documentations/${user}`);
       set({ documentations: response.data , documentIsLoaded : true});
     } catch (error) {
       console.error(error);
     }
   },
 
-  fetchSources: async () => {
+  fetchSources: async (user) => {
     try {
-      const response = await Axios.get('/sources');
+      const response = await Axios.get(`/sources/user/${user}`);
       set({ sources: response.data });
     } catch (error) {
       console.error(error);
@@ -36,10 +42,58 @@ const useStore = create((set) => ({
     }
   },
 
-  fetchMappings: async () => {
+  fetchMappings: async (user) => {
     try {
-      const response = await Axios.get('/mappings');
+      const response = await Axios.get(`/mappings/user/${user}`);
       set({ mappings: response.data , mappingIsLoaded : true});
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchLanguages: async () => {
+    try {
+      const response = await Axios.get('/languages');
+      set({ languages: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchProjects: async (user) => {
+    try {
+      const response = await Axios.get(`projects/${user}`);
+      set({ projects: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchSubProjects: async (user) => {
+    try {
+      const response = await Axios.get(`subProjects/${user}`);
+      set({ subProjects: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchConfigurations: async () => {
+    try {
+      const response = await Axios.get('/configurations');
+      set({ configurations: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchUserProjects: async (user) => {
+    try {
+      const response = await Axios.get(`projects/userProjects/${user}`);
+      set({ userProjects: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  fetchUsers: async (user) => {
+    try {
+      const response = await Axios.get(`users/${user}`);
+      set({ users: response.data });
     } catch (error) {
       console.error(error);
     }

@@ -1,15 +1,23 @@
 import './Home.css'
 import React, { useEffect,useState } from 'react';
 import { Navbar ,Body} from '../index'
+import {ClipLoader} from 'react-spinners';
+import useAuth from '../../hooks/useAuth';
+import { NormalPanel } from '../flexidocPanel';
 
-function Home(props) {
-  const userConnected = JSON.parse(localStorage.getItem('userConnected'));
+function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [modBackground, setModBackground] = useState(true)
-  const [navLineClicked,setNavLineClicked] = useState(() => {
-    const saved = sessionStorage.getItem('navLineClicked');
-    return saved ? saved : 'home';
-  })
+
+  const { setNavLineClicked , liveConfiguration , setLiveConfiguration} = useAuth();
+  
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -17,26 +25,22 @@ function Home(props) {
     };
     // Attach the handleResize function to the 'resize' event
     window.addEventListener('resize', handleResize);
-    console.log(screenWidth)
-
     // Clean up the event listener when the component is unmounted
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  useEffect(() => {
-    sessionStorage.setItem('navLineClicked', navLineClicked);
-  }, [navLineClicked]);
-
   const [showNavbar , setShowNavbar] = useState(false);
   const handleShowNavbar = () => {
     setShowNavbar((prev) => { return !prev })
+    setLiveConfiguration(false)
+    console.log(showNavbar)
   };
 
-    const handleClickDashboard = () => {
+    const handleClickMappings = () => {
       setModBackground(false)
-      setNavLineClicked("dashboard")
+      setNavLineClicked("mappings")
       screenWidth < 1160 && setShowNavbar(false)
     };
     const handleClickHome = () => {
@@ -64,30 +68,45 @@ function Home(props) {
       setNavLineClicked("documents")
       screenWidth < 1160 && setShowNavbar(false)
     };
+    const handleClickProjects = () => {
+      setModBackground(true)
+      setNavLineClicked("projects")
+      screenWidth < 1160 && setShowNavbar(false)
+    }
+    const handleClickUsers = () => {
+      setModBackground(false)
+      setNavLineClicked("users")
+      screenWidth < 1160 && setShowNavbar(false)
+    }
 
   return (
-    <>
-      <div className="container" style={{backgroundImage:modBackground && 'url(./backFilter.png)'}}>        
-            {(screenWidth > 1160 || showNavbar) &&
+    <>{ isLoading ? <ClipLoader
+      className='pageLoader'
+      loading={isLoading}
+      aria-label="Loading Spinner"
+      data-testid="loader"
+      /> :
+      <div className="container" style={{backgroundImage:modBackground && 'url(../../public/backFilter.png)'}}>        
+            {((screenWidth > 1160 || showNavbar) && (!liveConfiguration)) &&
             <Navbar 
             showNavbar={handleShowNavbar}
-            clickDashboard={handleClickDashboard}
+            clickMappings={handleClickMappings}
             clickHome={handleClickHome}
             clickProfile={handleClickProfile}
             clickSettings={handleClickSettings}
             clickSources={handleClickSources}
             clickDocuments={handleClickDocuments}
-            navLineClicked={navLineClicked}/>}
+            clickProjects={handleClickProjects}
+            clickUsers={handleClickUsers}/>}
             {(!showNavbar || screenWidth > 450) 
            && 
             <Body 
             showNavbar={handleShowNavbar}
             screenWidth={screenWidth}
             clickProfile={handleClickProfile}
-            setConnectValide={props.setConnectValide}
-            setSessionValide={props.setSessionValide}
             />}
-      </div>
+            {liveConfiguration && <NormalPanel />}
+      </div>}
     </>
   )
 }

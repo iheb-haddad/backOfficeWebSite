@@ -3,67 +3,75 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useState ,useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen , faTrash ,faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import "./DocsList.css"
 import Axios from '../../services/Axios';
+import ExportCSV from '../exportCsv/ExportCsv';
+import "./DocsList.css"
+import useAuth from '../../hooks/useAuth';
+import { toast } from 'sonner';
 
 function DocsList(props) {
     const [mappings , setMappings] = useState([])
-    // let [mappingDetails , setMappingDetails] = useState([])
     const [filtredMappings , setFiltredMappings] = useState([])
     const [dataChanged , setDataChanged] = useState(0)
     const [isEditing,setIsEditing] = useState("")
     const [isModified , setIsModified] = useState('')
     const [isDeleting , setIsDeleting]  = useState("")
     const [isLoaded , setIsLoaded] = useState(false)
+    const { auth } = useAuth();
+
 
     useEffect(() => {
-      Axios.get('/mappings')
+      const user = auth?.user?._id || '';
+      Axios.get(`/mappings/user/${user}`)	
       .then((response) => {
         setMappings(response.data)
             const filteredData = response.data.filter((mapping) => {
+              const projectMatch = props.filterParameters.selectedProject === 'tout' || mapping.idProject._id === props.filterParameters.selectedProject;
+              const subProjectMatch = props.filterParameters.selectedSubProject === 'tout' || mapping.idSubProject._id === props.filterParameters.selectedSubProject;
               const typeMatch = props.filterParameters.selectedType === 'tout' || mapping.idSection._id === props.filterParameters.selectedType;
-              const languageMatch = props.filterParameters.selectedLanguage === 'tout' || mapping.idDocument.langue === props.filterParameters.selectedLanguage;
+              const languageMatch = props.filterParameters.selectedLanguage === 'tout' || mapping.idDocument.language === props.filterParameters.selectedLanguage;
               const appMatch = props.filterParameters.selectedApp === 'tout' || mapping.idSource._id === props.filterParameters.selectedApp;
-              const titleMatch = props.filterParameters.titleSearched === '' || mapping.idDocument.titre.toLowerCase().startsWith(props.filterParameters.titleSearched.toLowerCase());
+              const titleMatch = props.filterParameters.titleSearched === '' || mapping.idDocument.title.toLowerCase().startsWith(props.filterParameters.titleSearched.toLowerCase());
           
-              return typeMatch && languageMatch && appMatch && titleMatch;
+              return projectMatch && subProjectMatch && typeMatch && languageMatch && appMatch && titleMatch;
             });
                 setFiltredMappings(filteredData)
                 setIsLoaded(true)
               })  
           .catch((error) => {
-            console.error('Error fetching documents:', error);
+            console.error('Error fetching mappings:', error);
+            toast.error('Erreur lors du chargement des données')
           });
       }, [dataChanged]);
 
       const handleDelete = (mappingId) => {
-        console.log(mappingId)
         setIsDeleting(mappingId);
         Axios.delete(`/mappings/${mappingId}`)
         .then((data) => {
             setDataChanged(prev => prev +1)
-              // You can update your UI or perform other actions here
+            toast.success('Mapping supprimé avec succès')
             })
             .catch((error) => {
               console.error('Error deleting ', error);
+              toast.error('Erreur lors de la suppression du mapping')
             });
             setTimeout(() => {
               setIsDeleting("")
-          },1500);
+          },2000);
         };
 
         useEffect(() =>{
-          console.log(mappings)
           const filteredData = mappings.filter((mapping) => {
+            const projectMatch = props.filterParameters.selectedProject === 'tout' || mapping.idProject._id === props.filterParameters.selectedProject;
+            const subProjectMatch = props.filterParameters.selectedSubProject === 'tout' || mapping.idSubProject._id === props.filterParameters.selectedSubProject;
             const typeMatch = props.filterParameters.selectedType === 'tout' || mapping.idSection._id === props.filterParameters.selectedType;
-            const languageMatch = props.filterParameters.selectedLanguage === 'tout' || mapping.idDocument.langue === props.filterParameters.selectedLanguage;
+            const languageMatch = props.filterParameters.selectedLanguage === 'tout' || mapping.idDocument.language === props.filterParameters.selectedLanguage;
             const appMatch = props.filterParameters.selectedApp === 'tout' || mapping.idSource._id === props.filterParameters.selectedApp;
-            const titleMatch = props.filterParameters.titleSearched === '' || mapping.idDocument.titre.toLowerCase().startsWith(props.filterParameters.titleSearched.toLowerCase());
+            const titleMatch = props.filterParameters.titleSearched === '' || mapping.idDocument.title.toLowerCase().startsWith(props.filterParameters.titleSearched.toLowerCase());
         
-            return typeMatch && languageMatch && appMatch  && titleMatch;
+            return projectMatch && subProjectMatch && typeMatch && languageMatch && appMatch  && titleMatch;
           });
-              setFiltredMappings(filteredData)
-              console.log(mappings)
+            setFiltredMappings(filteredData)
         },[props.filterParameters]);
 
         // Methofds to handle the form
@@ -83,34 +91,34 @@ function DocsList(props) {
 
         const handleModify = (mapping) => {
           setIsEditing(mapping._id)
-          console.log("heere"+JSON.stringify(mapping))
           setFormData({
-            source : mapping.idSource,
-            section : mapping.idSection
+            source : mapping.idSource._id,
+            section : mapping.idSection._id
           })
         }
         function areObjectsEqual(objA, objB) {
           // Get the keys of both objects
-          return objA.source === objB.idSource && objA.section === objB.idSection
+          return objA.source === objB.idSource._id && objA.section === objB.idSection._id
         }
         const handleModifyComplete = (mapping) => {
           setIsEditing("")
-          // let type = (formData.typeDoc === 'commun' || formData.typeDoc === 'fiche métier' || formData.typeDoc === 'autre') ? 'document' : formData.typeDoc
           const mappingModified = {
             idDocument : mapping.idDocument,
             idSection : formData.section,
             idSource : formData.source
           }
-          console.log("mooooood"+JSON.stringify(mappingModified))
+          
           if (!areObjectsEqual(formData,mapping)){
             Axios.put(`/mappings/${mapping._id}`, mappingModified)
             .then((data) => {
               console.log('Object modified:', data);
               setDataChanged(prev => prev +1)
+              toast.success('Mapping modifié avec succès')
               // You can update your UI or perform other actions here
             })
             .catch((error) => {
               console.error('Error modifying object:', error);
+              toast.error('Erreur lors de la modification du mapping')
             });
             setTimeout(() => {
               setIsModified(mapping._id)
@@ -122,6 +130,7 @@ function DocsList(props) {
         }
   return (
     <div style={{position:"relative"}}>
+      { isLoaded && <ExportCSV data={mappings} fileName={'mappings'}/>} 
         <div className="headList">
             <div className="type">Section</div>
             <div className="titre">Titre</div>
@@ -135,7 +144,7 @@ function DocsList(props) {
               loading={!isLoaded}
               aria-label="Loading Spinner"
               data-testid="loader"
-            />
+            />   
         { isLoaded &&
             filtredMappings.map((mapping)=>(
             <div className={`headList lineList ${isEditing === mapping._id && 'isEditing'}`} key={mapping._id} style={{backgroundColor: isModified === mapping._id && "#50e150"}}>
@@ -147,23 +156,18 @@ function DocsList(props) {
                   </select>
                 :<>{mapping.idSection.titleFr}</>
                 }</div>
-                <div className={`titre ${isDeleting === mapping._id && 'isDeleting'}`}>{mapping.idDocument.titre}</div>
-                <div className={`langue ${isDeleting === mapping._id && 'isDeleting'}`}>{mapping.idDocument.langue}</div>
+                <div className={`titre ${isDeleting === mapping._id && 'isDeleting'}`}>{mapping.idDocument.title}</div>
+                <div className={`langue ${isDeleting === mapping._id && 'isDeleting'}`}>{mapping.idDocument.language}</div>
                 <div className={`webApp ${isDeleting === mapping._id && 'isDeleting'}`}>{isEditing === mapping._id ?
                   <select name="app" id="selectApp" value={formData.source} onChange={onChangeSource}>
                     {props.data.sources.map((source) =>(
-                      <option key={source._id} value={source._id}>{source.nom}</option>
+                      <option key={source._id} value={source._id}>{source.name}</option>
                         ))}
                   </select> 
-                :<>{mapping.idSource.nom}</>
+                :<>{mapping.idSource.name}</>
                 }</div>
                 <div className='affichage'>
-                      <input
-                      type="checkbox"
-                      checked={mapping.idDocument.affichage === 'contenu'}
-                        // onChange={(event) => handleChange(event,mapping.id)}
-                        readOnly
-                      />
+                      {mapping.idDocument.display}
                 </div>
                 <div className="actions">
                   {!(isEditing === mapping._id) ? <FontAwesomeIcon icon={faPen} style={{cursor:'pointer'}}
@@ -172,10 +176,11 @@ function DocsList(props) {
                   onClick={() => handleModifyComplete(mapping)}/>}
                   <FontAwesomeIcon icon={faTrash} style={{cursor:'pointer'}} 
                   onClick={()=>handleDelete(mapping._id)}/>
-                  <a href={mapping.idDocument.urlDoc} about='_blank'>Ouvrir</a></div>
+                  <a href={mapping.idDocument.urlDoc} target='_blank'>Ouvrir</a></div>
             </div>
             ))
         }
+        { filtredMappings.length === 0 && <div style={{ textAlign : 'center',marginTop :'50px',fontSize :'1.6rem'}} >Aucun mapping trouvé</div>}
     </div>
   )
 }

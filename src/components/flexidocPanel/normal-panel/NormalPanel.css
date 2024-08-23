@@ -1,0 +1,82 @@
+
+.buttonsEx .custom-buttonEx{
+  font-family: "Montserrat",sans-serif;
+  color: black;
+    border-radius: 0;
+    padding: 0px 6px;
+    background-color:white;
+    font-weight: bold;
+    font-size: 16px;
+  }
+.buttonsEx .custom-buttonEx:hover{
+    color: grey;
+  }
+.buttonsEx .custom-buttonEx.active {
+    background-color: blue;
+    color: white;
+  }
+.head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:10px;
+  }
+.normalPanel{
+    border: 2px solid grey;
+    width: 300px;
+    background-color: white;
+    padding: 0;
+    padding-top: 10px;
+    /* min-height: 100vh; */
+    overflow-y: auto;
+  }
+.panelContainer{
+  display: flex;
+  top:0;
+  right: 0;
+  position: fixed;
+  z-index: 999999;
+}
+.search-btnEx{
+    background-color: white;
+    color: black;
+    font-size :1.1rem;
+    border : none;
+  }
+.searchExbar{
+    margin: 10px;
+    border: 2px solid rgb(0, 0, 0);
+    background-color: white;
+  }
+.inputEx-group {
+    display: flex;
+    align-items: center;
+    flex-wrap:nowrap;
+  }
+  
+.inputEx-group input {
+    border : none;
+    padding: 6px 8px;
+    border-radius: 0;
+    width: 87%;
+    height:100%;
+    background-color: white;
+  }
+  .loaderContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+  }
+  .panelBox{
+    animation: dispPanel 0.5s ease-in-out;
+    gap: 10px;
+  }
+  @keyframes dispPanel {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

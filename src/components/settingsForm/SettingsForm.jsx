@@ -1,9 +1,24 @@
-import React , {useState} from 'react'
+import React , {useState,useEffect} from 'react'
 import './SettingsForm.css'
 import Axios from '../../services/Axios';
+import useAuth from '../../hooks/useAuth';
+import useRessources from '../../hooks/useRessources';
+import { toast } from 'sonner';
 
 function SettingsForm() {
-    let userConnected = JSON.parse(localStorage.getItem('userConnected'));
+  const { auth , setAuth } = useAuth();
+  const {setBtnClicked} = useRessources();
+  useEffect(() => {
+    setBtnClicked("parametres");
+  }, []);
+  let userConnected = {
+    lastName : auth.user.lastName,
+    firstName : auth.user.firstName,
+    numTel : auth.user.numTel,
+    email : auth.user.email,
+    country : auth.user.country,
+    region : auth.user.region
+  }
     const initialValues = {
         lastName : userConnected.lastName,
         firstName : userConnected.firstName,
@@ -13,8 +28,10 @@ function SettingsForm() {
         region : userConnected.region,
       };
       const [formData, setFormData] = useState(initialValues);
-    const [message , setMessage] = useState("")
-    const [messageColor , setMessageColor] = useState("")
+      useEffect(() => {
+        setBtnClicked("parametres");
+        console.log('userConnected:', auth.user);
+      }, []);
     const [admins , setAdmins] = useState([])
     const [msgErreur1Color, setMsgErreur1Color] = useState('white');
 
@@ -115,15 +132,15 @@ function SettingsForm() {
       };
 
       const handleEnregistrer = () =>{
-        fetch('https://urlsjsonserver-p2nq.onrender.com/admins')
-        .then((response) => response.json())
+        Axios.get('/users')
+        .then((response) => response.data)
         .then((data) => {
           setAdmins(data);
             })
         .catch((error) => {
           console.error('Error fetching documents:', error);
         });
-      if(!admins.some(admin => (admin.email === formData.email) && (admin._id != userConnected._id ))){
+      if(!admins.some(admin => (admin.email === formData.email) && (admin._id != auth.user._id ))){
         if(userConnected.username === ''){
           const randomChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
           let name ;
@@ -140,19 +157,29 @@ function SettingsForm() {
             userConnected.numTel = formData.numTel
             userConnected.country = formData.country
             userConnected.region = formData.region
-            localStorage.setItem('userConnected', JSON.stringify(userConnected))
             changeInputColors();
-            userConnected = JSON.parse(localStorage.getItem('userConnected'));
-            Axios.put(`/users/${userConnected._id}`, userConnected)
+            Axios.put(`/users/${auth.user._id}`, userConnected)
             .then((data) => {
               console.log('Object modified:', data);
-              // You can update your UI or perform other actions here
+              const {firstName , lastName , email , numTel , country , region , ...rest} = auth.user
+              const user = {...rest,
+                firstName : userConnected.firstName,
+                lastName : userConnected.lastName,
+                email : userConnected.email,
+                numTel : userConnected.numTel,
+                country : userConnected.country,
+                region : userConnected.region
+              }
+              setAuth({user})
+              toast.success('Informations modifiés avec succès')
             })
             .catch((error) => {
               console.error('Error modifying object:', error);
+              toast.error('Erreur lors de la modification des informations')
             });
           }else{
             setMsgErreur1Color('red')
+            toast.error('Adresse email déjà utilisée')
           }
       };
       const handleAnnuler = () => {
@@ -228,10 +255,8 @@ function SettingsForm() {
       </div>
       </div>
         <div className="settingsButton">
-                <div>
-                    <button onClick={handleAnnuler}>Annuler</button>
-                    <button onClick={handleEnregistrer} className='enregistrer'>Enregistrer</button>
-                  </div>
+            <button onClick={handleAnnuler}>Annuler</button>
+            <button onClick={handleEnregistrer} className='enregistrer'>Enregistrer</button>
         </div>
     </>
   )

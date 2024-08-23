@@ -1,42 +1,57 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse ,faTableColumns,faGear ,faUser} from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Navbar.css'
 import { Link } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
+import useStore from '../../globalState/UseStore';
+import { use } from 'i18next';
 function Navbar(props) {
+  const {navLineClicked , auth} = useAuth();
+  const { projects , fetchProjects } = useStore();
+  useEffect(() => {
+    const user = auth?.user?._id || '';
+    fetchProjects(user);
+  },[]);
 
   return (
   <div style={{display:"flex"}}>
     <div className="navbar">
         <div className="head"> 
-          <img src="./logo2.png" alt="" />
+          <img src="../../../public/logo2.png" alt="" />
           {/* <div className="croix"><FontAwesomeIcon icon={faX} style={{cursor:'pointer'}} onClick={props.showNavbar}/></div> */}
         </div>
         <div className="navbarBody">
-            <Link to="/" className={`navLine ${props.navLineClicked === 'home' ? 'navClicked' : 'notClicked'}`} onClick={props.clickHome}>
+            <Link to="/" className={`navLine ${navLineClicked === 'home' ? 'navClicked' : 'notClicked'}`} onClick={props.clickHome}>
                     <FontAwesomeIcon icon={faHouse} />
                     <div className="title" >Tableau de bord</div>
             </Link>
-            <Link to="/GestionMapping" className={`navLine ${props.navLineClicked === 'dashboard' ? 'navClicked' : 'notClicked'}`} onClick={props.clickDashboard}>
+            <Link to="/GestionMapping" className={`navLine ${navLineClicked === 'mappings' ? 'navClicked' : 'notClicked'}`} onClick={props.clickMappings}>
                     <FontAwesomeIcon icon={faTableColumns} />
                     <div className="title" >Gestion de mapping</div>
             </Link>
-            <Link to="/Profile" className={`navLine ${props.navLineClicked === 'profile' ? 'navClicked' : 'notClicked'}`} onClick={props.clickProfile}>
-                <FontAwesomeIcon icon={faUser} />
-                <div className="title" >Gestion de profil</div>
-            </Link>
-            <Link to="/Configurations" className={`navLine ${props.navLineClicked === 'settings' ? 'navClicked' : 'notClicked'}`} onClick={props.clickSettings}>
+            {(auth?.user?.role === 'admin' || projects.length > 0 ) &&<Link to="/Configurations" className={`navLine ${navLineClicked === 'settings' ? 'navClicked' : 'notClicked'}`} onClick={props.clickSettings}>
                 <FontAwesomeIcon icon={faGear} />
                 <div className="title" >Configuration</div>
-            </Link>
-            <Link to="/GestionSources" className={`navLine ${props.navLineClicked === 'sources' ? 'navClicked' : 'notClicked'}`} onClick={props.clickSources}>
+            </Link>}
+            <Link to="/GestionSources" className={`navLine ${navLineClicked === 'sources' ? 'navClicked' : 'notClicked'}`} onClick={props.clickSources}>
                 <FontAwesomeIcon icon={faGear} />
                 <div className="title" >Gestion des sources</div>
             </Link>
-            <Link to="/GestionDocuments" className={`navLine ${props.navLineClicked === 'documents' ? 'navClicked' : 'notClicked'}`} onClick={props.clickDocuments}>
+            <Link to="/GestionDocuments" className={`navLine ${navLineClicked === 'documents' ? 'navClicked' : 'notClicked'}`} onClick={props.clickDocuments}>
                 <FontAwesomeIcon icon={faGear} />
                 <div className="title" >Gestion des documents/Notes</div>
             </Link>
+            {(auth?.user?.role === 'admin' || projects.length > 0 ) && <Link to="/GestionProjects" className={`navLine ${navLineClicked === 'projects' ? 'navClicked' : 'notClicked'}`} onClick={props.clickProjects}>
+                <FontAwesomeIcon icon={faGear} />
+                <div className="title" >Gestion des projets</div>
+            </Link>
+            }
+            {<Link to="/GestionComptes" className={`navLine ${navLineClicked === 'users' ? 'navClicked' : 'notClicked'}`} onClick={props.clickUsers}>
+                <FontAwesomeIcon icon={faUser} />
+                <div className="title" >{`Gestion ${(auth?.user?.role === 'admin' || projects.length > 0 ) ? "des comptes" : "de compte"}`}</div>
+            </Link>
+            }
         </div>      
     </div>
     <div className="blur-overlay" onClick={props.showNavbar}></div>

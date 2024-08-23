@@ -4,16 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faFileCirclePlus, faUpload, faFilter } from '@fortawesome/free-solid-svg-icons';
 import {MappingAdd ,DocsList ,UploadPage} from '../index';
 import useStore from '../../globalState/UseStore';
+import useAuth from '../../hooks/useAuth';
 
 const GestionMapping = () => {
 
   const initialFilterParameteres = {
+    selectedProject : 'tout',
+    selectedSubProject : 'tout',
     selectedType : 'tout',
     selectedLanguage : 'tout',
     selectedApp : 'tout',
     titleSearched : ''
   }
-  const { documentations, sources, sections,fetchDocumentations, fetchSources, fetchSections} = useStore();
+  
+  const { documentations, fetchDocumentations, sources, fetchSources, sections, fetchSections , userProjects , fetchUserProjects , subProjects , fetchSubProjects} = useStore();
+  const { setNavLineClicked , auth } = useAuth();
 
   const [filterParameters, setFilterParameters] = useState(initialFilterParameteres);
   const [componentCharged , setComponentCharged] = useState(<DocsList filterParameters={filterParameters} data = {{sources,sections}} />);
@@ -22,15 +27,42 @@ const GestionMapping = () => {
   const [filterbtnIsClicked , setFilterbtnIsClicked] = useState(false);
   const [uploadbtnIsClicked , setUploadbtnIsClicked] = useState(false);
   const [displaySearchInput , setDisplaySearchInput] = useState(true);
+  const [ dataChanged , setDataChanged] = useState(0)
 
 
   useEffect(() => {
-    fetchDocumentations();
-    fetchSources();
+    const user = auth?.user?._id || '';
+    setNavLineClicked("mappings")
+    fetchUserProjects(user);
+    fetchSubProjects(user);
+    fetchDocumentations(user);
+    fetchSources(user);
     fetchSections();
-  }, [fetchDocumentations, fetchSources, fetchSections]);
+    setAddbtnIsClicked(false)
+    setDisplayBackbtn(false)
+    setFilterbtnIsClicked(false)
+    setUploadbtnIsClicked(false)
+    setDisplaySearchInput(true)
+  }, [dataChanged]);
 
   // Methods of the filter action
+    const handleProjectChange = (event) => {
+      setFilterParameters((prevData) => ({
+          ...prevData,
+          selectedProject: event.target.value,
+          selectedSubProject : 'tout',
+          selectedApp : 'tout'
+        }));
+      };
+
+    const handleSubProjectChange = (event) => {
+      setFilterParameters((prevData) => ({
+          ...prevData,
+          selectedSubProject: event.target.value,
+          selectedApp : 'tout'
+        }));
+      };
+
     const handleInputSearch = (event) => {
       setFilterParameters((prevData) => ({
         ...prevData,
@@ -84,7 +116,7 @@ const GestionMapping = () => {
           setDisplaySearchInput(true)
         };
         const clickUploadbtn = () => { 
-          setComponentCharged(<UploadPage />)
+          setComponentCharged(<UploadPage filesType={'mappings'} setDataChanged={setDataChanged}/>)
           setAddbtnIsClicked(false)
           setDisplayBackbtn(true)
           setFilterbtnIsClicked(false)
@@ -94,14 +126,14 @@ const GestionMapping = () => {
       
         useEffect(() =>{
           setComponentCharged(<DocsList filterParameters={filterParameters} data = {{sources,sections}}/>) 
-        },[filterParameters]);
+        },[filterParameters,sources,sections]);
         
   return (
     <div style={{backgroundColor:'white' , minHeight:'90vh', paddingBottom : '40px'}}>
         <div className="buttonsBox" >
             <div>
             <button className="back" onClick={clickBackbtn}  style={{display:!displayBackbtn && "none"}}><FontAwesomeIcon icon={faArrowLeft}/></button>
-            <button className={addbtnIsClicked ? "addbtn clicked" : "addbtn"} onClick={clickAddbtn}><FontAwesomeIcon icon={faFileCirclePlus} /><span>Modifier</span></button>
+            <button className={addbtnIsClicked ? "addbtn clicked" : "addbtn"} onClick={clickAddbtn}><FontAwesomeIcon icon={faFileCirclePlus} /><span>Ajouter</span></button>
             <button className={uploadbtnIsClicked ? "uploadbtn clicked" : "uploadbtn"} onClick={clickUploadbtn}><FontAwesomeIcon icon={faUpload} /><span>Importer</span></button>
             </div>
             <div>
@@ -110,6 +142,23 @@ const GestionMapping = () => {
             </div>
         </div>
         <div className="filterBox" style={{display:filterbtnIsClicked ? "block" : "none"}}>
+          <div>
+          <select name="project" id="selectProject" value={filterParameters.selectedProject} onChange={handleProjectChange}>
+            <option value="tout" disabled hidden >Projet</option>
+            <option value="tout" >tout</option>
+            {userProjects.map((project) =>(
+                        <option key={project._id} value={project._id}>{project.name}</option>
+                      ))}
+          </select>
+          <select name="subProject" id="selectSubProject" value={filterParameters.selectedSubProject} onChange={handleSubProjectChange}>
+            <option value="tout" disabled hidden >Sous-Projet</option>
+            <option value="tout" >tout</option>
+            {subProjects.map((subProject) =>(
+                      (subProject.idProject._id === filterParameters.selectedProject || filterParameters.selectedProject === 'tout' ) &&
+                        <option key={subProject._id} value={subProject._id}>{subProject.name}</option>
+                      ))}
+          </select>
+          </div>
           <select name="type" id="selectType"  value={filterParameters.selectedType} onChange={handleTypeChange}>
             <option value="tout" disabled hidden >Section</option>
             <option value="tout" >tout</option>
@@ -127,9 +176,15 @@ const GestionMapping = () => {
               <option value="tout" disabled hidden>Application web</option>
               <option value="tout">tout</option>
               {sources.map((source) =>(
-                      <option key={source._id} value={source._id}>{source.nom}</option>
+                          ( source.idSubProject._id === filterParameters.selectedSubProject ||
+                          ( filterParameters.selectedSubProject === 'tout' && source.idProject._id === filterParameters.selectedProject ) ||
+                            (filterParameters.selectedProject === 'tout' && filterParameters.selectedSubProject === 'tout') ) &&
+                      <option key={source._id} value={source._id}>{source.name}</option>
                         ))}
           </select>
+        </div>
+        <div className='modelBtnBox'>
+          { uploadbtnIsClicked && <a className='uploadbtn' href='MappingsModel.csv' download='MappingsModel.csv'>Télécharger un modèle</a>}
         </div>
         {componentCharged}
     </div>

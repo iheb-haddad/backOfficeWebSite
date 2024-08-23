@@ -1,7 +1,6 @@
 
 .buttonsBox{
     margin-left: 50px;
-    margin-bottom: 20px;
     display: flex;
 }
 .buttonsBox button , .buttonsBox input ,.filterBox select{
@@ -49,6 +48,12 @@
 }
 .buttonsBox button span{
     margin-left: 15px;
+}
+.modelBtnBox{
+    display: flex;
+    justify-content: end;
+    padding-right: 40px;
+    margin-top: 20px;
 }
 
 @keyframes filterBoxEnter {

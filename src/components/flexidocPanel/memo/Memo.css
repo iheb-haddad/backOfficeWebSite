@@ -1,0 +1,21 @@
+.enteteMemo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-height: 15px;
+}
+.memo{
+    /* min-height: 75px; */
+    font-family: "Montserrat",sans-serif;
+    padding: 15px;
+    border: 1px solid grey;
+    cursor: default;
+    animation: dispPanel 0.5s ease-in-out;
+}
+.memo textArea::placeholder{
+    color: black;
+}
+.btnMemo button:active{
+    scale: 0.9;
+}
+

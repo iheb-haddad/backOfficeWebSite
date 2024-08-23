@@ -50,7 +50,7 @@
   padding-right: 10%;
   padding-top: 3%;
 }
-  .confButtons button{
+  .confButtons button , .infoContainer button{
     background-color: white;
     color:#5356d0;
     border : 2px solid rgb(83,86,208,0.6);
@@ -62,7 +62,7 @@
     cursor: pointer;
     margin-left: 10px;
 }
-.confButtons button:hover{
+.confButtons button:hover , .infoContainer button:hover{
   color: white;
   background-color: #5356d0;
 }
@@ -173,7 +173,81 @@
   color: #5356d0;
   cursor: pointer;
 }
-
+.infoContainer .buttonsInfo{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.demo{
+  height: 80vh;
+  width: 280px;
+  margin: 10px 200px;
+}
+.fleche1{
+  width: 100px;
+  height: 70px;
+  position: absolute;
+  left: 160px;
+  top: 5px;
+}
+.fleche2{
+  width: 150px;
+  height: 50px;
+  position: absolute;
+  left: 110px;
+  bottom: 40px;
+}
+.fleche3{
+  width: 115px;
+  height: 50px;
+  position: absolute;
+  left: 117px;
+  bottom: 45%;
+}
+.fleche4{
+  position: absolute;
+  top: 22%;
+  right: 130px;
+  width: 250px;
+  height: 50px;
+}
+.fleche5{
+  position: absolute;
+  bottom: 30%;
+  right: 130px;
+  width: 290px;
+  height: 50px;
+}
+.panelColor{
+  position: absolute;
+  left: 120px;
+  top : 20px;
+  text-align: center;
+}
+.memoSection{
+  position: absolute;
+  left: 110px;
+  bottom: 65px;
+  text-align: center;
+}
+.barreRed{
+  position: absolute;
+  left: 70px;
+  bottom: 49%;
+  text-align: center;
+}
+.sectionText{
+  position: absolute;
+  right: 90px;
+  top: 19%;
+  text-align: center;
+}
+.sectionTitle{
+  position: absolute;
+  bottom: 25%;
+  right: 90px;
+  text-align: center;
+}
 @media (max-width: 1160px) {
   .colorsForm{
       margin-top: 40px;

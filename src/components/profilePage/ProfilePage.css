@@ -1,69 +1,20 @@
 .profilePage{
-    width: 100%;
     height: 90vh;
-}
-.profilePage .profileCover{
-    height: 35%;
-    /* background-color: #3354cc; */
-    /* background-image : url("./couverture.jpg"); */
-    background-size: cover;
-}
-.profilePage .profileBody{
-    position: relative;
+    padding: 80px;
     background-color: white;
-    height: 75%;
 }
-.profilePage .boxes{
-    display: flex;
-    justify-content: center;     
-    position: absolute;
-    top:-120px;
-    left: 5%;
-    width: 90%;
-    /* height: 100%; */
-}
-.profileBody .sideBox{
-    width: 27%;
-    border: 1px solid rgb(194, 184, 184);
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.sideBox .profilePhoto{
-    padding-top: 15%;
-    flex:1;
-    display: flex;
-    justify-content: center;
-    align-self: center;
-}
-.sideBox .profilePhoto img {
-    width: 100px;
-    height: 110px;
-    object-fit: cover; 
-  }
-  .sideBox .profileInfo{
-    flex:2;
-    width: 100%;  
-}
-.sideBox .profileInfo .infoLine{
-    text-align: center;
-    font-weight: 400;
-    border-top: 1px solid rgb(194, 184, 184);
-    border-bottom: 1px solid rgb(194, 184, 184);
-    padding-top: 10px;
-    padding-bottom: 10px;
+.profileUsername{
+    font-family: "Montserrat", sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #5356d0;
+    margin-bottom: 20px;
 }
 .profileBody .settingsBox{
-    width: 100%;
-    /* height: 100%; */
     border: 1px solid rgb(194, 184, 184);
     background-color: white;
     display: flex;
     flex-direction: column;
-}
-.profileBody .gap{
-    width: 3%;
 }
  .settingsBox .settingsHead{
     height: 70px;
@@ -71,7 +22,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 1px solid rgb(194, 184, 184);
+    /* border-bottom: 1px solid rgb(194, 184, 184); */
 }
 .settingsHead h4{
     display: flex;
@@ -81,7 +32,7 @@
     height: 100%;
     font-family: "Montserrat", sans-serif;
     margin-right: 5%;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     color: #babfc4;
 }
@@ -100,11 +51,11 @@
 .settingsBox .settingsButton{
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-right: 30px;
+    padding-right: 70px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    border-top: 1px solid rgb(194, 184, 184);
+    /* border-top: 1px solid rgb(194, 184, 184); */
 }
 .settingsBox .settingsButton button{
     background-color: white;
@@ -125,32 +76,8 @@
 .settingsBox .settingsButton button:active{
     scale: 0.9;
 }
-.socialMedia{
-    width: 90%;
-    margin: 40px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.socialLine{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.socialLine input{
-    width: 60%;
-    margin: 0 3px;
-}
-.socialLine .social-icon{
-    margin-right: 3px;
-}
 
 @media (max-width: 1250px) and (min-width: 1160px) {
-    .profilePage .boxes{
-        width: 95%;
-        left: 2.5%;
-    }
     .settingsBox .settingsHead{
         padding-left: 20px;
     }
@@ -159,10 +86,6 @@
     }
 }
 @media (max-width: 950px) {
-    .profilePage .boxes{
-        width: 95%;
-        left: 2.5%;
-    }
     .settingsBox .settingsHead{
         padding-left: 20px;
     }

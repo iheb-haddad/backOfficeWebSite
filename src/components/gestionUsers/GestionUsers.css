@@ -1,0 +1,19 @@
+.firstname{
+    width: 15%;
+}
+.lastname{
+    width: 15%;
+}
+.email{
+    width: 20% ;
+}
+.projet{
+    width: 20%;
+}
+.projectsList{
+    display: flex;
+    flex-wrap: wrap;
+}
+.acts{
+    width: 10%;
+}

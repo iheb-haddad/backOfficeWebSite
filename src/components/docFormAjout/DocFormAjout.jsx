@@ -1,48 +1,50 @@
 import React,{useState,useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX} from '@fortawesome/free-solid-svg-icons';
+import { faX ,faUpload} from '@fortawesome/free-solid-svg-icons';
 import './DocFormAjout.css'
 import Axios from '../../services/Axios';
 import { ModifiedDocument } from '../index';
+import useStore from '../../globalState/UseStore';
+import UploadPage from '../uploadPage/UploadPage';
+import ExportCSV from '../exportCsv/ExportCsv';
+import useAuth from '../../hooks/useAuth';
+import { toast } from "sonner";
 
-function DocFormAjout(props) {
+function DocFormAjout() {
   const [msgErreur1Color, setMsgErreur1Color] = useState('white');
-  const [documentations , setDocumentations] = useState([]);
-  const [languages , setLanguages] = useState([]);
+  const { documentations , languages , fetchDocumentations , fetchLanguages , subProjects , fetchSubProjects , userProjects , fetchUserProjects} = useStore();
+  const { auth } = useAuth();
+  const { configurations , fetchConfigurations} = useStore();
   const [dataChanged , setDataChanged] = useState(0)
   const [showListDocuments ,setShowListDocuments] = useState(false)
   const [isModified , setIsModified] = useState("")
   const [modifiedData , setModifiedData] = useState({})
   const [showError2 , setShowError2] = useState(false)
   const [keyWord , setKeyWord] = useState("")
+  const [generalUrl , setGeneralUrl] = useState("")
+
+  const [showUploadPage , setShowUploadPage] = useState(false)
+  const clickUploadbtn = () => {
+      setShowUploadPage(prev => !prev)
+  }
 
   // Fetching necessary data
   useEffect(() => {
-    Axios.get('/documentations')
-    .then((response) => {
-      setDocumentations(response.data)
-            })
-        .catch((error) => {
-          console.error('Error fetching documents:', error);
-        });
+    const user = auth?.user?._id || '';
+    fetchDocumentations(user);
+    fetchLanguages();
+    fetchSubProjects(user);
+    fetchConfigurations();
+    fetchUserProjects(user);
   }, [dataChanged])
-
-  useEffect(() => {
-    Axios.get('/languages')
-    .then((response) => {
-      setLanguages(response.data)
-    })
-    .catch((error) => {
-      console.error('Error fetching languages:', error);
-    });
-  }, [])
 
   // initial values of the form
     const initialValues = {
+        project : '',
         urlType : 'normal',
-        selectedLanguage: '',
+        selectedLanguage: 'fr',
         title: '',
-        selectedStatut: '',
+        selectedStatut: 'public',
         urlDocument: '',
         affichage : 'titre',
         note : '',
@@ -50,21 +52,47 @@ function DocFormAjout(props) {
         keywords : []
       };
       const [formData, setFormData] = useState(initialValues);
-      const [typeDocument ,setTypeDocument] = useState("");
+      const [projectSelected , setProjectSelected] = useState("");
 
       const handleAnnuler = () => {
         setFormData(initialValues);
-        setTypeDocument("");
+        setProjectSelected("")
       };
 
     // methods to handle the form
+    const handleProjectChange = (event) => {
+        setProjectSelected(event.target.value)
+        const url = configurations.find(conf => conf.idProject === event.target.value)?.generalUrl
+        setGeneralUrl(url) 
+        if(formData.urlType === 'specifique'){
+          if(url){
+            setFormData((prevData) => ({
+              ...prevData,
+              urlDocument : url
+            }));
+          }else{
+            setMsgErreur1Color("red")
+            setTimeout(() => {
+              setMsgErreur1Color("white")
+            }, 2000);
+          }
+        }
+    }
+
+    const handleSubProjectChange = (event) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            project: event.target.value,
+          })); 
+    };
+
     function handleUrlTypeChange(event) {
         if(event.target.value === 'specifique'){
-          if(props.generalUrl){
+          if(generalUrl){
             setFormData((prevData) => ({
               ...prevData,
               urlType : event.target.value,
-              urlDocument : props.generalUrl
+              urlDocument : generalUrl
             }));
           }else{
             setMsgErreur1Color("red")
@@ -148,34 +176,30 @@ const deleteKeyword = (index) => {
   }));
 }  
 
-  const [message ,setMessage] = useState("")
-  const [messageColor , setMessageColor] = useState("black")
   const [showError,setShowError] = useState(false)
 
     const handleAddDocument = () => {
       const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
-        return (key !== 'title' && key !== 'urlDocument' && key != 'expiration' && key !== 'note') && (value === '' || value.length === 0);
+        return (key !== 'title' && key !== 'urlDocument' && key != 'expiration' && key !== 'note') && (value === '');
       });
       const titleEmpty = formData.affichage === 'titre' && formData.title === ''
       const noteEmpty = formData.urlType === 'note' && formData.note === ''
       setShowError(hasEmptyFields || titleEmpty || noteEmpty);
       if (hasEmptyFields || titleEmpty || noteEmpty) {
-        setMessage("Il faut remplir touts les champs obligatoires *")
-        setMessageColor("red")
-        setTimeout(() => {
-          setMessage("");
-        }, 4000);
+        toast.error("Il faut remplir touts les champs obligatoires 55*");
       }else{
         const newDocument = {
-          langue: formData.selectedLanguage,
-          titre: formData.title,
-          statut: formData.selectedStatut,
+          idProject : projectSelected,
+          idSubProject : formData.project,
+          language: formData.selectedLanguage,
+          title: formData.title,
+          status: formData.selectedStatut,
           urlDoc: formData.urlDocument,
-          affichage: formData.affichage,
+          display: formData.affichage,
           note : formData.note,
           expiration: formData.expiration,
           keywords : formData.keywords,
-          consultNumber: 0,
+          consultationNumber: 0,
           lastConsultation : ''
         };
     
@@ -184,21 +208,11 @@ const deleteKeyword = (index) => {
             console.log('New document added:', response.data);
             setDataChanged(prev => prev +1)
             setFormData(initialValues);
-            setTypeDocument("")
-            setMessage("La documentation est ajouté avec succés")
-            setMessageColor("green")
-            setTimeout(() => {
-              setMessage("");
-            }, 4000);
-            // You can update your UI or perform other actions here
+            toast.success("La documentation est ajouté avec succés");
           })
           .catch((error) => {
             console.error('Error adding new document:', error);
-            setMessage("Un problème effectue lors de l'ajout du documentation")
-            setMessageColor("red")
-            setTimeout(() => {
-              setMessage("");
-            }, 4000);
+            toast.error(error.response.data.message)
           });
         }
       };
@@ -210,7 +224,6 @@ const deleteKeyword = (index) => {
       Axios.delete(`/documentations/${_id}`)
       .then((response) => {
         console.log(response)
-        setDocumentations(documentations.filter((document) => document._id !== _id))
         setDataChanged( prev => prev + 1)
       })
       .catch((error) => {
@@ -219,11 +232,13 @@ const deleteKeyword = (index) => {
     }
     const handleModifDocument = (document) => {
       const initialValues = {
-        selectedLanguage: document.langue,
-        title: document.titre,
-        selectedStatut: document.statut,
+        project : document.idProject._id,
+        subProject : document.idSubProject._id,
+        selectedLanguage: document.language,
+        title: document.title,
+        selectedStatut: document.status,
         urlDocument: document.urlDoc,
-        affichage : document.affichage,
+        affichage : document.display,
         note : document.note,
         expiration : document.expiration,
         keywords : document.keywords
@@ -233,43 +248,80 @@ const deleteKeyword = (index) => {
     }
 
     const handleGetModifiedDocument = (document) => {
+      console.log(modifiedData)
         const hasEmptyFields = Object.entries(modifiedData).some(([key,value]) => {
-            return key !== 'urlDocument' && key !== 'title' && key !== 'note' && (value === '' || value.length === 0)
+            return key !== 'urlDocument' && key !== 'title' && key !== 'note' && (value === '')
         })
         const titleEmpty = modifiedData.affichage === 'titre' && modifiedData.title === ''
         setShowError2(hasEmptyFields || titleEmpty)
         if(!hasEmptyFields && !titleEmpty){
                 const newDocument = {
-                    langue: modifiedData.selectedLanguage,
-                    titre: modifiedData.title,
-                    statut: modifiedData.selectedStatut,
+                    _id : document._id,
+                    idProject : modifiedData.project,
+                    idSubProject : modifiedData.subProject,
+                    language: modifiedData.selectedLanguage,
+                    title: modifiedData.title,
+                    status: modifiedData.selectedStatut,
                     urlDoc: modifiedData.urlDocument,
-                    affichage: modifiedData.affichage,
+                    display: modifiedData.affichage,
                     note : modifiedData.note,
                     expiration: modifiedData.expiration,
                     keywords : modifiedData.keywords,
-                    consultNumber: document.consultNumber,
+                    consultationNumber: document.consultNumber,
                     lastConsultation : document.lastConsultation
                   };
                 Axios.put(`/documentations/${document._id}` , newDocument)
                 .then((response) => {
                     console.log(response)
                     setDataChanged( prev => prev + 1)
+                    toast.success("La documentation est modifié avec succés")
                 })
                 .catch((error) => {
                     console.log(error)
+                    toast.error(error.response.data.message || "Erreur lors de la modification")
                 })
                 setIsModified("")
             }
     }
 
   return (
+    <>
+    <div className="buttonsBox" style={{marginBottom : '40px',paddingRight:'40px', display :'flex', justifyContent:'space-between',alignItems:'center'}}>
+            { !showUploadPage ? <button className="uploadbtn" onClick={clickUploadbtn}><FontAwesomeIcon icon={faUpload} /><span>Importer des documentations utilisant des fichiers csv</span></button>
+            : <button className="uploadbtn" onClick={clickUploadbtn}><FontAwesomeIcon icon={faUpload} /><span>Cacher la page d'importation</span></button>}
+            {showUploadPage && <a className='uploadbtn' href='DocumentsModel.csv' download='DocumentsModel.csv'>Télécharger un modèle</a>}
+    </div>
+    {showUploadPage && <UploadPage filesType={'documents'} setDataChanged={setDataChanged}/>}
     <div className='docFormAjout'>
         <div className="entete">
             <h1>Ajouter une documentation</h1>
         </div>
         <div className="configBox">
-        <div className="configLine">
+            <div className="configLine">
+              <h3>Projet correspondant</h3>
+              <select value={projectSelected} onChange={handleProjectChange}
+              style={{border: (showError && !projectSelected) && "1px solid red"}}>
+                  <option value="" disabled hidden>----</option>
+                  {
+                    userProjects.map((project) => (
+                      <option key={project._id} value={project._id}>{project.name}</option>
+                    ))
+                  }
+              </select>
+            </div>  
+            <div className="configLine">
+              <h3>Sous-projet correspondant</h3>
+              <select value={formData.project} onChange={handleSubProjectChange}
+              style={{border: (showError && !formData.project) && "1px solid red"}}>
+                  <option value="" disabled hidden>----</option>
+                  {
+                    subProjects.filter((subProject) => subProject.idProject._id === projectSelected).map((project) => (
+                      <option key={project._id} value={project._id}>{project.name}</option>
+                    ))
+                  }
+              </select>
+            </div>  
+            <div className="configLine">
                 <div className="adminErr" style={{margin:'16px 0 5px 0'}}>
                 <p style={{color:msgErreur1Color}}>Ajouter d'abord votre url géneral</p>
                 </div> 
@@ -279,7 +331,7 @@ const deleteKeyword = (index) => {
                     <option value="note">Notes/Messages</option>
                 </select>
             </div>
-        <div className="configLine">
+            <div className="configLine">
                 <h3>Langue *</h3>
                 <select value={formData.selectedLanguage} onChange={handleLanguageChange}
                 style={{border: (showError && !formData.selectedLanguage) && "1px solid red"}}>
@@ -318,16 +370,13 @@ const deleteKeyword = (index) => {
                     value={formData.urlDocument}
                     onChange={handleUrlDocumentChange}
                     placeholder="Saisir Url du document"
-                    // style={{border: (showError && !formData.urlDocument) && "1px solid red"}}
-                    // style={{border: (showError && !formData.urlDocument) && "1px solid red"}}
                     />
             </div>}
             {formData.urlType !== 'note' &&
              <div className="configLine">
               <h3>Affichage *</h3>
                 <select value={formData.affichage} onChange={handleAffichageChange} >
-                 {formData.urlDocument &&<option value="contenu">Contenu affiché</option>}
-                 {formData.urlDocument &&<option value="contenu">Contenu affiché</option>}
+                    {formData.urlDocument &&<option value="contenu">Contenu affiché</option>}
                     <option value="titre">Seulement titre affiché</option>
                 </select>
             </div>}
@@ -336,7 +385,7 @@ const deleteKeyword = (index) => {
               <h3>Note / message</h3>
                 <textarea
                   id="myTextarea"
-                  value={modifiedData.note}
+                  value={formData.note}
                   onChange={handleTextareaChange}
                   style={{height:"100%",width:"89%"}}
                 />
@@ -358,8 +407,7 @@ const deleteKeyword = (index) => {
                   value={keyWord}
                   onChange={handleKeywordsChange}
                   onKeyDown={handleKeywordsChange}
-                  placeholder="Saisir titre "
-                  style={{border: (showError && formData.keywords.length === 0) && "1px solid red"}}
+                  placeholder="Saisir Mots-clés de recherche"
                   />
                 <div className='indication'>Cliquer Entrée pour ajouter encore</div>  
                 <div className="urlBlock">
@@ -373,15 +421,12 @@ const deleteKeyword = (index) => {
                     ))
                   }
                 </div>   
-            </div>    }                                 
+            </div>}                                
         </div>
         <div className="buttons">
-            <div className="message" style={{color:messageColor}}>{message}</div>
-           <div>
               <button onClick={handleAnnuler}>Annuler</button>
               <button onClick={handleAddDocument} className='appliquer'>Envoyer</button>
-            </div>
-        </div>
+          </div> 
         <div className="applicationsList" style={{width:"90%",marginTop:'30px'}}>
             <div className="document">
               <div className="documentName">Titre</div>
@@ -393,8 +438,8 @@ const deleteKeyword = (index) => {
           documentations.map((document) => (
             <div key={document._id}>
                 <div className="document documentLine" style= {{fontSize:'14px',color:'black'}} >
-                <div className="documentName">{document.titre}</div>
-                <div className="documentKeyword">{document.langue}</div>
+                <div className="documentName">{document.title}</div>
+                <div className="documentKeyword">{document.language}</div>
                 { isModified === document._id ? <button onClick={() => handleGetModifiedDocument(document)}>appliquer</button> :<button onClick={() => handleModifDocument(document)}>modifier</button>}
                 <button onClick={()=>handleDeleteDocument(document._id)}>Supprimer</button>
                 </div>
@@ -402,12 +447,17 @@ const deleteKeyword = (index) => {
                  <ModifiedDocument document={document} 
                  modifiedData = {modifiedData} 
                  setModifiedData={setModifiedData} 
-                 showError={showError2} />}
+                 showError={showError2}
+                 projects={userProjects} 
+                 subProjects={subProjects}/>}
             </div>
           ))
         }
+        { documentations.length === 0 && <div style={{ textAlign : 'center',marginTop :'50px',fontSize :'1.2rem'}} >Aucun document trouvé</div>}
+        <ExportCSV data={documentations} fileName={'documents'}/>
       </div>
     </div>
+    </>
   )
 }
 
