@@ -284,6 +284,17 @@ const deleteKeyword = (index) => {
             }
     }
 
+    const [projectFilter, setProjectFilter] = useState('')
+    const [subProjectFilter, setSubProjectFilter] = useState('')
+
+    const handleProjectFilterChange = (event) => {
+        setProjectFilter(event.target.value)
+        setSubProjectFilter('')
+    }
+    const handleSubProjectFilterChange = (event) => {
+        setSubProjectFilter(event.target.value)
+    }
+
   return (
     <>
     <div className="buttonsBox" style={{marginBottom : '40px',paddingRight:'40px', display :'flex', justifyContent:'space-between',alignItems:'center'}}>
@@ -294,7 +305,7 @@ const deleteKeyword = (index) => {
     {showUploadPage && <UploadPage filesType={'documents'} setDataChanged={setDataChanged}/>}
     <div className='docFormAjout'>
         <div className="entete">
-            <h1>Ajouter une documentation</h1>
+            <h2>Ajouter une documentation</h2>
         </div>
         <div className="configBox">
             <div className="configLine">
@@ -427,6 +438,30 @@ const deleteKeyword = (index) => {
               <button onClick={handleAnnuler}>Annuler</button>
               <button onClick={handleAddDocument} className='appliquer'>Envoyer</button>
           </div> 
+          <div className='configBox' style={{padding : '20px'}}>
+                <div className="configLine" style={{padding : '20px'}}>
+                        <h3>Projet correspondant</h3>
+                        <select value={projectFilter} onChange={handleProjectFilterChange}>
+                            <option value="" disabled hidden>----</option>
+                            {
+                            userProjects.map((project) => (
+                                <option key={project._id} value={project._id}>{project.name}</option>
+                            ))
+                            }
+                        </select>
+                </div>  
+                <div className="configLine" style={{padding : '20px'}}>
+                    <h3>Sous-projet correspondant</h3>
+                        <select value={subProjectFilter} onChange={handleSubProjectFilterChange}>
+                            <option value="" disabled hidden>----</option>
+                            {
+                            subProjects.filter((subProject) => subProject.idProject._id === projectFilter).map((project) => (
+                                <option key={project._id} value={project._id}>{project.name}</option>
+                            ))
+                            }
+                        </select>
+                </div>
+            </div> 
         <div className="applicationsList" style={{width:"90%",marginTop:'30px'}}>
             <div className="document">
               <div className="documentName">Titre</div>
@@ -436,6 +471,7 @@ const deleteKeyword = (index) => {
             </div>
         { showListDocuments &&
           documentations.map((document) => (
+            (projectFilter === '' || document.idProject._id === projectFilter) && (subProjectFilter === '' || document.idSubProject._id === subProjectFilter) &&
             <div key={document._id}>
                 <div className="document documentLine" style= {{fontSize:'14px',color:'black'}} >
                 <div className="documentName">{document.title}</div>

@@ -146,33 +146,33 @@ function ModifiedSection(props) {
         }
     ]
   return (
-<div className="modifiedForm">
-    <div className="colorsLine">
+    <div className="modifiedForm">
+        <div className="colorsLine">
                 <h3>Titre *</h3>
                 <select value={props.modifiedData.titleFr} onChange={handleTitleChange}
                 style={{border: (props.showError && !props.modifiedData.titleFr) && "1px solid red"}}>
                     <option value="">----</option>
                     <option value={props.modifiedData.titleFr}>{props.modifiedData.titleFr}</option>
-                    {props.sectionsTitles.map((section) =>(
-                      <option key={section._id} value={section.titleFr}>{section.titleFr}</option>
+                    {props.sectionsTitles.map((section,index) =>(
+                      <option key={index} value={section.titleFr}>{section.titleFr}</option>
                     ))}
                 </select>
-    </div> 
-    {
-        confLines.map((line,index) => {
-            return <ConfLine
-            key = {index}
-            type = {line.type}
-            label = {line.label}
-            value = {line.value}
-            handle = {line.handle}
-            holder = {line.holder}
-            style = {line.style}
-            options = {line.options}
-            />
-        })
-    }
-</div>
+        </div> 
+        {
+            confLines.map((line,index) => {
+                return <ConfLine
+                key = {index}
+                type = {line.type}
+                label = {line.label}
+                value = {line.value}
+                handle = {line.handle}
+                holder = {line.holder}
+                style = {line.style}
+                options = {line.options}
+                />
+            })
+        }
+    </div>
   )
 }
 

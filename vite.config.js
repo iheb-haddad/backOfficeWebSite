@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import dotenv from 'dotenv';
 import react from '@vitejs/plugin-react';
 import fs from 'fs';
+import path from 'path';
 
 dotenv.config();
 const httpsType = process.env.VITE_HTTPS_TYPE;
@@ -61,5 +62,10 @@ export default defineConfig(() => {
   return {
     server: serverConfig,
     plugins: [react()],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
   };
 });

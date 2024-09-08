@@ -7,6 +7,14 @@ function ExportCSV({ data , fileName}) {
     const csvData = data.map(item => {
         const { createdAt,updatedAt,__v, ...rest } = item;
 
+        if(item.idDocumentation){
+            return {
+                _id: item._id,
+                project : item.idProject && item.idProject.name,
+                subProject : item.idSubProject && item.idSubProject.name,
+                document: item.idDocumentation.title,
+            }
+        }else
         if(item.idDocument){
             return {
                 _id: item._id,

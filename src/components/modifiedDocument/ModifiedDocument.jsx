@@ -147,14 +147,14 @@ function ModifiedDocument(props) {
                 <option value="brouillon">Brouillon</option>
             </select>
         </div>
-        { props.modifiedData.urlDocument !== '' && props.modifiedData.note === '' &&
+        {  props.modifiedData.note === '' &&
         <div className="configLine">
-             <h3>Url Document *</h3>
+             <h3>Url Document</h3>
             <input
                 type="text"
                 value={props.modifiedData.urlDocument}
                 onChange={handleUrlDocumentChange}
-                placeholder={initialValues.urlDocument}
+                placeholder={initialValues.urlDocument || "Saisir url document"}
                 // style={{border: (props.showError && !props.modifiedData.urlDocument) && "1px solid red"}}
                 />
         </div>

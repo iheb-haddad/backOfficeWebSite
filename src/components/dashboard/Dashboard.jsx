@@ -5,13 +5,15 @@ import { faCircleArrowRight ,faCircleArrowLeft} from '@fortawesome/free-solid-sv
 import './Dashboard.css'
 import useStore from '../../globalState/UseStore';
 import useAuth from '../../hooks/useAuth';
-import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { faRotateRight } from '@fortawesome/free-solid-svg-icons';
 import Axios from '../../services/Axios';
 import ModalBox from '../modalBox/ModalBox';
-import { use } from 'i18next';
+import { toast } from 'sonner';
+import Reinitialiser from './Reinitialiser';
+import HistoricList from './HistoricList';
+import {AreaChartCard, PieChartCard} from '../index';
 
 function Dashboard() {
     const initialFilterParameteres = {
@@ -192,18 +194,26 @@ function Dashboard() {
     
 
       const [showModal , setShowModal] = useState(false)
-      const [documentSelected , setDocumentSelected] = useState({})
+
       
-      const handleResetConsultNumber = () => {
-        Axios.put(`/documentations/resetConsultationNumber/${documentSelected._id}`)
+      const handleResetConsultNumber = (doc) => {
+        Axios.put(`/documentations/resetConsultationNumber/${doc._id}`)
         .then((res) => {
             const user = auth?.user?._id || '';
             fetchDocumentations(user);
             setShowModal(false)
-            console.log("consult number reseted");
         })
         .catch((err) => {
             console.log(err);
+        })
+
+        Axios.delete(`/consultHistoric/documentation/${doc._id}`)
+        .then((res) => {
+            toast.success('Historique de consultaion supprimé')
+        })
+        .catch((err) => {
+            console.log(err);
+            toast.error('Erreur lors de la suppression de l\'historique de consultation')
         })
     }
       const handleShowModal = (doc) => {
@@ -214,6 +224,21 @@ function Dashboard() {
       const handleCloseModal = () => {
         setShowModal(false)
       }
+
+      const [historicSelected , setHistoricSelected] = useState('')
+      const [historic , setHistoric] = useState([])
+
+      useEffect(() => {
+        if(historicSelected){
+            Axios.get(`/consultHistoric/documentation/${historicSelected}`)
+            .then((res) => {
+                setHistoric(res.data)
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
+      }, [historicSelected])
 
   return (
     <div className="accueil">
@@ -254,6 +279,8 @@ function Dashboard() {
                 <div className="title">Votre documentation, votre manière</div>
                 <div className="subtitle">"FlexiDoc : Votre documentation personnalisé pour une efficacité maximale et pour une productivité optimale.."</div>
             </div>
+            <PieChartCard />
+            <AreaChartCard />
             <div className="accueilBox smallBox" style={{gridColumn : 'span 3'}}>
                 <div className="docsList">
                     <div className="docsHead">
@@ -261,12 +288,14 @@ function Dashboard() {
                         <div className="creationDate">Date de création</div>
                         <div className="consultNumber">Nbr consultation</div>
                         <div className="lastConsult">Dernière consultation</div>
+                        <div className='hist'></div>
                     </div>
                     <div className="docsHead">
                         <input className="docsTitle" type="text" value={filterParameters.title} onChange={handleChangeFilterTitle}/>
                         <input className='creationDate' type="text" value={filterParameters.creationDate} onChange={handleChangeFilterCreationDate}/>
                         <input className='consultNumber' type="text" value={filterParameters.consultNumber} onChange={handleChangeFilterConsultNumber}/>
                         <input className='lastConsult' type="text" value={filterParameters.lastConsult} onChange={handleChangeFilterLastConsult}/>
+                        <div className='hist'></div>
                     </div>
                     <ClipLoader
                         className='loader'
@@ -276,11 +305,12 @@ function Dashboard() {
                         />
                     <div className="docsListContent">
                         {documentIsLoaded && filtredDocumentations.length > 0 ? filtredDocumentations.map((doc) => (
-                            <div className="docsLine" key={doc._id}>
+                            <div key={doc._id} className="docsLine">
                                 <div className="docsLineTitle">{doc.title}</div>
                                 <div className="creationDateLine">{reformDate(doc.createdAt)}</div>
-                                <div className="consultNumberLine">{doc.consultationNumber}{doc.consultationNumber > 0 &&<FontAwesomeIcon onClick={() => handleShowModal(doc)} icon={faRotateRight} style={{cursor :'pointer'}}/>}</div>
+                                <div className="consultNumberLine">{doc.consultationNumber}{doc.consultationNumber > 0 &&<Reinitialiser onContinue={() => handleResetConsultNumber(doc)} message={`Voulez-vous vraiment supprimer l'historique de consultation de du document "${doc.title}" ?`}/>}</div>
                                 <div className="lastConsultLine">{doc.lastConsultation}</div>
+                                <HistoricList doc={doc}/>
                             </div>
                         ))
                     :
@@ -288,18 +318,9 @@ function Dashboard() {
                     }
                     </div>
                 </div>
-                <div className="statIcon">
-                    {/* <>
-                        <div className="dateTitle">Date de consultation :</div>
-                        <DatePicker onChange={changeDateConsultation} value={dateConsultation} format="y-MM-dd"/>
-                    </> */}
-                    <div className="imgBox">
-                        <img src="./documentIcon.png" alt="" />
-                    </div>
-                </div>
             </div>
         </div>
-        {showModal && <ModalBox message={`Voulez-vous vraiment réinitialiser le nombre de consultation de ${documentSelected.title} ?`} onCancel={handleCloseModal} onContinue={handleResetConsultNumber}/> }
+        {/* {showModal && <ModalBox message={`Voulez-vous vraiment supprimer l'historique de consultation de ${documentSelected.title} ?`} onCancel={handleCloseModal} onContinue={handleResetConsultNumber}/> } */}
     </div>
   )
 }

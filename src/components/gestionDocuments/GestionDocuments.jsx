@@ -5,6 +5,7 @@ import useAuth from '../../hooks/useAuth';
 import useRessources from '../../hooks/useRessources';
 import useStore from '../../globalState/UseStore';
 import { toast } from 'sonner';
+import { GestionErrors } from '../index'
 
 function GestionDocuments() {
   const {confSelected , setConfSelected} = useRessources();
@@ -114,6 +115,7 @@ function GestionDocuments() {
                       <button className='appliquer' onClick={handleEnregistrer}>Appliquer</button>
               </div>
         </div> }
+        <GestionErrors  />
       </div>
   )
 }

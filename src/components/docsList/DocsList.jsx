@@ -180,7 +180,7 @@ function DocsList(props) {
             </div>
             ))
         }
-        { filtredMappings.length === 0 && <div style={{ textAlign : 'center',marginTop :'50px',fontSize :'1.6rem'}} >Aucun mapping trouvé</div>}
+        { filtredMappings.length === 0 && isLoaded && <div style={{ textAlign : 'center',marginTop :'50px',fontSize :'1.6rem'}} >Aucun mapping trouvé</div>}
     </div>
   )
 }

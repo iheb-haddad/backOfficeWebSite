@@ -331,28 +331,28 @@ function MappingAdd(props) {
     <div className="mappingAddBox">
         <div className="mappingAddEntete">
         <div className='configBox' style={{padding : '20px'}}>
+          <div className="configLine" style={{padding : '20px'}}>
+                <h3>Projet correspondant</h3>
+                <select value={projectSelected} onChange={handleProjectChange}>
+                    <option value="" disabled hidden>----</option>
+                    {
+                      userProjects.map((project) => (
+                        <option key={project._id} value={project._id}>{project.name}</option>
+                      ))
+                    }
+                </select>
+          </div>  
         <div className="configLine" style={{padding : '20px'}}>
-              <h3>Projet correspondant</h3>
-              <select value={projectSelected} onChange={handleProjectChange}>
-                  <option value="" disabled hidden>----</option>
-                  {
-                    userProjects.map((project) => (
-                      <option key={project._id} value={project._id}>{project.name}</option>
-                    ))
-                  }
-              </select>
-        </div>  
-      <div className="configLine" style={{padding : '20px'}}>
-        <h3>Sous-projet correspondant</h3>
-              <select value={subProjectSelected} onChange={handleSubProjectChange}>
-                  <option value="" disabled hidden>----</option>
-                  {
-                    subProjects.filter((subProject) => subProject.idProject._id === projectSelected).map((project) => (
-                      <option key={project._id} value={project._id}>{project.name}</option>
-                    ))
-                  }
-              </select>
-      </div>
+          <h3>Sous-projet correspondant</h3>
+                <select value={subProjectSelected} onChange={handleSubProjectChange}>
+                    <option value="" disabled hidden>----</option>
+                    {
+                      subProjects.filter((subProject) => subProject.idProject._id === projectSelected).map((project) => (
+                        <option key={project._id} value={project._id}>{project.name}</option>
+                      ))
+                    }
+                </select>
+        </div>
       </div>
           <div className="enteteTitle">Configurations basées sur :</div>
             <input type="radio" name='source' value='sourceToDoc' checked = {checkedSource} onChange={handleChangeToSource}/>

@@ -2,7 +2,7 @@
     min-width: 300px;
     background-color: #f1f1fc;
     height: 100vh;
-    z-index: 9999999999999999; 
+    z-index: 50; 
     position: fixed;
     font-family: "Montserrat", sans-serif;
   }

@@ -5,7 +5,7 @@ import './Navbar.css'
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import useStore from '../../globalState/UseStore';
-import { use } from 'i18next';
+
 function Navbar(props) {
   const {navLineClicked , auth} = useAuth();
   const { projects , fetchProjects } = useStore();
@@ -40,7 +40,7 @@ function Navbar(props) {
             </Link>
             <Link to="/GestionDocuments" className={`navLine ${navLineClicked === 'documents' ? 'navClicked' : 'notClicked'}`} onClick={props.clickDocuments}>
                 <FontAwesomeIcon icon={faGear} />
-                <div className="title" >Gestion des documents/Notes</div>
+                <div className="title" >Gestion des documents/Notes/Errors</div>
             </Link>
             {(auth?.user?.role === 'admin' || projects.length > 0 ) && <Link to="/GestionProjects" className={`navLine ${navLineClicked === 'projects' ? 'navClicked' : 'notClicked'}`} onClick={props.clickProjects}>
                 <FontAwesomeIcon icon={faGear} />

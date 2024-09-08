@@ -24,6 +24,7 @@ function GestionSections() {
         {id:5 , titleFr : 'Notes' , titleEn : 'Notes'},
         {id:6 , titleFr : 'Formations' , titleEn : 'Trainings'},
         {id:7 , titleFr : 'Autres' , titleEn : 'Others'},
+        {id:8 , titleFr : 'Erreurs' , titleEn : 'Errors'},
     ]
 
     const [sectionsTitles , setSectionsTitles ] = useState ([])

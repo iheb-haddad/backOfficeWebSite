@@ -29,3 +29,8 @@ export {default as ExportCSV} from './exportCsv/ExportCsv';
 export {default as GestionUsers} from './gestionUsers/GestionUsers';
 export {default as GestionSubProjects} from './gestionSubProjects/GestionSubProjects';
 export {default as GestionComptes} from './gestionComptes/GestionComptes';  
+export {default as GestionErrors} from './gestionErrors/GestionErrors';
+export {default as SmtpConfig} from './smtpConfig/SmtpConfig';
+export {default as SupportMailConfig} from './supportMailConfig/SupportMailConfig';
+export {default as PieChartCard} from './pieChart/PieChart';
+export {default as AreaChartCard} from './areaChart/AreaChart';

@@ -14,6 +14,8 @@ import ExportCSV from '../exportCsv/ExportCsv';
 import UploadPage from '../uploadPage/UploadPage';
 import useStore from '../../globalState/UseStore';
 import { toast } from 'sonner';
+import SmtpConfig from '../smtpConfig/SmtpConfig';
+import SupportMailConfig from '../supportMailConfig/SupportMailConfig';
 
 function Configurations() {
   const [initialValues , setInitialValues] = useState({})
@@ -488,6 +490,8 @@ function Configurations() {
         }
       </div>
       <GestionSections />
+      <SmtpConfig />
+      <SupportMailConfig />
       <div className="infoContainer">
         <div className="buttonsInfo">
             <button onClick={handleLiveConfiguration}>Configurer en direct</button>

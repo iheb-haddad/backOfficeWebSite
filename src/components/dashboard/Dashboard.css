@@ -231,37 +231,46 @@
     background-color: #dbd8d8;
 }
 .docsTitle {
-    width: 24%;
+    width: 23%;
 }
 .creationDate {
-    width: 20%
+    width: 19%
 }
 .consultNumber {
-    width: 16%
+    width: 15%
 }
 .lastConsult {
-    width: 24%
+    width: 20%
 }
 .docsLineTitle {
-    width: 24%;
+    width: 23%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     cursor: default;
 }
 .creationDateLine {
-    width: 20%;
+    width: 19%;
     cursor: default;
 }
 .consultNumberLine {
-    width: 16%;
+    width: 15%;
     cursor: default;
     display: flex;
     justify-content: space-between;
 }
 .lastConsultLine {
-    width: 24%;
+    width: 20%;
     cursor: default;
+}
+.hist{
+    width : 7%;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
 }
 @media (max-width: 1300px){
     .citation .title{
@@ -492,3 +501,21 @@
         }
     }
     }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 40px;
+        button{
+            background-color: white;
+            color: #5356d0;
+            border: 2px solid rgb(83, 86, 208, 0.6);
+            border-radius: 8px;
+            padding: 5px 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            margin: 7px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+    }    

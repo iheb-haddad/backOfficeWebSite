@@ -12,6 +12,7 @@ const useStore = create((set) => ({
   subProjects : [],
   configurations : [],
   users : [],
+  errors : [],
   mappingIsLoaded: false,
   documentIsLoaded: false,
 
@@ -98,6 +99,14 @@ const useStore = create((set) => ({
       console.error(error);
     }
   },
+  fetchErrors: async(user) => {
+    try {
+      const response = await Axios.get(`errors/${user}`);
+      set({ errors: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }));
 
 export default useStore;

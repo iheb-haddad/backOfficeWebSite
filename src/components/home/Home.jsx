@@ -86,7 +86,7 @@ function Home() {
       aria-label="Loading Spinner"
       data-testid="loader"
       /> :
-      <div className="container" style={{backgroundImage:modBackground && 'url(../../public/backFilter.png)'}}>        
+      <div className="containerr" style={{backgroundImage:modBackground && 'url(../../public/backFilter.png)'}}>        
             {((screenWidth > 1160 || showNavbar) && (!liveConfiguration)) &&
             <Navbar 
             showNavbar={handleShowNavbar}

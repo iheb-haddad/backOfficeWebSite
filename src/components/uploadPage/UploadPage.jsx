@@ -96,7 +96,7 @@ function UploadPage({filesType , setDataChanged}) {
       return false;
     }
     if(!document.title){
-      setMessage('Manque le nom du documpent à la ligne ' + (index + indexError + 1))
+      setMessage('Manque le nom du document à la ligne ' + (index + indexError + 1))
       setShowModal(true)
       setIndexError(index + indexError + 1)
       console.error('Document name is required');
@@ -420,6 +420,49 @@ function UploadPage({filesType , setDataChanged}) {
     };
   }
 
+  const addError = async (error,index) => {
+    if(!error.project){
+      setMessage('Manque du projet à la ligne ' + (index + indexError + 1))
+      setShowModal(true)
+      setIndexError(index + indexError + 1)
+      console.error('Project is required');
+      return false;
+    }
+    if(!error.subProject){
+      setMessage('Manque du sous projet à la ligne ' + (index + indexError + 1))
+      setShowModal(true)
+      setIndexError(index + indexError + 1)
+      console.error('SubProject is required');
+      return false;
+    }
+    if(!error.document){
+      setMessage('Manque du document à la ligne ' + (index + indexError + 1))
+      setShowModal(true)
+      setIndexError(index + indexError + 1)
+      console.error('Document is required');
+      return false;
+    }
+    
+    const newError = {
+      project : error.project,
+      subProject : error.subProject,
+      document : error.document
+    }
+
+    try {
+      const response = await Axios.post('/errors/upload', newError);
+      console.log('New error added:', response.data);
+      setDataChanged(prev => prev + 1);
+      return true;
+    } catch(error){
+      console.error('Error adding new error:', error);
+      setMessage(error.response.data.message + ' à la ligne ' + (index + indexError + 1))
+      setShowModal(true)
+      setIndexError(index + indexError + 1)
+      return false;
+    };
+  }
+
 
   const handleContinuer = async () => {
     console.log(indexError);
@@ -508,6 +551,17 @@ function UploadPage({filesType , setDataChanged}) {
       const user = newDatas[i];
       if (!await addUser(user, i)) {
         console.error('Error adding new user:');
+        break; // Break out of the loop
+      }
+      i === newDatas.length - 1 && setIndexError(0)
+    }
+  }else if(filesType === 'erreurs'){
+    const newDatas = data.slice(indexError)
+    newDatas.length === 0 && setIndexError(0)
+    for (let i = 0; i < newDatas.length; i++) {
+      const error = newDatas[i];
+      if (!await addError(error, i)) {
+        console.error('Error adding new error:');
         break; // Break out of the loop
       }
       i === newDatas.length - 1 && setIndexError(0)
@@ -640,6 +694,15 @@ function UploadPage({filesType , setDataChanged}) {
           }
         }
       }
+      if(filesType === 'erreurs'){
+        for (let i = 0; i < result.data.length; i++) {
+          const error = result.data[i];
+          if (!await addError(error, i)) {
+            console.error('Error adding new error:');
+            break; // Break out of the loop
+          }
+        }
+      }
 
       setTimeout(() => {
         const updatedBarWidth = [...barWidth];
@@ -757,6 +820,16 @@ function UploadPage({filesType , setDataChanged}) {
           const user = result.data[i];
           if (!await addUser(user, i)) {
             console.error('Error adding new user:');
+            break; // Break out of the loop
+          }
+        }
+      }
+
+      if(filesType === 'erreurs'){
+        for (let i = 0; i < result.data.length; i++) {
+          const error = result.data[i];
+          if (!await addError(error, i)) {
+            console.error('Error adding new error:');
             break; // Break out of the loop
           }
         }
