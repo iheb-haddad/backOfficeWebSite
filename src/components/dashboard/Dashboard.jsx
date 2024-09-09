@@ -158,7 +158,7 @@ function Dashboard() {
             const titleMatch = filterParameters.title === '' || doc.title.toLowerCase().startsWith(filterParameters.title.toLowerCase());
             const creationDateMatch = filterParameters.creationDate === '' ||compareDate(filterParameters.creationDate,doc.createdAt.split("T")[0])
             const consultNumberMatch = compareConsultNumber(doc.consultationNumber);
-            const lastConsultMatch = filterParameters.lastConsult === '' ||compareDate(filterParameters.lastConsult,doc.lastConsultation.split("T")[0])
+            const lastConsultMatch = filterParameters.lastConsult === '' || doc.lastConsultation && compareDate(filterParameters.lastConsult,doc.lastConsultation.split("T")[0])
             return titleMatch && creationDateMatch && consultNumberMatch && lastConsultMatch;
         });
         setFiltredDocumentations(filteredData);
@@ -309,7 +309,7 @@ function Dashboard() {
                                 <div className="docsLineTitle">{doc.title}</div>
                                 <div className="creationDateLine">{reformDate(doc.createdAt)}</div>
                                 <div className="consultNumberLine">{doc.consultationNumber}{doc.consultationNumber > 0 &&<Reinitialiser onContinue={() => handleResetConsultNumber(doc)} message={`Voulez-vous vraiment supprimer l'historique de consultation de du document "${doc.title}" ?`}/>}</div>
-                                <div className="lastConsultLine">{doc.lastConsultation}</div>
+                                <div className="lastConsultLine">{doc.lastConsultation && reformDate(doc.lastConsultation)}</div>
                                 <HistoricList doc={doc}/>
                             </div>
                         ))
