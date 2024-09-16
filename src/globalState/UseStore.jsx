@@ -1,25 +1,25 @@
-import {create} from 'zustand';
-import Axios from '../services/Axios';
+import { create } from "zustand";
+import Axios from "../services/Axios";
 
 const useStore = create((set) => ({
   documentations: [],
   sources: [],
   sections: [],
   mappings: [],
-  languages : [],
-  projects : [],
-  userProjects : [],
-  subProjects : [],
-  configurations : [],
-  users : [],
-  errors : [],
+  languages: [],
+  projects: [],
+  userProjects: [],
+  subProjects: [],
+  configurations: [],
+  users: [],
+  errors: [],
   mappingIsLoaded: false,
   documentIsLoaded: false,
 
   fetchDocumentations: async (user) => {
     try {
       const response = await Axios.get(`/documentations/${user}`);
-      set({ documentations: response.data , documentIsLoaded : true});
+      set({ documentations: response.data, documentIsLoaded: true });
     } catch (error) {
       console.error(error);
     }
@@ -36,7 +36,7 @@ const useStore = create((set) => ({
 
   fetchSections: async () => {
     try {
-      const response = await Axios.get('/sections');
+      const response = await Axios.get("/sections");
       set({ sections: response.data });
     } catch (error) {
       console.error(error);
@@ -46,14 +46,14 @@ const useStore = create((set) => ({
   fetchMappings: async (user) => {
     try {
       const response = await Axios.get(`/mappings/user/${user}`);
-      set({ mappings: response.data , mappingIsLoaded : true});
+      set({ mappings: response.data, mappingIsLoaded: true });
     } catch (error) {
       console.error(error);
     }
   },
   fetchLanguages: async () => {
     try {
-      const response = await Axios.get('/languages');
+      const response = await Axios.get("/languages");
       set({ languages: response.data });
     } catch (error) {
       console.error(error);
@@ -77,7 +77,7 @@ const useStore = create((set) => ({
   },
   fetchConfigurations: async () => {
     try {
-      const response = await Axios.get('/configurations');
+      const response = await Axios.get("/configurations");
       set({ configurations: response.data });
     } catch (error) {
       console.error(error);
@@ -99,14 +99,14 @@ const useStore = create((set) => ({
       console.error(error);
     }
   },
-  fetchErrors: async(user) => {
+  fetchErrors: async (user) => {
     try {
       const response = await Axios.get(`errors/${user}`);
       set({ errors: response.data });
     } catch (error) {
       console.error(error);
     }
-  }
+  },
 }));
 
 export default useStore;

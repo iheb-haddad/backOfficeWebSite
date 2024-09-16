@@ -1,267 +1,342 @@
-import React , {useState , useEffect} from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload} from '@fortawesome/free-solid-svg-icons';
-import Axios from '../../services/Axios';
-import useStore from '../../globalState/UseStore';
-import useAuth from '../../hooks/useAuth';
-import ModifiedProject from '../modifiedProject/ModifiedProject';
-import UploadPage from '../uploadPage/UploadPage';
-import ExportCSV from '../exportCsv/ExportCsv';
-import ModalBox from '../modalBox/ModalBox';
-import { toast } from 'sonner';
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import Axios from "../../services/Axios";
+import useStore from "../../globalState/UseStore";
+import useAuth from "../../hooks/useAuth";
+import ModifiedProject from "../modifiedProject/ModifiedProject";
+import UploadPage from "../uploadPage/UploadPage";
+import ExportCSV from "../exportCsv/ExportCsv";
+import ModalBox from "../modalBox/ModalBox";
+import { toast } from "sonner";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { DataTable } from "../ui/dataTable";
+import { Button } from "../ui/Button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { MoreHorizontal } from "lucide-react";
+import ModifyProject from "../gestionProjects/popupModifiedProj";
 
 function GestionSubProjects() {
-    const { setNavLineClicked , auth } = useAuth();
-    const [showUploadPage , setShowUploadPage] = useState(false)
+  const { setNavLineClicked, auth } = useAuth();
+  const [showUploadPage, setShowUploadPage] = useState(false);
 
-    const [showModal , setShowModal] = useState(false)
-    const [message , setMessage] = useState('')
-    const [projectSelected , setProjectSelected] = useState('')
+  const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState("");
+  const [projectSelected, setProjectSelected] = useState("");
 
-    const tryToDelete = (project) => {
-      setProjectSelected(project._id)
-      setMessage(`Attention vous êtes sur le point de supprimer le projet ${project.name} et tout ce qui lui est associé (documents,sources,users...).`)
-      setShowModal(true)
-    }
+  const tryToDelete = (project) => {
+    setProjectSelected(project._id);
+    setMessage(
+      `Attention vous êtes sur le point de supprimer le projet ${project.name} et tout ce qui lui est associé (documents,sources,users...).`
+    );
+    setShowModal(true);
+  };
 
-    const handleAnnuler = () => {
-      setShowModal(false)
-    }
-    const handleContinuer = () => {
-      setShowModal(false)
-      handleDeleteProject(projectSelected)
-    }
+  const handleAnnuler = () => {
+    setShowModal(false);
+  };
+  const handleContinuer = () => {
+    setShowModal(false);
+    handleDeleteProject(projectSelected);
+  };
 
-    const clickUploadbtn = () => {
-      setShowUploadPage(prev => !prev)
-  }
+  const clickUploadbtn = () => {
+    setShowUploadPage((prev) => !prev);
+  };
 
-    const initialApp = {
-        name :'',
-        description:'',
-        project:''
-      }
-      const { projects ,fetchProjects , subProjects ,fetchSubProjects} = useStore();
-      const [projectForm , setprojectForm] = useState(initialApp)
-      const [dataChanged , setDataChanged] = useState(0)
-      const [msgError1, setMsgError1] = useState('')
-      const [msgError2, setMsgError2] = useState('')
-      const [showListProjects ,setShowListProjects] = useState(false)
-      const [showError , setShowError] = useState(false)
-      const [showError2 , setShowError2] = useState(false)
-      const [isModified , setIsModified] = useState('')
-      const [modifiedName , setModifiedName] = useState('')
-      const [modifiedDescription , setModifiedDescription] = useState('')
+  const initialApp = {
+    name: "",
+    description: "",
+    project: "",
+  };
+  const {
+    projects,
+    fetchProjects,
+    subProjects,
+    fetchSubProjects,
+    userProjects,
+    fetchUserProjects,
+  } = useStore();
+  const [projectForm, setprojectForm] = useState(initialApp);
+  const [dataChanged, setDataChanged] = useState(0);
+  const [msgError1, setMsgError1] = useState("");
+  const [msgError2, setMsgError2] = useState("");
+  const [showListProjects, setShowListProjects] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showError2, setShowError2] = useState(false);
+  const [isModified, setIsModified] = useState("");
+  const [modifiedName, setModifiedName] = useState("");
+  const [modifiedDescription, setModifiedDescription] = useState("");
+  const [projectFilter, setProjectFilter] = useState("");
 
-      useEffect(() => {
-        setNavLineClicked("projects")
-        const user = auth?.user?._id || '';
-        fetchProjects(user);
-        fetchSubProjects(user);
-      },[dataChanged]);
+  useEffect(() => {
+    setNavLineClicked("projects");
+    const user = auth?.user?._id || "";
+    fetchProjects(user);
+    fetchSubProjects(user);
+    fetchUserProjects(user);
+  }, [dataChanged]);
 
-      const handleProjectChange = (event) => {
-        setprojectForm((prevData) => ({
-            ...prevData,
-            project : event.target.value,
-            }));
-        };
+  const handleProjectChange = (event) => {
+    setprojectForm((prevData) => ({
+      ...prevData,
+      project: event.target.value,
+    }));
+  };
 
-      const handleProjectNameChange = (event) => {
-        setMsgError1('')
-            setprojectForm((prevData) => ({
-            ...prevData,
-            name : event.target.value,
-        }
-        ))
+  const handleProjectNameChange = (event) => {
+    setMsgError1("");
+    setprojectForm((prevData) => ({
+      ...prevData,
+      name: event.target.value,
+    }));
+  };
+
+  const handleProjectDescriptionChange = (event) => {
+    setprojectForm((prevData) => ({
+      ...prevData,
+      description: event.target.value,
+    }));
+  };
+
+  const handleEnregistrerProject = () => {
+    setShowError(false);
+    const hasEmptyFields =
+      projectForm.name === "" || projectForm.description === "";
+    setShowError(hasEmptyFields);
+    if (!hasEmptyFields) {
+      const newProject = {
+        idProject: projectForm.project,
+        name: projectForm.name,
+        description: projectForm.description,
       };
-      
-      const handleProjectDescriptionChange = (event) => {
-        setprojectForm((prevData) => ({
-        ...prevData,
-        description : event.target.value,
+      Axios.post("/subProjects", newProject)
+        .then((data) => {
+          console.log("app added:", data);
+          setprojectForm(initialApp);
+          setDataChanged((prev) => prev + 1);
+          toast.success("Sous-projet ajouté avec succès");
+        })
+        .catch((error) => {
+          toast.error(error.response.data.message);
+          console.error("Error adding app:", error);
+        });
+    } else {
+      toast.error("Veuillez remplir tous les champs");
     }
-    ))};
+  };
 
-      const handleEnregistrerProject = () => {
-        setShowError(false)
-        const hasEmptyFields = projectForm.name === '' || projectForm.description === '';
-        setShowError(hasEmptyFields)
-        if(!hasEmptyFields){
-            const newProject = {
-                idProject : projectForm.project,
-                name : projectForm.name,
-                description : projectForm.description
-            };
-            Axios.post('/subProjects',newProject)
-                .then((data) => {
-                console.log('app added:', data);
-                setprojectForm(initialApp)
-                setDataChanged(prev => prev + 1)
-                toast.success('Sous-projet ajouté avec succès')
-                })
-                .catch((error) => {
-                    toast.error(error.response.data.message);
-                    console.error('Error adding app:', error);
-                }
-                );
-        }else{
-          toast.error('Veuillez remplir tous les champs')
-        }      
-        };  
+  const handleAnnulerWebApp = () => {
+    setprojectForm(initialApp);
+  };
 
-        const handleAnnulerWebApp = () => {
-          setprojectForm(initialApp)
-        };
+  const handleDeleteProject = (projectId) => {
+    Axios.delete(`/subProjects/${projectId}`)
+      .then((data) => {
+        setDataChanged((prev) => prev + 1);
+        console.log("project deleted");
+        toast.success("Sous-projet supprimé avec succès");
+      })
+      .catch((error) => {
+        console.error("Error deleting ", error);
+      });
+  };
 
-        const handleShowListProjects = () => {
-            setShowListProjects(prev => !prev)
-        } 
+  const columns = [
+    {
+      accessorKey: "name",
+      header: "Nom",
+    },
+    {
+      accessorKey: "description",
+      header: "Description",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const project = row.original;
 
-        const handleDeleteProject = (projectId) => {
-            Axios.delete(`/subProjects/${projectId}`)
-            .then((data) => {
-                setDataChanged(prev => prev +1)
-                console.log("project deleted")
-                toast.success('Sous-projet supprimé avec succès')
-                })
-                .catch((error) => {
-                  console.error('Error deleting ', error);
-                });
-          }
-
-          const handleModifProject = (project) => {
-            setMsgError2('')
-            setModifiedName(project.name)
-            setModifiedDescription(project.description)
-            setIsModified(project._id)
-        }
-
-        const handleGetModifiedProject = (projectId) => {
-            const hasEmptyFields = modifiedName === '' || modifiedDescription === '';
-            setShowError2(hasEmptyFields)
-            if(!hasEmptyFields){
-                const modifiedProject = {
-                    name : modifiedName,
-                    description : modifiedDescription
-                };
-                Axios.put(`/subProjects/${projectId}`,modifiedProject)
-                    .then((data) => {
-                    console.log('app modified:', data);
-                    setModifiedName('')
-                    setModifiedDescription('')
-                    setIsModified('')
-                    setDataChanged(prev => prev + 1)
-                    toast.success('Sous-projet modifié avec succès')
-                    })
-                    .catch((error) => {
-                        error.response.status === 400 && setMsgError2('Nom de projet déjà existe')
-                        console.error('Error modifying app:', error);
-                    }
-                    );
-                }      
-            }
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-4 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <ModifyProject
+                project={project}
+                setDataChanged={setDataChanged}
+                type="subProject"
+              />
+              <DropdownMenuItem>
+                <button onClick={() => handleDeleteProject(project._id)}>
+                  Supprimer
+                  <FontAwesomeIcon icon={faTrash} className="text-sm ml-2" />
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
 
   return (
     <>
-      <div className="buttonsBox" style={{marginBottom : '40px',paddingRight:'40px', display :'flex', justifyContent:'space-between',alignItems:'center',marginTop:'30px'}}>
-        { !showUploadPage ? <button className="uploadbtn" onClick={clickUploadbtn}><FontAwesomeIcon icon={faUpload} /><span>Importer des sous-projets utilisant des fichiers csv</span></button>
-          : <button className="uploadbtn" onClick={clickUploadbtn}><FontAwesomeIcon icon={faUpload} /><span>Cacher la page d'importation</span></button>}
-        {showUploadPage && <a className='uploadbtn' href='subProjectsModel.csv' download='subProjectsModel.csv'>Télécharger un modèle</a>}
+      <div
+        className="buttonsBox"
+        style={{
+          marginBottom: "40px",
+          paddingRight: "40px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "30px",
+        }}
+      >
+        {!showUploadPage ? (
+          <button className="uploadbtn" onClick={clickUploadbtn}>
+            <FontAwesomeIcon icon={faUpload} />
+            <span>Importer des projets utilisant des fichiers csv</span>
+          </button>
+        ) : (
+          <button className="uploadbtn" onClick={clickUploadbtn}>
+            <FontAwesomeIcon icon={faUpload} />
+            <span>Cacher la page d'importation</span>
+          </button>
+        )}
+        {showUploadPage && (
+          <a
+            className="uploadbtn"
+            href="ProjectsModel.csv"
+            download="ProjectsModel.csv"
+          >
+            Télécharger un modèle
+          </a>
+        )}
       </div>
-      {showUploadPage && <UploadPage filesType={'subProjects'} setDataChanged={setDataChanged}/>}
+      {showUploadPage && (
+        <UploadPage filesType={"subProjects"} setDataChanged={setDataChanged} />
+      )}
       <div className="urlBox">
-      <h5>Sous-Projets</h5>   
-      <h4>Ajouter un nouveau sous-projet.</h4>
-      <div className='configBox'>
-      <div className="configLine">
-          <h3>Projet correspondant</h3>
-              <select value={projectForm.project} onChange={handleProjectChange}
-                style={{border: (showError && !projectForm.project) && "1px solid red"}}>
-                    <option value="" disabled hidden>----</option>
-                    {
-                      projects.map((project) => (
-                        <option key={project._id} value={project._id}>{project.name}</option>
-                      ))
-                    }
-              </select>
-      </div>
-      <div className="configLine">
-        <h3>Nom du sous-projet</h3>
-        <input
-            type="text"
-            value={projectForm.name}
-            onChange={handleProjectNameChange}
-            placeholder="Saisir titre "
-            style={{border: (showError && !projectForm.name) && "1px solid red"}}
+        <h5>Projets</h5>
+        <h4>Ajouter un nouveau projet.</h4>
+        <div className="configBox">
+          <div className="configLine">
+            <h3>Client correspondant</h3>
+            <select
+              value={projectForm.project}
+              onChange={handleProjectChange}
+              style={{
+                border: showError && !projectForm.project && "1px solid red",
+              }}
+            >
+              <option value="" disabled hidden>
+                ----
+              </option>
+              {projects.map((project) => (
+                <option key={project._id} value={project._id}>
+                  {project.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="configLine">
+            <h3>Nom du projet</h3>
+            <input
+              type="text"
+              value={projectForm.name}
+              onChange={handleProjectNameChange}
+              placeholder="Saisir titre "
+              style={{
+                border: showError && !projectForm.name && "1px solid red",
+              }}
             />
-          <div className="adminErr">
-              <p style={{color:"red"}}>{msgError1}</p>
-          </div> 
-      </div>
-      <div className="configLine">
-        <h3>Description</h3>
-        <input
-            type="text"
-            value={projectForm.description}
-            onChange={handleProjectDescriptionChange}
-            placeholder="Saisir titre "
-            style={{border: (showError && !projectForm.description) && "1px solid red"}}
+            <div className="adminErr">
+              <p style={{ color: "red" }}>{msgError1}</p>
+            </div>
+          </div>
+          <div className="configLine">
+            <h3>Description</h3>
+            <input
+              type="text"
+              value={projectForm.description}
+              onChange={handleProjectDescriptionChange}
+              placeholder="Saisir titre "
+              style={{
+                border:
+                  showError && !projectForm.description && "1px solid red",
+              }}
             />
+          </div>
+        </div>
+        <div className="confButtons" style={{ marginBottom: "30px" }}>
+          <button onClick={handleAnnulerWebApp}>Annuler</button>
+          <button className="appliquer" onClick={handleEnregistrerProject}>
+            Appliquer
+          </button>
+        </div>
+        <div className="configBox" style={{ padding: "20px" }}>
+          <div className="configLine" style={{ padding: "20px" }}>
+            <h3>Client correspondant</h3>
+            <select
+              value={projectFilter}
+              onChange={(e) => setProjectFilter(e.target.value)}
+            >
+              <option value="" disabled hidden>
+                ----
+              </option>
+              {userProjects.map((project) => (
+                <option key={project._id} value={project._id}>
+                  {project.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="applicationsList">
+          <div className="flex justify-end">
+            <Button
+              className="bg-white text-black border hover:bg-white"
+              onClick={() => setShowListProjects(!showListProjects)}
+            >
+              {showListProjects ? "cacher liste" : "afficher liste"}
+            </Button>
+          </div>
+          {showListProjects && (
+            <DataTable
+              data={subProjects.filter((subPrj) => {
+                return (
+                  projectFilter === "" || subPrj.idProject._id === projectFilter
+                );
+              })}
+              columns={columns}
+              type="project"
+              nbrColumnsMax={3}
+            />
+          )}
+          <ExportCSV data={subProjects} fileName={"projects"} />
+        </div>
       </div>
-    </div>
-    <div className="confButtons" style={{marginBottom : '30px'}}>
-            <button onClick={handleAnnulerWebApp}>Annuler</button>
-            <button className='appliquer' onClick={handleEnregistrerProject}>Appliquer</button>
-    </div>
-    <div className="applicationsList">
-          <div className="document">
-            {!showListProjects && <div className="documentName">Nom</div>}
-            {!showListProjects && <div className="documentName">Description</div>}
-            { showListProjects ? <button style={{position :'absolute', right :'50px'}} onClick={handleShowListProjects}>Cacher Liste</button>:<button onClick={handleShowListProjects}>Afficher Liste</button>}
-          </div>
-      { showListProjects &&
-        projects.map((project) => (
-          <div key={project._id}>
-              <h4 style={{padding : '0',margin :'20px 0 0 0', fontSize :'1.1rem',fontWeight:'bold'}}>{project.name}</h4>
-              <div className="document">
-              {<div className="documentName">Nom</div>}
-              {<div className="documentName">Description</div>}
-              <button></button>
-              <button></button>
-          </div>
-            { subProjects.filter(subProject => subProject.idProject._id === project._id).length === 0 ?
-            <h4 style={{textAlign : 'center'}}>Aucun sous-projets</h4> :
-              subProjects.filter(subProject => subProject.idProject._id === project._id).map((subProject) => (
-              <div key={subProject._id}>
-                  <div className="document documentLine" style= {{fontSize:'14px',color:'black'}} key={subProject._id}>
-                  <div className="documentName">{subProject.name}</div>
-                  <div className="documentName">{subProject.description}</div>
-                  { isModified === subProject._id ? <button onClick={() => handleGetModifiedProject(subProject._id)}>appliquer</button> :<button onClick={() => handleModifProject(subProject)}>modifier</button>}
-                  <button onClick={()=>tryToDelete(subProject)}>Supprimer</button>
-                  </div>
-                  {
-                  isModified === subProject._id && <ModifiedProject project = {subProject}
-                  modifiedName={modifiedName}
-                  modifiedDescription={modifiedDescription}
-                  setModifiedName={setModifiedName}
-                  setModifiedDescription={setModifiedDescription}
-                  msgError={msgError2}
-                  setMsgError={setMsgError2}
-                  showError={showError2}/>
-                  }
-              </div>  
-              ))
-          }
-          </div>
-        ))
-      }
-      <ExportCSV data={subProjects} fileName={'subProjects'}/>
-    </div>
-    </div>
-    {showModal && <ModalBox type='delete' message={message} onCancel={handleAnnuler} onContinue={handleContinuer}/>}
-  </>    
-  )
+      {showModal && (
+        <ModalBox
+          type="delete"
+          message={message}
+          onCancel={handleAnnuler}
+          onContinue={handleContinuer}
+        />
+      )}
+    </>
+  );
 }
 
-export default GestionSubProjects
+export default GestionSubProjects;

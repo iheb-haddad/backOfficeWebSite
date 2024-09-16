@@ -1,117 +1,114 @@
-.addAdminForm{
-    display: grid;
-    grid-template-columns: auto auto;
-    row-gap: 10px;
-    column-gap: 10px;
-    width: 100%;
-    height: 100%;
+.addAdminForm {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 10px;
+  column-gap: 10px;
+  width: 100%;
+  height: 100%;
 }
-.addAdminLine h3{
-    margin-bottom: 5px;
-    color: #222e54;;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-  .addAdminLine input{
-    border:1px solid rgb(214, 214, 214);
-    background-color: white;
-    height: 30px;
-    padding:0 10px;
-    width: 90%;
-  }
-  .addAdminLine input:focus{
-    outline-color: rgb(83,86,208,0.6) ;
-  }
-  .addAdminLine input::placeholder{
-    color: #222e54;
-  }
-  .addAdminLine select{
-    border:1px solid rgb(214, 214, 214);
-    background-color: white;
-    height: 34px;
-    padding:0 10px;
-    width: 90%;
-  }
-  .adminErr p{
-    margin: 0;
-    padding: 0;
-    padding-left: 10px;
-    margin-top: 5px;
-    font-family: "Montserrat",sans-serif;
-    font-weight: 500;
+.addAdminLine h3 {
+  margin-bottom: 5px;
+  color: #222e54;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.addAdminLine input {
+  border: 1px solid rgb(214, 214, 214);
+  background-color: white;
+  height: 30px;
+  padding: 0 10px;
+  width: 90%;
+}
+.addAdminLine input:focus {
+  outline-color: rgb(83, 86, 208, 0.6);
+}
+.addAdminLine input::placeholder {
+  color: #222e54;
+}
+.addAdminLine select {
+  border: 1px solid rgb(214, 214, 214);
+  background-color: white;
+  height: 34px;
+  padding: 0 10px;
+  width: 90%;
+}
+.adminErr p {
+  margin: 0;
+  padding: 0;
+  padding-left: 10px;
+  margin-top: 5px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+}
+.message {
+  font-size: 1.2rem;
+  margin-right: 40px;
+}
+@media (max-width: 800px) {
+  .addAdminLine h3 {
     font-size: 0.8rem;
   }
-  .message{
-    font-size: 1.2rem;
-    margin-right: 40px;
+  .adminErr p {
+    font-size: 0.7rem;
   }
-  @media (max-width: 800px) {
-    .addAdminLine h3{
-      font-size: 0.8rem;
-    }
-    .adminErr p{
-      font-size: 0.7rem;
-    }
-    .message{
-      font-size: 1rem;
-      margin-right: 35px;
-    }
-
-  }  
-  @media (max-width: 580px) {
-    .addAdminLine h3{
-      font-size: 0.7rem;
-    }
-    .addAdminLine input{
-      font-size: 0.7rem;
-      padding: 0 5px;
-      width: 85%;
-      height: 24px;
-    }
-    .adminErr p{
-      font-size: 0.6rem;
-    }
-    .addAdminForm{
-      row-gap: 3px;
-      column-gap: 5px;
-    }
-    .message{
-      font-size: 0.7rem;
-      margin-right: 20px;
-    }
-  }
-.addAdmin .settingsButton{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-right: 70px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    /* border-top: 1px solid rgb(194, 184, 184); */
-}
-.addAdmin .settingsButton button{
-    background-color: white;
-    color: #5356d0;
-    border : 2px solid rgb(83,86,208,0.6);
-    border-radius: 8px;
-    padding: 7px 14px;
-    font-family: 'Montserrat' , sans-serif;
+  .message {
     font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
+    margin-right: 35px;
+  }
+}
+@media (max-width: 580px) {
+  .addAdminLine h3 {
+    font-size: 0.7rem;
+  }
+  .addAdminLine input {
+    font-size: 0.7rem;
+    padding: 0 5px;
+    width: 85%;
+    height: 24px;
+  }
+  .adminErr p {
+    font-size: 0.6rem;
+  }
+  .addAdminForm {
+    row-gap: 3px;
+    column-gap: 5px;
+  }
+  .message {
+    font-size: 0.7rem;
     margin-right: 20px;
+  }
+}
+.addAdmin .settingsButton {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-right: 70px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* border-top: 1px solid rgb(194, 184, 184); */
+}
+.addAdmin .settingsButton button {
+  background-color: white;
+  color: #5356d0;
+  border: 2px solid rgb(83, 86, 208, 0.6);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 20px;
 }
 .addAdmin .settingsButton .enregistrer {
-    color: white;
-    background-color: #5356d0;
-}  
-.addAdmin .settingsButton button:active{
-    scale: 0.9;
+  color: white;
+  background-color: #5356d0;
 }
-.addAdminLine option span{
+.addAdmin .settingsButton button:active {
+  scale: 0.9;
+}
+.addAdminLine option span {
   margin-left: 20%;
   font-size: 80%;
   color: gray;
 }
-
-  

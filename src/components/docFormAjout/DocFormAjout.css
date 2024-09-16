@@ -1,185 +1,194 @@
-.docFormAjout{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;  
-    background-color: white;
-    padding: 20px;
-    width: 80%;
-    margin-left: 8%;
-    margin-top: 30px;
-    margin-bottom: 40px;
-    border: 1px solid rgb(194, 184, 184);
+.docFormAjout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  background-color: white;
+  padding: 20px;
+  width: 80%;
+  margin-left: 8%;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  border: 1px solid rgb(194, 184, 184);
 }
-.entete,.configBox,.buttons{
-    width: 100%;
+.entete,
+.configBox,
+.buttons {
+  width: 100%;
 }
-.entete{
+.entete {
   position: relative;
 }
-.entete h2{
-    position: absolute;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #222e54;
-    top: -34px;
-    left: 20px;
-    background-color: white;
-    padding: 0 6px;
-  }
-.configBox{
-    display: grid;
-    grid-template-columns: auto auto;
-    row-gap: 10px;
-  }
-  .configLine h3{
-    margin-bottom: 5px;
-    color: black;
-    font-size: 1rem;
-    font-weight: 400;
-  }
-  .configLine input, .configLine select{
-    border:1px solid rgb(214, 214, 214);
-    background-color: white;
-    height: 34px;
-    padding:0 10px;
-    width: 90%;
-  }
-  .configLine input{
-    width: 86%;
-  }
-  .configLine input:focus{
-    outline: none;
-  }
-  .buttons{
-    margin-top: 40px;
-    margin-right: 10%;
-    display: flex;
-    justify-content: flex-end;
-  }
-  .buttons button{
-    background-color: white;
-    color:#5356d0;
-    border : 2px solid rgb(83,86,208,0.6);
-    border-radius: 8px;
-    padding: 8px 13px;
-    font-family: 'Montserrat' , sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin-right: 20px;
-  }
-  .buttons button:hover{
-    color: white;
-    background-color: #5356d0;
+.entete h2 {
+  position: absolute;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #222e54;
+  top: -34px;
+  left: 20px;
+  background-color: white;
+  padding: 0 6px;
 }
-.buttons .appliquer{
+.configBox {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 10px;
+}
+.configLine h3 {
+  margin-bottom: 5px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.configLine input,
+.configLine select {
+  border: 1px solid rgb(214, 214, 214);
+  background-color: white;
+  height: 34px;
+  padding: 0 10px;
+  width: 90%;
+}
+.configLine input {
+  width: 86%;
+}
+.configLine .radioGrp input[type="radio"] {
+  width: 20px;
+}
+.configLine input:focus {
+  outline: none;
+}
+.buttons {
+  margin-top: 40px;
+  margin-right: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
+.buttons button {
+  background-color: white;
+  color: #5356d0;
+  border: 2px solid rgb(83, 86, 208, 0.6);
+  border-radius: 8px;
+  padding: 8px 13px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-right: 20px;
+}
+.buttons button:hover {
   color: white;
   background-color: #5356d0;
-}  
-.buttons .appliquer:active{
-    scale: 1.1;
 }
-  .message{
-    font-size: 1.2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 15%;
-  }
-  .error{
-    border: 1px solid red;
-  }
+.buttons .appliquer {
+  color: white;
+  background-color: #5356d0;
+}
+.buttons .appliquer:active {
+  scale: 1.1;
+}
+.message {
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15%;
+}
+.error {
+  border: 1px solid red;
+}
 
-  .document {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 10px;
-  }
-  .documentName{
-    flex: 3;
-  }
-  .documentKeyword{
-    flex: 3;
-  }
-  .document button{
-    flex: 1;
-    border: none;
-    text-decoration: underline;
-    color: #5356d0;
-    cursor: pointer;
-    background-color: transparent;
-  }
-.documentLine{
-  border-bottom: 1px solid rgba(0,0,0,0.4);
+.document {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+.documentName {
+  flex: 3;
+}
+.documentKeyword {
+  flex: 3;
+}
+.document button {
+  flex: 1;
+  border: none;
+  text-decoration: underline;
+  color: #5356d0;
+  cursor: pointer;
+  background-color: transparent;
+}
+.documentLine {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   margin-top: 0;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.documentLine:hover{
+.documentLine:hover {
   background-color: #dbd8d8;
-}  
-@media (max-width:850px){
-  .entete h1{
+}
+@media (max-width: 850px) {
+  .entete h1 {
     font-size: 1.1rem;
   }
-  .configLine h3{
+  .configLine h3 {
     font-size: 0.9rem;
   }
-  .configLine input, .configLine select{
+  .configLine input,
+  .configLine select {
     height: 28px;
-    padding:0 7px;
+    padding: 0 7px;
     width: 90%;
   }
-  .buttons{
+  .buttons {
     margin-top: 30px;
     margin-right: 7%;
   }
-  .buttons button{
+  .buttons button {
     padding: 8px 13px;
     font-size: 1rem;
     margin-right: 20px;
   }
 }
-@media (max-width:700px){
-  .entete h1{
+@media (max-width: 700px) {
+  .entete h1 {
     font-size: 1rem;
   }
-  .configLine h3{
+  .configLine h3 {
     font-size: 0.8rem;
   }
-  .configLine input, .configLine select{
+  .configLine input,
+  .configLine select {
     height: 25px;
-    padding:0 5px;
+    padding: 0 5px;
     width: 90%;
     font-size: 0.8rem;
   }
-  .buttons{
+  .buttons {
     margin-right: 5%;
   }
-  .buttons button{
+  .buttons button {
     padding: 6px 10px;
     font-size: 0.9rem;
     margin-right: 15px;
   }
 }
 @media (max-width: 500px) {
-  .entete h1{
+  .entete h1 {
     font-size: 0.9rem;
   }
-  .configLine h3{
+  .configLine h3 {
     font-size: 0.7rem;
   }
-  .configLine input, .configLine select{
+  .configLine input,
+  .configLine select {
     height: 25px;
-    padding:0 5px;
+    padding: 0 5px;
     width: 90%;
     font-size: 0.7rem;
   }
-  .buttons{
+  .buttons {
     margin-right: 3%;
   }
-  .buttons button{
+  .buttons button {
     padding: 4px 7px;
     font-size: 0.8rem;
     margin-right: 8px;

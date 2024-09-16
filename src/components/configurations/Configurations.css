@@ -1,22 +1,22 @@
-.colorsForm{
-    display: grid;
-    grid-template-columns: auto auto;
-    row-gap: 20px;
-    column-gap: 10px;
-    width: 80%;
-    margin-left: 8%;
-    margin-bottom: 60px;
-    padding: 20px;
-    height: 100%;
-    border: 1px solid rgb(194, 184, 184);
-    position: relative;
-    font-family: "Montserrat",sans-serif;
-    font-weight: 500;
-    color: #222e54;
-    margin-top: 20px;
-    background-color: white;
+.colorsForm {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 20px;
+  column-gap: 10px;
+  width: 80%;
+  margin-left: 8%;
+  margin-bottom: 60px;
+  padding: 20px;
+  height: 100%;
+  border: 1px solid rgb(194, 184, 184);
+  position: relative;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #222e54;
+  margin-top: 20px;
+  background-color: white;
 }
-.colorsForm h4{
+.colorsForm h4 {
   margin: 0;
   padding: 0 5px;
   position: absolute;
@@ -26,54 +26,58 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
-.colorsLine h3{
-    margin-top: 0;
-    margin-bottom: 5px;
-    color: #222e54;
-    font-size: 0.9rem;
-    font-weight: 500;
-  }
-  .colorsLine input ,  .colorsLine select{
-    border:1px solid rgb(214, 214, 214);
-    background-color: white;
-    height: 30px;
-    padding:0 10px;
-    width: 90%;
-  }
-  .colorsLine input:focus, .colorsLine select:focus{
-    outline-color: rgb(83,86,208,0.6) ;
-  }
-.confButtons{
+.colorsLine h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #222e54;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.colorsLine input,
+.colorsLine select {
+  border: 1px solid rgb(214, 214, 214);
+  background-color: white;
+  height: 30px;
+  padding: 0 10px;
+  width: 90%;
+}
+.colorsLine input:focus,
+.colorsLine select:focus {
+  outline-color: rgb(83, 86, 208, 0.6);
+}
+.confButtons {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding-right: 10%;
   padding-top: 3%;
 }
-  .confButtons button , .infoContainer button{
-    background-color: white;
-    color:#5356d0;
-    border : 2px solid rgb(83,86,208,0.6);
-    border-radius: 8px;
-    padding: 5px 10px;
-    font-family: 'Montserrat' , sans-serif;
-    font-size: 0.8rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin-left: 10px;
+.confButtons button,
+.infoContainer button {
+  background-color: white;
+  color: #5356d0;
+  border: 2px solid rgb(83, 86, 208, 0.6);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: 10px;
 }
-.confButtons button:hover , .infoContainer button:hover{
+.confButtons button:hover,
+.infoContainer button:hover {
   color: white;
   background-color: #5356d0;
 }
-.confButtons .appliquer{
+.confButtons .appliquer {
   color: white;
   background-color: #5356d0;
-}  
-.confButtons .appliquer:active{
-    scale: 1.1;
 }
-.urlBox{
+.confButtons .appliquer:active {
+  scale: 1.1;
+}
+.urlBox {
   display: flex;
   flex-direction: column;
   border: 1px solid rgb(194, 184, 184);
@@ -82,30 +86,30 @@
   margin-left: 8%;
   margin-top: 30px;
   width: 80%;
-  font-family: "Montserrat",sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500;
   color: #222e54;
   position: relative;
   background-color: white;
 }
-.urlForm{
+.urlForm {
   /* display: grid;
   grid-template-columns: auto auto;
   row-gap: 20px;
   column-gap: 10px;  */
   display: flex;
   height: 100%;
-  font-family: "Montserrat",sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 500;
 }
-.urlLine{
-  flex : 1
+.urlLine {
+  flex: 1;
 }
-.urlBox h4{
+.urlBox h4 {
   margin-bottom: 30px;
-  font-weight: 500
+  font-weight: 500;
 }
-.urlBox h5{
+.urlBox h5 {
   margin: 0;
   padding: 0 5px;
   position: absolute;
@@ -115,35 +119,35 @@
   font-size: 1.1rem;
   font-weight: 600;
 }
-.urlLine h3{
+.urlLine h3 {
   margin-top: 0;
   margin-bottom: 5px;
-  color:#222e54;
+  color: #222e54;
   font-size: 0.9rem;
   font-weight: 500;
 }
-.urlLine input{
-  border:1px solid rgb(214, 214, 214);
+.urlLine input {
+  border: 1px solid rgb(214, 214, 214);
   background-color: white;
   height: 30px;
-  padding:0 10px;
+  padding: 0 10px;
   width: 90%;
 }
-.urlLine input:focus{
-  outline-color: rgb(83,86,208,0.6) ;
+.urlLine input:focus {
+  outline-color: rgb(83, 86, 208, 0.6);
 }
 .application {
   display: flex;
   justify-content: space-evenly;
   margin-top: 10px;
 }
-.applicationName{
+.applicationName {
   flex: 3;
 }
-.applicationKeyword{
+.applicationKeyword {
   flex: 3;
 }
-.application button{
+.application button {
   flex: 1;
   background-color: white;
   border: none;
@@ -151,7 +155,7 @@
   color: #5356d0;
   cursor: pointer;
 }
-.languageLine{
+.languageLine {
   border: 1px solid rgb(214, 214, 214);
   margin: 0 50px;
   padding: 10px 50px 10px 50px;
@@ -159,219 +163,240 @@
   justify-content: space-between;
   align-items: center;
 }
-.addLine:hover{
+.addLine:hover {
   background-color: #ddd0d0;
   color: black !important;
 }
-.infoContainer{
+.infoContainer {
   position: absolute;
   top: 0;
   right: 40px;
 }
-.infoContainer .infoIcon{
+.infoContainer .infoIcon {
   font-size: 2.4rem;
   color: #5356d0;
   cursor: pointer;
 }
-.infoContainer .buttonsInfo{
+.infoContainer .buttonsInfo {
   display: flex;
   align-items: center;
   gap: 20px;
 }
-.demo{
+.demo {
   height: 80vh;
   width: 280px;
   margin: 10px 200px;
 }
-.fleche1{
+.fleche1 {
   width: 100px;
   height: 70px;
   position: absolute;
   left: 160px;
   top: 5px;
 }
-.fleche2{
+.fleche2 {
   width: 150px;
   height: 50px;
   position: absolute;
   left: 110px;
   bottom: 40px;
 }
-.fleche3{
+.fleche3 {
   width: 115px;
   height: 50px;
   position: absolute;
   left: 117px;
   bottom: 45%;
 }
-.fleche4{
+.fleche4 {
   position: absolute;
   top: 22%;
   right: 130px;
   width: 250px;
   height: 50px;
 }
-.fleche5{
+.fleche5 {
   position: absolute;
   bottom: 30%;
   right: 130px;
   width: 290px;
   height: 50px;
 }
-.panelColor{
+.panelColor {
   position: absolute;
   left: 120px;
-  top : 20px;
+  top: 20px;
   text-align: center;
 }
-.memoSection{
+.memoSection {
   position: absolute;
   left: 110px;
   bottom: 65px;
   text-align: center;
 }
-.barreRed{
+.barreRed {
   position: absolute;
   left: 70px;
   bottom: 49%;
   text-align: center;
 }
-.sectionText{
+.sectionText {
   position: absolute;
   right: 90px;
   top: 19%;
   text-align: center;
 }
-.sectionTitle{
+.sectionTitle {
   position: absolute;
   bottom: 25%;
   right: 90px;
   text-align: center;
 }
 @media (max-width: 1160px) {
-  .colorsForm{
-      margin-top: 40px;
+  .colorsForm {
+    margin-top: 40px;
   }
 }
-@media (max-width:850px) {
-  .colorsForm h4 , .urlBox h5{
+@media (max-width: 850px) {
+  .colorsForm h4,
+  .urlBox h5 {
     font-size: 1rem;
   }
-  .colorsLine h3 , .urlLine h3{ 
+  .colorsLine h3,
+  .urlLine h3 {
     font-size: 0.8rem;
   }
-  .urlBox h4 ,.colorsLine input , .urlLine input{
+  .urlBox h4,
+  .colorsLine input,
+  .urlLine input {
     font-size: 0.9rem;
   }
-  .colorsForm , .urlBox{
+  .colorsForm,
+  .urlBox {
     width: 90%;
     margin-left: 3%;
   }
 }
-@media (max-width:700px) {
-  .confButtons{
+@media (max-width: 700px) {
+  .confButtons {
     padding-right: 5%;
   }
-  .confButtons button{
+  .confButtons button {
     padding: 6px 8px;
     margin-left: 5px;
   }
-  .colorsForm h4 , .urlBox h5{
-    top:-10px;
+  .colorsForm h4,
+  .urlBox h5 {
+    top: -10px;
     font-size: 0.9rem;
   }
-  .colorsLine h3 , .urlLine h3{ 
+  .colorsLine h3,
+  .urlLine h3 {
     font-size: 0.7rem;
   }
-  .urlBox h4 ,.colorsLine input , .urlLine input{
+  .urlBox h4,
+  .colorsLine input,
+  .urlLine input {
     font-size: 0.8rem;
   }
-  .colorsForm , .urlBox{
+  .colorsForm,
+  .urlBox {
     width: 90%;
     margin-left: 1%;
   }
 }
-@media (max-width:600px) {
-  .confButtons{
+@media (max-width: 600px) {
+  .confButtons {
     padding-right: 3%;
   }
-  .confButtons button{
+  .confButtons button {
     padding: 4px 6px;
     font-size: 0.7rem;
   }
-  .urlForm,.colorsForm{
+  .urlForm,
+  .colorsForm {
     row-gap: 5px;
-    column-gap:0;
+    column-gap: 0;
   }
 }
-@media (max-width:530px) {
-  .colorsForm , .urlBox{
+@media (max-width: 530px) {
+  .colorsForm,
+  .urlBox {
     width: 93%;
     padding: 10px;
   }
-  .confButtons{
+  .confButtons {
     padding-right: 2%;
   }
-  .confButtons button{
+  .confButtons button {
     padding: 3px 3px;
     font-size: 0.6rem;
     margin-left: 3px;
   }
-  .colorsForm h4 , .urlBox h5{
+  .colorsForm h4,
+  .urlBox h5 {
     font-size: 0.7rem;
   }
-  .colorsLine h3 , .urlLine h3{ 
+  .colorsLine h3,
+  .urlLine h3 {
     font-size: 0.6rem;
   }
-  .urlBox h4 ,.colorsLine input , .urlLine input{
+  .urlBox h4,
+  .colorsLine input,
+  .urlLine input {
     font-size: 0.7rem;
   }
-  .urlLine input ,.colorsLine input{
+  .urlLine input,
+  .colorsLine input {
     height: 26px;
     padding: 0 5px;
     width: 85%;
   }
 }
-@media (max-width:500px) {
-  .colorsForm , .urlBox{
+@media (max-width: 500px) {
+  .colorsForm,
+  .urlBox {
     padding: 10px;
   }
-  .confButtons{
+  .confButtons {
     padding-right: 0;
   }
-  .confButtons button{
+  .confButtons button {
     border-radius: 7px;
     padding: 2px 3px;
     font-size: 0.5rem;
   }
 }
-@media (max-width:400px) {
+@media (max-width: 400px) {
   .colorsForm {
     padding: 8px;
   }
-  .urlBox{
+  .urlBox {
     padding: 8px;
   }
 }
-@media (max-width:370px) {
+@media (max-width: 370px) {
   .colorsForm {
     padding: 7px;
   }
-  .urlBox{
+  .urlBox {
     padding: 7px;
   }
-  .confButtons{
+  .confButtons {
     padding-right: 0;
   }
-  .confButtons button{
+  .confButtons button {
     border-radius: 7px;
     padding: 2px 1px;
     font-size: 0.3rem;
   }
-  .colorsLine h3 , .urlLine h3{ 
+  .colorsLine h3,
+  .urlLine h3 {
     font-size: 0.5rem;
   }
-  .urlBox h4 ,.colorsLine input , .urlLine input{
+  .urlBox h4,
+  .colorsLine input,
+  .urlLine input {
     font-size: 0.6rem;
   }
 }

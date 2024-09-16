@@ -1,2 +1,2 @@
-project,subProject,language,title,status,urlDoc,display,note,expiration,keywords,consultationNumber,lastConsultation
-projet1,sous-projet1,fr,titre document1,public,lien to document,titre,,2024-5-2,"mot1,mot2","0",""
+client,project,language,title,status,urlDoc,display,note,expiration,keywords,consultationNumber,lastConsultation
+client1,projet1,fr,titre document1,public,lien to document,titre,,2024-5-2,"mot1,mot2","0",""
