@@ -90,7 +90,7 @@ const ModifySection = ({
           </div>
         </DialogDescription>
         <DialogFooter>
-          <Button onClick={() => handleGetModifiedSection(source._id)}>
+          <Button onClick={() => handleGetModifiedSection(section._id)}>
             Valider
           </Button>
         </DialogFooter>
