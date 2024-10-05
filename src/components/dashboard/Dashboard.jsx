@@ -382,34 +382,37 @@ function Dashboard() {
               aria-label="Loading Spinner"
               data-testid="loader"
             />
-            {(mappingIsLoaded && mappings.length > 0) ?
-              mappings
-                .slice(
-                  mappings.length - page * 2 - 2 > 0
-                    ? mappings.length - page * 2 - 2
-                    : 0,
-                  mappings.length - page * 2
-                )
-                .reverse()
-                .map((mapping) => (
-                  <div
-                    className={`modificationsHeadList modificationsLine ${
-                      isLeaving && "isLeaving"
-                    } ${isEntering && "isEntering"} ${
-                      isLeaving2 && "isLeaving2"
-                    } ${isEntering2 && "isEntering2"}`}
-                    key={mapping._id}
-                  >
-                    <div className="type">{mapping.idSection.titleFr}</div>
-                    <div className="titre">{mapping.idDocument.title}</div>
-                    <div className="langue">{mapping.idDocument.language}</div>
-                    <div className="webApp">{mapping.idSource.name}</div>
+            {mappingIsLoaded && mappings.length > 0
+              ? mappings
+                  .slice(
+                    mappings.length - page * 2 - 2 > 0
+                      ? mappings.length - page * 2 - 2
+                      : 0,
+                    mappings.length - page * 2
+                  )
+                  .reverse()
+                  .map((mapping) => (
+                    <div
+                      className={`modificationsHeadList modificationsLine ${
+                        isLeaving && "isLeaving"
+                      } ${isEntering && "isEntering"} ${
+                        isLeaving2 && "isLeaving2"
+                      } ${isEntering2 && "isEntering2"}`}
+                      key={mapping._id}
+                    >
+                      <div className="type">{mapping.idSection.titleFr}</div>
+                      <div className="titre">{mapping.idDocument.title}</div>
+                      <div className="langue">
+                        {mapping.idDocument.language}
+                      </div>
+                      <div className="webApp">{mapping.idSource.name}</div>
+                    </div>
+                  ))
+              : mappingIsLoaded &&
+                mappings.length === 0 && (
+                  <div className="modificationsHeadList modificationsLine justify-center mt-4">
+                    <div className="type">Aucun résultat</div>
                   </div>
-                ))
-              : (mappingIsLoaded && mappings.length === 0) && (
-                <div className="modificationsHeadList modificationsLine">
-                  <div className="type">Aucun résultat</div>
-                </div>
                 )}
           </div>
         </div>

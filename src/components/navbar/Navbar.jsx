@@ -4,6 +4,9 @@ import {
   faTableColumns,
   faGear,
   faUser,
+  faBook,
+  faLink,
+  faFolderOpen
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import "./Navbar.css";
@@ -45,7 +48,7 @@ function Navbar(props) {
               }`}
               onClick={props.clickProjects}
             >
-              <FontAwesomeIcon icon={faGear} />
+              <FontAwesomeIcon icon={faFolderOpen} />
               <div className="title">Gestion des clients & projets</div>
             </Link>
           )}
@@ -82,7 +85,7 @@ function Navbar(props) {
             }`}
             onClick={props.clickSources}
           >
-            <FontAwesomeIcon icon={faGear} />
+            <FontAwesomeIcon icon={faLink} />
             <div className="title">Gestion des sources</div>
           </Link>
           <Link
@@ -92,7 +95,7 @@ function Navbar(props) {
             }`}
             onClick={props.clickDocuments}
           >
-            <FontAwesomeIcon icon={faGear} />
+            <FontAwesomeIcon icon={faBook} />
             <div className="title">Gestion des documents/Notes/Errors</div>
           </Link>
           <Link
