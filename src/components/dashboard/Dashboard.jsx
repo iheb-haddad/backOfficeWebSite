@@ -382,14 +382,8 @@ function Dashboard() {
               aria-label="Loading Spinner"
               data-testid="loader"
             />
-            {mappingIsLoaded &&
+            {(mappingIsLoaded && mappings.length > 0) ?
               mappings
-                .filter((mapping) => {
-                  return (
-                    mapping.idDocument.idSubProject._id ===
-                    auth?.user?.idProject?._id
-                  );
-                })
                 .slice(
                   mappings.length - page * 2 - 2 > 0
                     ? mappings.length - page * 2 - 2
@@ -411,7 +405,12 @@ function Dashboard() {
                     <div className="langue">{mapping.idDocument.language}</div>
                     <div className="webApp">{mapping.idSource.name}</div>
                   </div>
-                ))}
+                ))
+              : (mappingIsLoaded && mappings.length === 0) && (
+                <div className="modificationsHeadList modificationsLine">
+                  <div className="type">Aucun résultat</div>
+                </div>
+                )}
           </div>
         </div>
         <div

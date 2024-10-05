@@ -63,57 +63,59 @@ export function DataTable({
   },[])
 
   return (
-    <div className="col-span-3" >
+    <div className="col-span-3">
       <div className="flex items-center pb-4 gap-2">
-        {(type === 'dashboard' || type === 'document' || type === 'error') &&table.getColumn('title')?.getIsVisible() && <Input
-          placeholder="Filter documents..."
-          value={(table.getColumn("title")?.getFilterValue()) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />}
-        {(type === 'project' || type === 'source')&& table.getColumn('name')?.getIsVisible() && <Input
-          placeholder="Filter par nom..."
-          value={(table.getColumn("name")?.getFilterValue()) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />}
-        {type === 'dashboard' && table.getColumn('createdAt')?.getIsVisible() && 
-        <DatePickerWithRange date={creationDate} setDate={setCreationDate} placeholder={"Date création"}/>
-        }
-        {type === 'dashboard' && table.getColumn('consultationNumber')?.getIsVisible() && 
-        <Input
-          placeholder="Nombre à partir de..."
-          value={(table.getColumn("consultationNumber")?.getFilterValue()) ?? ""}
-          onChange={(event) =>
-           parseInt(event.target.value) ?
-            table.getColumn("consultationNumber")?.setFilterValue(parseInt(event.target.value).toString())
-            : table.getColumn("consultationNumber")?.setFilterValue("")
-          }
-          className="max-w-sm"
-        />
-        }
-        {type === 'dashboard' && table.getColumn('lastConsultation')?.getIsVisible() && 
-        <DatePickerWithRange date={consultaionDate} setDate={setConsultationDate} placeholder={'Date consultation'}/>
-        }
-        {type === 'historic' && table.getColumn('date')?.getIsVisible() && 
-        <DatePickerWithRange date={consultaionDate} setDate={setConsultationDate} placeholder={'Date consultation'}/>
-        }
+        {(type === 'dashboard' || type === 'document' || type === 'error') && table.getColumn('title')?.getIsVisible() && (
+          <Input
+            placeholder="Filtrer les documents..."
+            value={(table.getColumn("title")?.getFilterValue()) ?? ""}
+            onChange={(event) =>
+              table.getColumn("title")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
+        {(type === 'project' || type === 'source') && table.getColumn('name')?.getIsVisible() && (
+          <Input
+            placeholder="Filtrer par nom..."
+            value={(table.getColumn("name")?.getFilterValue()) ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
+        {type === 'dashboard' && table.getColumn('createdAt')?.getIsVisible() && (
+          <DatePickerWithRange date={creationDate} setDate={setCreationDate} placeholder={"Date de création"} />
+        )}
+        {type === 'dashboard' && table.getColumn('consultationNumber')?.getIsVisible() && (
+          <Input
+            placeholder="Nombre à partir de..."
+            value={(table.getColumn("consultationNumber")?.getFilterValue()) ?? ""}
+            onChange={(event) =>
+              parseInt(event.target.value)
+                ? table.getColumn("consultationNumber")?.setFilterValue(parseInt(event.target.value).toString())
+                : table.getColumn("consultationNumber")?.setFilterValue("")
+            }
+            className="max-w-sm"
+          />
+        )}
+        {type === 'dashboard' && table.getColumn('lastConsultation')?.getIsVisible() && (
+          <DatePickerWithRange date={consultaionDate} setDate={setConsultationDate} placeholder={'Date de consultation'} />
+        )}
+        {type === 'historic' && table.getColumn('date')?.getIsVisible() && (
+          <DatePickerWithRange date={consultaionDate} setDate={setConsultationDate} placeholder={'Date de consultation'} />
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns
+              Colonnes
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
               .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
+              .filter((column) => column.getCanHide())
               .map((column) => {
                 return (
                   <DropdownMenuCheckboxItem
@@ -121,17 +123,16 @@ export function DataTable({
                     className="capitalize"
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) => {
-                      if(value){
-                        if (table.getVisibleLeafColumns().length > (nbrColumnsMax-1)) {
+                      if (value) {
+                        if (table.getVisibleLeafColumns().length > (nbrColumnsMax - 1)) {
                           toast.error(`Vous ne pouvez pas afficher plus de ${nbrColumnsMax} colonnes`)
-                        }else{
+                        } else {
                           column.toggleVisibility(!!value)
                         }
-                      }else{
-                      column.toggleVisibility(!!value)
+                      } else {
+                        column.toggleVisibility(!!value)
                       }
-                    }
-                    }
+                    }}
                   >
                     {column.id}
                   </DropdownMenuCheckboxItem>
@@ -140,7 +141,7 @@ export function DataTable({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-lg border" style={{boxShadow: "0 0 4px 2px rgb(0,0,0,0.1)"}}>
+      <div className="rounded-lg border" style={{ boxShadow: "0 0 4px 2px rgb(0,0,0,0.1)" }}>
         <Table>
           <TableHeader className='bg-gray-100'>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -163,7 +164,6 @@ export function DataTable({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
@@ -178,7 +178,7 @@ export function DataTable({
             ) : (
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results.
+                  Aucun résultat.
                 </TableCell>
               </TableRow>
             )}
@@ -186,8 +186,8 @@ export function DataTable({
         </Table>
       </div>
       <div className="mt-3">
-        <DataTablePagination table={table}/>
+        <DataTablePagination table={table} />
       </div>
-    </div>      
+    </div>
   )
 }
