@@ -16,28 +16,22 @@ import ModifiedSection from "../modifiedSection/ModifiedSection";
 import Axios from "../../services/Axios";
 import { toast } from "sonner";
 
-const ModifySection = ({
-  section,
-  setDataChanged,
-  sectionsTitles,
-}) => {
-
-    const initialValues = {
-      titleFr: section.titleFr,
-      titleEn: section.titleEn,
-      titlePolice: section.titlePolice,
-      textPolice: section.textPolice,
-      titleColor: section.titleColor,
-      textColor: section.textColor,
-      backgroundColor: section.backgroundColor,
-      fontSizeTitle: section.fontSizeTitle,
-      fontSizeText: section.fontSizeText,
-      paddingUnderTitle: section.paddingUnderTitle,
-    };
-    const [modifiedData, setModifiedData] = useState(initialValues);
-    const [showError2, setShowError2] = useState(false);
-    const [msgErreurColor2, setMsgErreurColor2] = useState("#EEEEEE");
-
+const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
+  const initialValues = {
+    titleFr: section.titleFr,
+    titleEn: section.titleEn,
+    titlePolice: section.titlePolice,
+    textPolice: section.textPolice,
+    titleColor: section.titleColor,
+    textColor: section.textColor,
+    backgroundColor: section.backgroundColor,
+    fontSizeTitle: section.fontSizeTitle,
+    fontSizeText: section.fontSizeText,
+    paddingUnderTitle: section.paddingUnderTitle,
+  };
+  const [modifiedData, setModifiedData] = useState(initialValues);
+  const [showError2, setShowError2] = useState(false);
+  const [msgErreurColor2, setMsgErreurColor2] = useState("#EEEEEE");
 
   const handleGetModifiedSection = (_id) => {
     const hasEmptyFields = Object.entries(modifiedData).some(([key, value]) => {
@@ -79,14 +73,14 @@ const ModifySection = ({
         </DialogHeader>
         <DialogDescription>
           <div className="w-full text-black">
-          <ModifiedSection
-                    section={section}
-                    sectionsTitles={sectionsTitles}
-                    modifiedData={modifiedData}
-                    setModifiedData={setModifiedData}
-                    showError={showError2}
-                    msgErreurColor={msgErreurColor2}
-                  />
+            <ModifiedSection
+              section={section}
+              sectionsTitles={sectionsTitles}
+              modifiedData={modifiedData}
+              setModifiedData={setModifiedData}
+              showError={showError2}
+              msgErreurColor={msgErreurColor2}
+            />
           </div>
         </DialogDescription>
         <DialogFooter>

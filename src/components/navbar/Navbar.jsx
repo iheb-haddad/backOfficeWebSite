@@ -37,15 +37,31 @@ function Navbar(props) {
             <FontAwesomeIcon icon={faHouse} />
             <div className="title">Tableau de bord</div>
           </Link>
+          {(auth?.user?.role === "admin" || projects.length > 0) && (
+            <Link
+              to="/GestionProjects"
+              className={`navLine ${
+                navLineClicked === "projects" ? "navClicked" : "notClicked"
+              }`}
+              onClick={props.clickProjects}
+            >
+              <FontAwesomeIcon icon={faGear} />
+              <div className="title">Gestion des clients & projets</div>
+            </Link>
+          )}
           <Link
-            to="/GestionMapping"
+            to="/GestionComptes"
             className={`navLine ${
-              navLineClicked === "mappings" ? "navClicked" : "notClicked"
+              navLineClicked === "users" ? "navClicked" : "notClicked"
             }`}
-            onClick={props.clickMappings}
+            onClick={props.clickUsers}
           >
-            <FontAwesomeIcon icon={faTableColumns} />
-            <div className="title">Gestion de mapping</div>
+            <FontAwesomeIcon icon={faUser} />
+            <div className="title">{`Gestion ${
+              auth?.user?.role === "admin" || projects.length > 0
+                ? "des comptes"
+                : "de compte"
+            }`}</div>
           </Link>
           {
             <Link
@@ -79,34 +95,16 @@ function Navbar(props) {
             <FontAwesomeIcon icon={faGear} />
             <div className="title">Gestion des documents/Notes/Errors</div>
           </Link>
-          {(auth?.user?.role === "admin" || projects.length > 0) && (
-            <Link
-              to="/GestionProjects"
-              className={`navLine ${
-                navLineClicked === "projects" ? "navClicked" : "notClicked"
-              }`}
-              onClick={props.clickProjects}
-            >
-              <FontAwesomeIcon icon={faGear} />
-              <div className="title">Gestion des clients & projets</div>
-            </Link>
-          )}
-          {
-            <Link
-              to="/GestionComptes"
-              className={`navLine ${
-                navLineClicked === "users" ? "navClicked" : "notClicked"
-              }`}
-              onClick={props.clickUsers}
-            >
-              <FontAwesomeIcon icon={faUser} />
-              <div className="title">{`Gestion ${
-                auth?.user?.role === "admin" || projects.length > 0
-                  ? "des comptes"
-                  : "de compte"
-              }`}</div>
-            </Link>
-          }
+          <Link
+            to="/GestionMapping"
+            className={`navLine ${
+              navLineClicked === "mappings" ? "navClicked" : "notClicked"
+            }`}
+            onClick={props.clickMappings}
+          >
+            <FontAwesomeIcon icon={faTableColumns} />
+            <div className="title">Gestion de mapping</div>
+          </Link>
         </div>
       </div>
       <div className="blur-overlay" onClick={props.showNavbar}></div>
