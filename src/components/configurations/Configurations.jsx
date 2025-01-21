@@ -139,6 +139,11 @@ function Configurations() {
   const handlePanelWidthChange = createHandleChange("panelWidth");
   const handleTimerChange = createHandleChange("timer");
   const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
+  const handleBackgroundLanguageChange = createHandleChange("backgroundLanguage");
+  const handleTextColorLanguageChange = createHandleChange("textColorLanguage");
+  const handleButtonMemoBgColorChange = createHandleChange("buttonMemoBgColor");
+  const handleButtonMemoFontColorChange = createHandleChange("buttonMemoFontColor");
+  const handleButtonMemoFontSizeChange = createHandleChange("buttonMemoFontSize");
 
   const initialInputColors = {
     panelFieldColor: "white",
@@ -149,6 +154,11 @@ function Configurations() {
     widthPanelFieldColor: "white",
     timerFieldColor: "white",
     resizeBarWidthFieldColor: "white",
+    backgroundLanguage: "white",
+    textColorLanguage: "white",
+    buttonMemoBgColor: "white",
+    buttonMemoFontColor: "white",
+    buttonMemoFontSize: "white",
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
@@ -205,6 +215,36 @@ function Configurations() {
         resizeBarWidthFieldColor: "#50e150",
       }));
     }
+    if(confSelected.backgroundLanguage != initialValues.backgroundLanguage){
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        backgroundLanguage: "#50e150",
+      }));
+    }
+    if(confSelected.textColorLanguage != initialValues.textColorLanguage){
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        textColorLanguage: "#50e150",
+      }));
+    }
+    if(confSelected.buttonMemoBgColor != initialValues.buttonMemoBgColor){
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        buttonMemoBgColor: "#50e150",
+      }));
+    }
+    if(confSelected.buttonMemoFontColor != initialValues.buttonMemoFontColor){
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        buttonMemoFontColor: "#50e150",
+      }));
+    }
+    if(confSelected.buttonMemoFontSize != initialValues.buttonMemoFontSize){
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        buttonMemoFontSize: "#50e150",
+      }));
+    }
 
     setTimeout(() => {
       setInputColor(initialInputColors);
@@ -240,6 +280,11 @@ function Configurations() {
     generalUrl: confSelected.generalUrl,
     timer: 10,
     resizeBarWidth: "5px",
+    backgroundLanguage: "black",
+    textColorLanguage: "white",
+    buttonMemoBgColor: "black",
+    buttonMemoFontColor: "white",
+    buttonMemoFontSize: 10,
   };
 
   const handleAReinitialiser = () => {
@@ -302,6 +347,51 @@ function Configurations() {
       options: [],
     },
     {
+      type: "input",
+      label: "Largeur initial du panneau",
+      value: confSelected.panelWidth,
+      handle: handlePanelWidthChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.widthPanelFieldColor },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Durée du Timer (en minutes)",
+      value: confSelected.timer,
+      handle: handleTimerChange,
+      holder: "Saisir durée",
+      style: { backgroundColor: inputColor.timerFieldColor },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Largeur de la barre de redimensionnement",
+      value: confSelected.resizeBarWidth,
+      handle: handleResizeBarWidthChange,
+      holder: "Saisir largeur",
+      style: { backgroundColor: inputColor.resizeBarWidthFieldColor },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Couleur de fond de la langue",
+      value: confSelected.backgroundLanguage,
+      handle: handleBackgroundLanguageChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.backgroundLanguage },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Couleur du texte de la langue",
+      value: confSelected.textColorLanguage,
+      handle: handleTextColorLanguageChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.textColorLanguage },
+      options: [],
+    },
+    {
       type: "select",
       label: "Affichage de la section Mémo",
       value: confSelected.memoSection,
@@ -333,31 +423,31 @@ function Configurations() {
     },
     {
       type: "input",
-      label: "Largeur initial du panneau",
-      value: confSelected.panelWidth,
-      handle: handlePanelWidthChange,
+      label: "Couleur de fond de bouton Mémo",
+      value: confSelected.buttonMemoBgColor,
+      handle: handleButtonMemoBgColorChange,
       holder: "Saisir couleur",
-      style: { backgroundColor: inputColor.widthPanelFieldColor },
+      style: { backgroundColor: inputColor.buttonMemoBgColor },
+      options: [],
+    },
+    {
+      type: "input",  
+      label: "Couleur du texte de bouton Mémo",
+      value: confSelected.buttonMemoFontColor,
+      handle: handleButtonMemoFontColorChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.buttonMemoFontColor },
       options: [],
     },
     {
       type: "input",
-      label: "Durée du Timer (en minutes)",
-      value: confSelected.timer,
-      handle: handleTimerChange,
-      holder: "Saisir durée",
-      style: { backgroundColor: inputColor.timerFieldColor },
+      label: "Taille du texte de bouton Mémo",
+      value: confSelected.buttonMemoFontSize,
+      handle: handleButtonMemoFontSizeChange,
+      holder: "Saisir taille",
+      style: { backgroundColor: inputColor.buttonMemoFontSize },
       options: [],
-    },
-    {
-      type: "input",
-      label: "Largeur de la barre de redimensionnement",
-      value: confSelected.resizeBarWidth,
-      handle: handleResizeBarWidthChange,
-      holder: "Saisir largeur",
-      style: { backgroundColor: inputColor.resizeBarWidthFieldColor },
-      options: [],
-    },
+    }
   ];
 
   const [open, setOpen] = useState(false);
