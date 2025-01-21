@@ -190,7 +190,7 @@ const GestionMapping = () => {
             onClick={clickAddbtn}
           >
             <FontAwesomeIcon icon={faFileCirclePlus} />
-            <span>Ajouter</span>
+            <span>Mapper</span>
           </button>
           <button
             className={uploadbtnIsClicked ? "uploadbtn clicked" : "uploadbtn"}

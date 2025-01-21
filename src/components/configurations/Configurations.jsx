@@ -124,61 +124,21 @@ function Configurations() {
       });
   }, [dataChanged, projet]);
 
-  const handlePanelColorChange = (event) => {
+  const createHandleChange = (key) => (event) => {
     setConfSelected((prevData) => ({
       ...prevData,
-      panelColor: event.target.value,
+      [key]: event.target.value,
     }));
   };
 
-  const handlePanelTextColorChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      panelTextColor: event.target.value,
-    }));
-  };
-
-  const handleMemoSectionChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      memoSection: event.target.value,
-    }));
-  };
-
-  const handleMemoBackColorChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      memoBackgroundColor: event.target.value,
-    }));
-  };
-
-  const handleMemoFontColorChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      memoFontColor: event.target.value,
-    }));
-  };
-
-  const handlePanelWidthChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      panelWidth: event.target.value,
-    }));
-  };
-
-  const handleTimerChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      timer: parseInt(event.target.value),
-    }));
-  };
-
-  const handleResizeBarWidthChange = (event) => {
-    setConfSelected((prevData) => ({
-      ...prevData,
-      resizeBarWidth: event.target.value,
-    }));
-  };
+  const handlePanelColorChange = createHandleChange("panelColor");
+  const handlePanelTextColorChange = createHandleChange("panelTextColor");
+  const handleMemoSectionChange = createHandleChange("memoSection");
+  const handleMemoBackColorChange = createHandleChange("memoBackgroundColor");
+  const handleMemoFontColorChange = createHandleChange("memoFontColor");
+  const handlePanelWidthChange = createHandleChange("panelWidth");
+  const handleTimerChange = createHandleChange("timer");
+  const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
 
   const initialInputColors = {
     panelFieldColor: "white",
