@@ -144,6 +144,7 @@ function Configurations() {
   const handleButtonMemoBgColorChange = createHandleChange("buttonMemoBgColor");
   const handleButtonMemoFontColorChange = createHandleChange("buttonMemoFontColor");
   const handleButtonMemoFontSizeChange = createHandleChange("buttonMemoFontSize");
+  const handleSectionEmailDisplayChange = createHandleChange("sectionEmailDisplay");
 
   const initialInputColors = {
     panelFieldColor: "white",
@@ -159,6 +160,7 @@ function Configurations() {
     buttonMemoBgColor: "white",
     buttonMemoFontColor: "white",
     buttonMemoFontSize: "white",
+    handleSectionEmailDisplay: "white",
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
@@ -245,6 +247,12 @@ function Configurations() {
         buttonMemoFontSize: "#50e150",
       }));
     }
+    if(confSelected.sectionEmailDisplay != initialValues.sectionEmailDisplay){
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        handleSectionEmailDisplay: "#50e150",
+      }));
+    }
 
     setTimeout(() => {
       setInputColor(initialInputColors);
@@ -285,6 +293,7 @@ function Configurations() {
     buttonMemoBgColor: "black",
     buttonMemoFontColor: "white",
     buttonMemoFontSize: 10,
+    sectionEmailDisplay: "display",
   };
 
   const handleAReinitialiser = () => {
@@ -401,6 +410,18 @@ function Configurations() {
       options: [
         { title: "Afficher Mémo", value: "display" },
         { title: "Cacher Mémo", value: "hide" },
+      ],
+    },
+    {
+      type: "select",
+      label: "Affichage de la section Email",
+      value: confSelected.sectionEmailDisplay,
+      handle: handleSectionEmailDisplayChange,
+      holder: "",
+      style: { backgroundColor: inputColor.handleSectionEmailDisplay },
+      options: [
+        { title: "Afficher Email", value: "display" },
+        { title: "Cacher Email", value: "hide" },
       ],
     },
     {
