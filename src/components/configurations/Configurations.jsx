@@ -151,6 +151,11 @@ function Configurations() {
         ...prevData,
         timer: value,
       }));
+    }else{
+      setConfSelected((prevData) => ({
+        ...prevData,
+        timer: 0,
+      }));
     }
   };
 
