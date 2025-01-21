@@ -137,7 +137,6 @@ function Configurations() {
   const handleMemoBackColorChange = createHandleChange("memoBackgroundColor");
   const handleMemoFontColorChange = createHandleChange("memoFontColor");
   const handlePanelWidthChange = createHandleChange("panelWidth");
-  const handleTimerChange = createHandleChange("timer");
   const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
   const handleBackgroundLanguageChange = createHandleChange("backgroundLanguage");
   const handleTextColorLanguageChange = createHandleChange("textColorLanguage");
@@ -145,6 +144,15 @@ function Configurations() {
   const handleButtonMemoFontColorChange = createHandleChange("buttonMemoFontColor");
   const handleButtonMemoFontSizeChange = createHandleChange("buttonMemoFontSize");
   const handleSectionEmailDisplayChange = createHandleChange("sectionEmailDisplay");
+  const handleTimerChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        timer: value,
+      }));
+    }
+  };
 
   const initialInputColors = {
     panelFieldColor: "white",
@@ -292,7 +300,7 @@ function Configurations() {
     textColorLanguage: "white",
     buttonMemoBgColor: "black",
     buttonMemoFontColor: "white",
-    buttonMemoFontSize: 10,
+    buttonMemoFontSize: "10px",
     sectionEmailDisplay: "display",
   };
 
