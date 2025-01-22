@@ -139,12 +139,18 @@ function Configurations() {
   const handleMemoFontColorChange = createHandleChange("memoFontColor");
   const handlePanelWidthChange = createHandleChange("panelWidth");
   const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
-  const handleBackgroundLanguageChange = createHandleChange("backgroundLanguage");
+  const handleBackgroundLanguageChange =
+    createHandleChange("backgroundLanguage");
   const handleTextColorLanguageChange = createHandleChange("textColorLanguage");
   const handleButtonMemoBgColorChange = createHandleChange("buttonMemoBgColor");
-  const handleButtonMemoFontColorChange = createHandleChange("buttonMemoFontColor");
-  const handleButtonMemoFontSizeChange = createHandleChange("buttonMemoFontSize");
-  const handleSectionEmailDisplayChange = createHandleChange("sectionEmailDisplay");
+  const handleButtonMemoFontColorChange = createHandleChange(
+    "buttonMemoFontColor"
+  );
+  const handleButtonMemoFontSizeChange =
+    createHandleChange("buttonMemoFontSize");
+  const handleSectionEmailDisplayChange = createHandleChange(
+    "sectionEmailDisplay"
+  );
   const handleTimerChange = (event) => {
     const value = parseInt(event.target.value, 10);
     if (!isNaN(value)) {
@@ -152,7 +158,7 @@ function Configurations() {
         ...prevData,
         timer: value,
       }));
-    }else{
+    } else {
       setConfSelected((prevData) => ({
         ...prevData,
         timer: 0,
@@ -231,37 +237,37 @@ function Configurations() {
         resizeBarWidthFieldColor: "#50e150",
       }));
     }
-    if(confSelected.backgroundLanguage != initialValues.backgroundLanguage){
+    if (confSelected.backgroundLanguage != initialValues.backgroundLanguage) {
       setInputColor((prevColor) => ({
         ...prevColor,
         backgroundLanguage: "#50e150",
       }));
     }
-    if(confSelected.textColorLanguage != initialValues.textColorLanguage){
+    if (confSelected.textColorLanguage != initialValues.textColorLanguage) {
       setInputColor((prevColor) => ({
         ...prevColor,
         textColorLanguage: "#50e150",
       }));
     }
-    if(confSelected.buttonMemoBgColor != initialValues.buttonMemoBgColor){
+    if (confSelected.buttonMemoBgColor != initialValues.buttonMemoBgColor) {
       setInputColor((prevColor) => ({
         ...prevColor,
         buttonMemoBgColor: "#50e150",
       }));
     }
-    if(confSelected.buttonMemoFontColor != initialValues.buttonMemoFontColor){
+    if (confSelected.buttonMemoFontColor != initialValues.buttonMemoFontColor) {
       setInputColor((prevColor) => ({
         ...prevColor,
         buttonMemoFontColor: "#50e150",
       }));
     }
-    if(confSelected.buttonMemoFontSize != initialValues.buttonMemoFontSize){
+    if (confSelected.buttonMemoFontSize != initialValues.buttonMemoFontSize) {
       setInputColor((prevColor) => ({
         ...prevColor,
         buttonMemoFontSize: "#50e150",
       }));
     }
-    if(confSelected.sectionEmailDisplay != initialValues.sectionEmailDisplay){
+    if (confSelected.sectionEmailDisplay != initialValues.sectionEmailDisplay) {
       setInputColor((prevColor) => ({
         ...prevColor,
         handleSectionEmailDisplay: "#50e150",
@@ -466,7 +472,7 @@ function Configurations() {
       options: [],
     },
     {
-      type: "input",  
+      type: "input",
       label: "Couleur du texte de bouton Mémo",
       value: confSelected.buttonMemoFontColor,
       handle: handleButtonMemoFontColorChange,
@@ -482,7 +488,7 @@ function Configurations() {
       holder: "Saisir taille",
       style: { backgroundColor: inputColor.buttonMemoFontSize },
       options: [],
-    }
+    },
   ];
 
   const [open, setOpen] = useState(false);
@@ -506,6 +512,46 @@ function Configurations() {
       className="configurations"
       style={{ paddingTop: "40px", position: "relative" }}
     >
+            <div className="infoContainer">
+        <div className="buttonsInfo">
+          <div className="p-2">
+            <h1 className="text-lg">Custom Color Picker</h1>
+            <ColorPicker />
+          </div>
+          <div className="flex items-center gap-2">
+          <button onClick={handleLiveConfiguration}>
+            Configurer en direct
+          </button>
+          <Icon
+            className="infoIcon"
+            icon="mdi:information-variant-circle-outline"
+            onClick={onOpenModal}
+          />
+          </div>
+        </div>
+        <Modal open={open} onClose={onCloseModal} center>
+          <img src="./fleche1.png" alt="" className="fleche1" />
+          <img src="./modeNormal.png" alt="" className="demo" />
+          <h4 className="panelColor">
+            Couleur <br />
+            du panneau
+          </h4>
+          <img src="./fleche2.png" alt="" className="fleche2" />
+          <h4 className="memoSection">
+            Section <br />
+            mémo
+          </h4>
+          <img src="./fleche2.png" alt="" className="fleche3" />
+          <h4 className="barreRed">
+            Barre de <br />
+            redimensionnement
+          </h4>
+          <img src="./fleche3.png" alt="" className="fleche4" />
+          <h4 className="sectionText">Texte de section</h4>
+          <img src="./fleche4.png" alt="" className="fleche5" />
+          <h4 className="sectionTitle">Titre de section</h4>
+        </Modal>
+      </div>
       {(auth?.user?.role === "admin" || projects.length > 0) && (
         <>
           <div
@@ -574,10 +620,6 @@ function Configurations() {
                 />
               );
             })}
-            <div className="p-8">
-      <h1 className="text-xl font-bold">Custom Color Picker</h1>
-      <ColorPicker />
-    </div>
             <div className="confButtons">
               <div>
                 <button onClick={handleAReinitialiser}>Réinitialiser</button>
@@ -648,40 +690,6 @@ function Configurations() {
         </>
       )}
       <SupportMailConfig />
-      <div className="infoContainer">
-        <div className="buttonsInfo">
-          <button onClick={handleLiveConfiguration}>
-            Configurer en direct
-          </button>
-          <Icon
-            className="infoIcon"
-            icon="mdi:information-variant-circle-outline"
-            onClick={onOpenModal}
-          />
-        </div>
-        <Modal open={open} onClose={onCloseModal} center>
-          <img src="./fleche1.png" alt="" className="fleche1" />
-          <img src="./modeNormal.png" alt="" className="demo" />
-          <h4 className="panelColor">
-            Couleur <br />
-            du panneau
-          </h4>
-          <img src="./fleche2.png" alt="" className="fleche2" />
-          <h4 className="memoSection">
-            Section <br />
-            mémo
-          </h4>
-          <img src="./fleche2.png" alt="" className="fleche3" />
-          <h4 className="barreRed">
-            Barre de <br />
-            redimensionnement
-          </h4>
-          <img src="./fleche3.png" alt="" className="fleche4" />
-          <h4 className="sectionText">Texte de section</h4>
-          <img src="./fleche4.png" alt="" className="fleche5" />
-          <h4 className="sectionTitle">Titre de section</h4>
-        </Modal>
-      </div>
     </div>
   );
 }

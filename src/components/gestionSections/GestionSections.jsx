@@ -20,6 +20,7 @@ import {
 } from "../ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import ModifySection from "./popupModifiedSection";
+import { Copy, Download } from "lucide-react";
 
 function GestionSections() {
   const [showUploadPage, setShowUploadPage] = useState(false);
@@ -57,7 +58,6 @@ function GestionSections() {
     sectionBorderDisplay: "display",
     sectionBorderColor: "black",
     sectionBorderRound: "0px",
-    redCircleWidth: "10px",
   };
 
   const [formData, setFormData] = useState(initialValues);
@@ -65,6 +65,14 @@ function GestionSections() {
   const [showError, setShowError] = useState(false);
   const [showListSections, setShowListSections] = useState(false);
   const [dataChanged, setDataChanged] = useState(0);
+  const [copiedSection, setCopiedSection] = useState(null);
+
+  const copyStyleSection = (section) => {
+    const { _id,  titleFr, titleEn, ...styleSection } = section;
+    console.log(styleSection);
+    setCopiedSection({ ...styleSection });
+    toast.success("Style de section copié");
+  };
 
   useEffect(() => {
     Axios.get("/sections")
@@ -115,7 +123,6 @@ function GestionSections() {
   const handleSectionBorderDisplayChange = handleChange("sectionBorderDisplay");
   const handleSectionBorderColorChange = handleChange("sectionBorderColor");
   const handleSectionBorderRoundChange = handleChange("sectionBorderRound");
-  const handleRedCircleWidthChange = handleChange("redCircleWidth");
 
   const handleAnnuler1 = () => {
     setFormData(initialValues);
@@ -144,6 +151,7 @@ function GestionSections() {
       setFormData(initialValues);
     }
   };
+
   const handleDeleteSection = (_id) => {
     Axios.delete(`/sections/${_id}`)
       .then((response) => {
@@ -244,6 +252,7 @@ function GestionSections() {
       holder: "",
       style: { border: showError && !formData.traitDisplay && "1px solid red" },
       options: [
+        { title: "----", value: "" },
         { title: "Afficher Trait", value: "display" },
         { title: "Cacher Trait", value: "hide" },
       ],
@@ -276,8 +285,8 @@ function GestionSections() {
         border: showError && !formData.sectionBorderDisplay && "1px solid red",
       },
       options: [
-        { title: "Afficher Border", value: "display" },
-        { title: "Cacher Border", value: "hide" },
+        { title: "Afficher Bordure", value: "display" },
+        { title: "Cacher Bordure", value: "hide" },
       ],
     },
     {
@@ -302,18 +311,30 @@ function GestionSections() {
       },
       options: [],
     },
-    {
-      type: "input",
-      label: "Largeur du cercle rouge",
-      value: formData.redCircleWidth,
-      handle: handleRedCircleWidthChange,
-      holder: "Saisir largeur",
-      style: {
-        border: showError && !formData.redCircleWidth && "1px solid red",
-      },
-      options: [],
-    }
   ];
+
+  const pasteStyleToForm = () => {
+    setFormData((prev) => ({
+      ...prev,  
+      ...copiedSection,
+    }));
+    toast.success("Style collé avec succès");
+  };
+
+  const pasteStyleToExistedSection = (_id) => {
+    const newSection = {
+      ...copiedSection,
+    };
+    Axios.put(`/sections/${_id}`, newSection)
+      .then((response) => {
+        console.log(response);
+        setDataChanged((prev) => prev + 1);
+        toast.success("Style collé avec succès");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const columns = [
     {
@@ -350,6 +371,24 @@ function GestionSections() {
                   <FontAwesomeIcon icon={faTrash} className="text-sm ml-2" />
                 </button>
               </DropdownMenuItem>
+              <DropdownMenuItem>
+                <button
+                  onClick={() => copyStyleSection(section)}
+                  className="flex items-center gap-2"
+                >
+                  Copier <Copy size={14} />
+                </button>
+              </DropdownMenuItem>
+              {copiedSection && (
+                <DropdownMenuItem>
+                  <button
+                    onClick={() => pasteStyleToExistedSection(section._id)}
+                    className="flex items-center gap-2"
+                  >
+                    Coller <Download size={14} />
+                  </button>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -394,6 +433,14 @@ function GestionSections() {
         <UploadPage filesType={"sections"} setDataChanged={setDataChanged} />
       )}
       <div className="colorsForm">
+        <div className="absolute flex -top-3 right-4 gap-2">
+          {copiedSection && copiedSection.titleFr !== formData.titleFr && (
+            <div className="flex items-center gap-1 p-2 border rounded-md border-blue-600 bg-white cursor-pointer"
+            onClick={pasteStyleToForm}>
+              Coller <Download size={14} />
+            </div>
+          )}
+        </div>
         <h4>Gestion des sections</h4>
         <div className="colorsLine">
           <div className="colorsLine">

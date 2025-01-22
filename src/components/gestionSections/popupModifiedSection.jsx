@@ -28,6 +28,12 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
     fontSizeTitle: section.fontSizeTitle,
     fontSizeText: section.fontSizeText,
     paddingUnderTitle: section.paddingUnderTitle,
+    traitDisplay: section.traitDisplay,
+    traitColor: section.traitColor,
+    traitWidth: section.traitWidth,
+    sectionBorderDisplay: section.sectionBorderDisplay,
+    sectionBorderColor: section.sectionBorderColor,
+    sectionBorderRound: section.sectionBorderRound,
   };
   const [modifiedData, setModifiedData] = useState(initialValues);
   const [showError2, setShowError2] = useState(false);

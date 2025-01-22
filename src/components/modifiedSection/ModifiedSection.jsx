@@ -11,54 +11,27 @@ function ModifiedSection(props) {
       )[0].titleEn,
     }));
   };
-  const handleTitlePoliceChange = (event) => {
+  const handlePropertyChange = (field) => (event) => {
     props.setModifiedData((prevData) => ({
       ...prevData,
-      titlePolice: event.target.value,
+      [field]: event.target.value,
     }));
   };
-  const handleTextPoliceChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      textPolice: event.target.value,
-    }));
-  };
-  const handleTitleColorChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      titleColor: event.target.value,
-    }));
-  };
-  const handleTextColorChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      textColor: event.target.value,
-    }));
-  };
-  const handleBackgroundColorChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      backgroundColor: event.target.value,
-    }));
-  };
-  const handleFontSizeTitleChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      fontSizeTitle: event.target.value,
-    }));
-  };
-  const handleFontSizeTextChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      fontSizeText: event.target.value,
-    }));
-  };
-  const handlePaddingUnderTitleChange = (event) => {
-    props.setModifiedData((prevData) => ({
-      ...prevData,
-      paddingUnderTitle: event.target.value,
-    }));
-  };
+
+  const handleTextPoliceChange = handlePropertyChange("textPolice");
+  const handleTitlePoliceChange = handlePropertyChange("titlePolice");
+  const handleTitleColorChange = handlePropertyChange("titleColor");
+  const handleTextColorChange = handlePropertyChange("textColor");
+  const handleBackgroundColorChange = handlePropertyChange("backgroundColor");
+  const handleFontSizeTitleChange = handlePropertyChange("fontSizeTitle");
+  const handleFontSizeTextChange = handlePropertyChange("fontSizeText");
+  const handlePaddingUnderTitleChange = handlePropertyChange("paddingUnderTitle");
+  const handleTraitDisplayChange = handlePropertyChange("traitDisplay");
+  const handleTraitColorChange = handlePropertyChange("traitColor");
+  const handleTraitWidthChange = handlePropertyChange("traitWidth");
+  const handleSectionBorderDisplayChange = handlePropertyChange("sectionBorderDisplay");
+  const handleSectionBorderColorChange = handlePropertyChange("sectionBorderColor");
+  const handleSectionBorderRoundChange = handlePropertyChange("sectionBorderRound");
 
   const confLines = [
     {
@@ -161,6 +134,94 @@ function ModifiedSection(props) {
         border:
           props.showError &&
           !props.modifiedData.paddingUnderTitle &&
+          "1px solid red",
+      },
+      options: [],
+    },
+    {
+      label: "Affichage du trait",
+      type: "select",
+      value: props.modifiedData.traitDisplay,
+      handle: handleTraitDisplayChange,
+      holder: "",
+      style: {
+        border:
+          props.showError &&
+          !props.modifiedData.traitDisplay &&
+          "1px solid red",
+      },
+      options: [
+        { title: "----", value: "" },
+        { title: "Afficher Trait", value: "display" },
+        { title: "Cacher Trait", value: "hide" },
+      ],
+    },
+    {
+      label: "Couleur du trait",
+      type: "input",
+      value: props.modifiedData.traitColor,
+      handle: handleTraitColorChange,
+      holder: "Couleur du trait",
+      style: {
+        border:
+          props.showError && !props.modifiedData.traitColor && "1px solid red",
+      },
+      options: [],
+    },
+    {
+      label: "Largeur du trait",
+      type: "input",
+      value: props.modifiedData.traitWidth,
+      handle: handleTraitWidthChange,
+      holder: "Largeur du trait",
+      style: {
+        border:
+          props.showError && !props.modifiedData.traitWidth && "1px solid red",
+      },
+      options: [],
+    },
+    {
+      label: "Affichage de la bordure de section",
+      type: "select",
+      value: props.modifiedData.sectionBorderDisplay,
+      handle: handleSectionBorderDisplayChange,
+      holder: "",
+      style: {
+        border:
+          props.showError &&
+          !props.modifiedData.sectionBorderDisplay &&
+          "1px solid red",
+      },
+      options: [
+        { title: "----", value: "" },
+        { title: "Afficher Bordure", value: "display" },
+        { title: "Cacher Bordure", value: "hide" },
+      ],
+    },
+    {
+      label: "Couleur de la bordure de section",
+      type: "input",
+      value: props.modifiedData.sectionBorderColor,
+      handle: handleSectionBorderColorChange,
+      holder: "Couleur de la bordure de section",
+      style: {
+        border:
+          props.showError &&
+          !props.modifiedData.sectionBorderColor &&
+          "1px solid red",
+      },
+      options: [],
+    },
+    {
+      label: "Arrondi de la bordure de section",
+      type: "input",
+      value: props.modifiedData.sectionBorderRound,
+      handle: handleSectionBorderRoundChange,
+      holder: "Arrondi de la bordure de section",
+      style: {
+        border:
+          props.showError &&
+          !props.modifiedData.sectionBorderRound &&
           "1px solid red",
       },
       options: [],

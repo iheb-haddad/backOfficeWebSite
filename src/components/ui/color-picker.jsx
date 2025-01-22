@@ -4,19 +4,19 @@ import { Input } from '@/components/ui/input'; // Adjust import paths
 import { ChromePicker } from 'react-color';
 
 const ColorPicker= () => {
-  const [color, setColor] = useState<string>('#ff0000');
+  const [color, setColor] = useState('#5356d0');
 
   const handleChange = (newColor) => {
     setColor(newColor.hex);
   };
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-2">
       {/* Popover for Color Picker */}
       <Popover>
         <PopoverTrigger asChild>
           <button
-            className="h-8 w-8 rounded-full border"
+            className="h-6 w-6 rounded-full border-none"
             style={{ backgroundColor: color }}
           />
         </PopoverTrigger>
@@ -29,7 +29,7 @@ const ColorPicker= () => {
       <Input
         value={color}
         onChange={(e) => setColor(e.target.value)}
-        className="w-32"
+        className="w-28"
       />
     </div>
   );
