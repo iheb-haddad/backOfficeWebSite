@@ -51,6 +51,13 @@ function GestionSections() {
     fontSizeTitle: "14px",
     fontSizeText: "14px",
     paddingUnderTitle: "2px",
+    traitDisplay: "display",
+    traitColor: "black",
+    traitWidth: "1px",
+    sectionBorderDisplay: "display",
+    sectionBorderColor: "black",
+    sectionBorderRound: "0px",
+    redCircleWidth: "10px",
   };
 
   const [formData, setFormData] = useState(initialValues);
@@ -87,57 +94,28 @@ function GestionSections() {
       )[0].titleEn,
     }));
   };
-  const handleTitlePoliceChange = (event) => {
+  const handleChange = (field) => (event) => {
     setFormData((prevData) => ({
       ...prevData,
-      titlePolice: event.target.value,
-    }));
-  };
-  const handleTextPoliceChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      textPolice: event.target.value,
-    }));
-  };
-  const handleTitleColorChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      titleColor: event.target.value,
-    }));
-  };
-  const handleTextColorChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      textColor: event.target.value,
-    }));
-  };
-  const handleBackgroundColorChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      backgroundColor: event.target.value,
+      [field]: event.target.value,
     }));
   };
 
-  const handleFontSizeTitleChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      fontSizeTitle: event.target.value,
-    }));
-  };
-
-  const handleFontSizeTextChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      fontSizeText: event.target.value,
-    }));
-  };
-
-  const handlePaddingUnderTitleChange = (event) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      paddingUnderTitle: event.target.value,
-    }));
-  };
+  const handleTitlePoliceChange = handleChange("titlePolice");
+  const handleTextPoliceChange = handleChange("textPolice");
+  const handleTitleColorChange = handleChange("titleColor");
+  const handleTextColorChange = handleChange("textColor");
+  const handleBackgroundColorChange = handleChange("backgroundColor");
+  const handleFontSizeTitleChange = handleChange("fontSizeTitle");
+  const handleFontSizeTextChange = handleChange("fontSizeText");
+  const handlePaddingUnderTitleChange = handleChange("paddingUnderTitle");
+  const handleTraitDisplayChange = handleChange("traitDisplay");
+  const handleTraitColorChange = handleChange("traitColor");
+  const handleTraitWidthChange = handleChange("traitWidth");
+  const handleSectionBorderDisplayChange = handleChange("sectionBorderDisplay");
+  const handleSectionBorderColorChange = handleChange("sectionBorderColor");
+  const handleSectionBorderRoundChange = handleChange("sectionBorderRound");
+  const handleRedCircleWidthChange = handleChange("redCircleWidth");
 
   const handleAnnuler1 = () => {
     setFormData(initialValues);
@@ -258,6 +236,83 @@ function GestionSections() {
       },
       options: [],
     },
+    {
+      type: "select",
+      label: "Affichage du trait",
+      value: formData.traitDisplay,
+      handle: handleTraitDisplayChange,
+      holder: "",
+      style: { border: showError && !formData.traitDisplay && "1px solid red" },
+      options: [
+        { title: "Afficher Trait", value: "display" },
+        { title: "Cacher Trait", value: "hide" },
+      ],
+    },
+    {
+      type: "input",
+      label: "Couleur du trait",
+      value: formData.traitColor,
+      handle: handleTraitColorChange,
+      holder: "Saisir couleur",
+      style: { border: showError && !formData.traitColor && "1px solid red" },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Largeur du trait",
+      value: formData.traitWidth,
+      handle: handleTraitWidthChange,
+      holder: "Saisir largeur",
+      style: { border: showError && !formData.traitWidth && "1px solid red" },
+      options: [],
+    },
+    {
+      type: "select",
+      label: "Affichage de la bordure de section",
+      value: formData.sectionBorderDisplay,
+      handle: handleSectionBorderDisplayChange,
+      holder: "",
+      style: {
+        border: showError && !formData.sectionBorderDisplay && "1px solid red",
+      },
+      options: [
+        { title: "Afficher Border", value: "display" },
+        { title: "Cacher Border", value: "hide" },
+      ],
+    },
+    {
+      type: "input",
+      label: "Couleur de la bordure de section",
+      value: formData.sectionBorderColor,
+      handle: handleSectionBorderColorChange,
+      holder: "Saisir couleur",
+      style: {
+        border: showError && !formData.sectionBorderColor && "1px solid red",
+      },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Arrondi de la bordure de section",
+      value: formData.sectionBorderRound,
+      handle: handleSectionBorderRoundChange,
+      holder: "Saisir arrondi",
+      style: {
+        border: showError && !formData.sectionBorderRound && "1px solid red",
+      },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Largeur du cercle rouge",
+      value: formData.redCircleWidth,
+      handle: handleRedCircleWidthChange,
+      holder: "Saisir largeur",
+      style: {
+        border: showError && !formData.redCircleWidth && "1px solid red",
+      },
+      options: [],
+    }
   ];
 
   const columns = [

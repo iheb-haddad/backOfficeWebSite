@@ -21,6 +21,7 @@ import useStore from "../../globalState/UseStore";
 import { toast } from "sonner";
 import SmtpConfig from "../smtpConfig/SmtpConfig";
 import SupportMailConfig from "../supportMailConfig/SupportMailConfig";
+import ColorPicker from "../ui/color-picker";
 
 function Configurations() {
   const [initialValues, setInitialValues] = useState({});
@@ -573,6 +574,10 @@ function Configurations() {
                 />
               );
             })}
+            <div className="p-8">
+      <h1 className="text-xl font-bold">Custom Color Picker</h1>
+      <ColorPicker />
+    </div>
             <div className="confButtons">
               <div>
                 <button onClick={handleAReinitialiser}>Réinitialiser</button>

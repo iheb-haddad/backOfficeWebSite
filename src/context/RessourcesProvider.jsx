@@ -14,6 +14,13 @@ export const RessourcesProvider = ({ children }) => {
     generalUrl: "",
     timer: "",
     resizeBarWidth: "",
+    resizeBarWidth: "",
+    backgroundLanguage: "",
+    textColorLanguage: "",
+    buttonMemoBgColor: "",
+    buttonMemoFontColor: "",
+    buttonMemoFontSize: "",
+    sectionEmailDisplay: "",
   };
   const [languages, setLanguages] = useState([]);
   const [sections, setSections] = useState([]);

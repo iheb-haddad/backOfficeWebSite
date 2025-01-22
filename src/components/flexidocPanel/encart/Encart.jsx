@@ -38,8 +38,9 @@ function Encart(props) {
   ]
 
   return (
-    <div className='encart' style={{ backgroundColor: props.sectionConfig.backgroundColor, color: props.sectionConfig.titleColor,minHeight:'75px'}}>
-      <div className='entete' style={{ borderBottom: `2px solid ${props.sectionConfig.titleColor}` , paddingBottom : props.sectionConfig.paddingUnderTitle, color: props.sectionConfig.titleColor}}>
+    <div className='encart' style={{ backgroundColor: props.sectionConfig.backgroundColor, color: props.sectionConfig.titleColor,minHeight:'75px',border: props.sectionConfig.sectionBorderDisplay === "display" ? `1px ${props.sectionConfig.sectionBorderColor}` : "none",
+    borderRadius: props.sectionConfig.sectionBorderRound ||"0px",}}>
+      <div className='entete' style={{ borderBottom: props.sectionConfig.traitDisplay === "display" ? `2px solid ${props.sectionConfig.traitColor}` : "none" , paddingBottom : props.sectionConfig.paddingUnderTitle, color: props.sectionConfig.titleColor}}>
         <div style={{fontSize:props.sectionConfig.fontSizeTitle,fontWeight:'bold',fontFamily:props.sectionConfig.titlePolice}} >{t(props.sectionConfig.titleEn)}</div>
         <div style={{ cursor: 'pointer',fontSize:props.sectionConfig.fontSizeTitle }}>
           <FontAwesomeIcon icon={faChevronUp} />

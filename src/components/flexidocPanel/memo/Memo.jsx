@@ -20,7 +20,7 @@ function Memos(props) {
           La maintenance des logiciels est la clé de la durabilité et de la performance de notre infrastructure informatique. 
           </div>
           <div className="btnMemo" style={{height:'30px',width:'100%' , position:'relative'}}>
-          <button style={{position:'absolute',right:'5px',fontSize:'10px',color:"black",backgroundColor:'white',fontWeight:'600',border:'1px solid black',padding :'5px',minWidth:'70px',maxWidth:'70px'}}>{t('done')}</button>
+          <button style={{position:'absolute',right:'5px',fontSize: props.buttonFontSize || '10px',color: props.buttonFontColor || "black",backgroundColor: props.buttonBgColor || 'white',fontWeight:'600',border:'1px solid black',padding :'5px',minWidth:'70px',maxWidth:'70px'}}>{t('done')}</button>
           </div>
         </div>
     </>
