@@ -72,6 +72,27 @@ function DocFormAjout() {
   const [formData, setFormData] = useState(initialValues);
   const [projectSelected, setProjectSelected] = useState("");
 
+  useEffect(() => {
+    if(!projectSelected && userProjects.length === 1) {
+      setProjectSelected(userProjects[0]._id)
+    }
+    if(!projectFilter && userProjects.length === 1) {
+      setProjectFilter(userProjects[0]._id)
+    }
+  },[userProjects])
+
+  useEffect(() => {
+    if(!formData.project && subProjects.length === 1) {
+      setFormData((prevData) => ({
+        ...prevData,
+        project: subProjects[0]._id,
+      }));
+    }
+    if(!subProjectFilter && subProjects.length === 1) {
+      setSubProjectFilter(subProjects[0]._id)
+    }
+  },[subProjects])
+
   const handleAnnuler = () => {
     setFormData(initialValues);
     setProjectSelected("");
