@@ -83,6 +83,14 @@ function GestionSubProjects() {
     fetchUserProjects(user);
   }, [dataChanged]);
 
+  useEffect(() => {
+    if(!projectForm.project && projects.length === 1) {
+      setprojectForm((prevData) => ({
+        ...prevData,
+        project: projects[0]._id,
+      }));
+    }}, [projects]);
+
   const handleProjectChange = (event) => {
     setprojectForm((prevData) => ({
       ...prevData,

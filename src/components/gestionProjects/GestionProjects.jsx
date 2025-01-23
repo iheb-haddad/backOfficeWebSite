@@ -233,14 +233,16 @@ function GestionProjects() {
         )}
         <div className="applicationsList">
           <div className="flex justify-end">
+            { auth?.user?.role === "admin" &&
             <Button
               className="bg-white text-black border hover:bg-white"
               onClick={() => setShowListProjects(!showListProjects)}
             >
               {showListProjects ? "cacher liste" : "afficher liste"}
             </Button>
+            }
           </div>
-          {showListProjects && (
+          {showListProjects || auth?.user?.role !== "admin" && (
             <DataTable
               data={projects}
               columns={columns}
