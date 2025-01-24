@@ -18,7 +18,6 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/Button";
 import { MoreHorizontal } from "lucide-react";
-import { use } from "i18next";
 
 const GestionErrors = () => {
   const { auth } = useAuth();
@@ -43,6 +42,18 @@ const GestionErrors = () => {
     fetchUserProjects(user);
     fetchErrors(user);
   }, [dataChanged]);
+
+  useEffect(() => {
+    if(!projectSelected && userProjects.length === 1) {
+      setProjectSelected(userProjects[0]._id);
+    }
+  }, [userProjects]);
+
+  useEffect(() => {
+    if(!subProjectSelected && subProjects.length === 1) {
+      setSubProjectSelected(subProjects[0]._id);
+    }
+  }, [subProjects]);
 
   useEffect(() => {
     setReformedErrors(
