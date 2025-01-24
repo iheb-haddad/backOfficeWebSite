@@ -239,11 +239,11 @@ function Dashboard() {
       filterParameters.consultNumber === ">" ||
       filterParameters.consultNumber === "=" ||
       (filterParameters.consultNumber[0] === "="
-        ? consultationNumber == filterParameters.consultNumber.slice(1)
+        ? consultationNumber === parseInt(filterParameters.consultNumber.slice(1))
         : filterParameters.consultNumber[0] === "<"
-        ? consultationNumber < filterParameters.consultNumber.slice(1)
+        ? consultationNumber < parseInt(filterParameters.consultNumber.slice(1))
         : filterParameters.consultNumber[0] === ">" &&
-          consultationNumber > filterParameters.consultNumber.slice(1)) ||
+          consultationNumber > parseInt(filterParameters.consultNumber.slice(1))) ||
       consultationNumber.toString().startsWith(filterParameters.consultNumber)
     );
   };
