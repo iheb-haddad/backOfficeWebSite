@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input"
 import { DatePickerWithRange } from "./dateRange"
 import { toast } from "sonner"
 import { DataTablePagination } from "./dataTablePagination"
+import { set } from "date-fns"
 export function DataTable({
   columns,
   data,
@@ -34,6 +35,8 @@ export function DataTable({
   setCreationDate,
   consultaionDate,
   setConsultationDate,
+  consultNumber,
+  setConsultNumber,
   nbrColumnsMax,
   type,
 }) {
@@ -91,12 +94,12 @@ export function DataTable({
         {type === 'dashboard' && table.getColumn('consultationNumber')?.getIsVisible() && (
           <Input
             placeholder="Nombre à partir de..."
-            value={(table.getColumn("consultationNumber")?.getFilterValue()) ?? ""}
+            value={consultNumber}
             onChange={(event) =>
               parseInt(event.target.value)
-                ? table.getColumn("consultationNumber")?.setFilterValue(parseInt(event.target.value).toString())
-                : ((event.target.value[0] === "=" || event.target.value[0] === "<" || event.target.value[0] === ">") && (parseInt(event.target.value.slice(1))) || event.target.value.length === 1) ? table.getColumn("consultationNumber")?.setFilterValue(event.target.value)
-                : table.getColumn("consultationNumber")?.setFilterValue("")
+                ? setConsultNumber(event.target.value)
+                : ((event.target.value[0] === "=" || event.target.value[0] === "<" || event.target.value[0] === ">") && (parseInt(event.target.value.slice(1))) || event.target.value.length === 1) ? setConsultNumber(event.target.value)
+                : null
             }
             className="max-w-sm"
           />

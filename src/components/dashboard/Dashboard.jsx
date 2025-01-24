@@ -235,7 +235,18 @@ function Dashboard() {
   const compareConsultNumber = (consultationNumber) => {
     console.log(filterParameters.consultNumber);
     return (
-      false
+      true ||
+      filterParameters.consultNumber === "" ||
+      filterParameters.consultNumber === "<" ||
+      filterParameters.consultNumber === ">" ||
+      filterParameters.consultNumber === "=" ||
+      (filterParameters.consultNumber[0] === "="
+        ? consultationNumber === parseInt(filterParameters.consultNumber.slice(1))
+        : filterParameters.consultNumber[0] === "<"
+        ? consultationNumber < parseInt(filterParameters.consultNumber.slice(1))
+        : filterParameters.consultNumber[0] === ">" &&
+          consultationNumber > parseInt(filterParameters.consultNumber.slice(1))) ||
+      consultationNumber.toString().startsWith(filterParameters.consultNumber)
     );
   };
 
@@ -426,6 +437,10 @@ function Dashboard() {
           consultaionDate={consultaionDate}
           setCreationDate={setCreationDate}
           setConsultationDate={setConsultationDate}
+          consultNumber={filterParameters.consultNumber}
+          setConsultNumber={(value) =>
+            setFilterParameters({ ...filterParameters, consultNumber: value })
+          }
           nbrColumnsMax={5}
           type="dashboard"
         />
