@@ -242,7 +242,7 @@ function GestionProjects() {
             </Button>
             }
           </div>
-          {showListProjects || auth?.user?.role !== "admin" && (
+          {(showListProjects || auth?.user?.role !== "admin") && (
             <DataTable
               data={projects}
               columns={columns}
