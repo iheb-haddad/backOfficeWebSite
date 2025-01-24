@@ -95,6 +95,7 @@ export function DataTable({
             onChange={(event) =>
               parseInt(event.target.value)
                 ? table.getColumn("consultationNumber")?.setFilterValue(parseInt(event.target.value).toString())
+                : ((event.target.value[0] === "=" || event.target.value === "<" || event.target.value === ">") && parseInt(event.target.value.slice(1))) ? table.getColumn("consultationNumber")?.setFilterValue(event.target.value)
                 : table.getColumn("consultationNumber")?.setFilterValue("")
             }
             className="max-w-sm"
