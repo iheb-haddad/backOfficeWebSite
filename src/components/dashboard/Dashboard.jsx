@@ -235,6 +235,7 @@ function Dashboard() {
   const compareConsultNumber = (consultationNumber) => {
     console.log(filterParameters.consultNumber);
     return (
+      true ||
       filterParameters.consultNumber === "" ||
       filterParameters.consultNumber === "<" ||
       filterParameters.consultNumber === ">" ||
