@@ -235,18 +235,7 @@ function Dashboard() {
   const compareConsultNumber = (consultationNumber) => {
     console.log(filterParameters.consultNumber);
     return (
-      true ||
-      filterParameters.consultNumber === "" ||
-      filterParameters.consultNumber === "<" ||
-      filterParameters.consultNumber === ">" ||
-      filterParameters.consultNumber === "=" ||
-      (filterParameters.consultNumber[0] === "="
-        ? consultationNumber === parseInt(filterParameters.consultNumber.slice(1))
-        : filterParameters.consultNumber[0] === "<"
-        ? consultationNumber < parseInt(filterParameters.consultNumber.slice(1))
-        : filterParameters.consultNumber[0] === ">" &&
-          consultationNumber > parseInt(filterParameters.consultNumber.slice(1))) ||
-      consultationNumber.toString().startsWith(filterParameters.consultNumber)
+      false
     );
   };
 
