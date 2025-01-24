@@ -217,10 +217,10 @@ function GestionSources() {
   }, [userProjects]);
 
   useEffect(() => {
-    if (!formData.project && subProjects.length === 1) {
+    if (!webApplicationForm.projet && subProjects.length === 1) {
       setFormData((prevData) => ({
         ...prevData,
-        project: subProjects[0]._id,
+        projet: subProjects[0]._id,
       }));
     }
     if (!subProjectFilter && subProjects.length === 1) {
