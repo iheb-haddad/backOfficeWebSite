@@ -71,6 +71,12 @@ export default function SmtpConfig() {
       });
   }, [formData.project]);
 
+  useEffect(() => {
+    if(!formData.project && projects.length === 1) {
+      setFormData({...formData, project: projects[0]._id});
+    }
+  }, [projects]);
+
   const confLines = [
     {
       type: "input",

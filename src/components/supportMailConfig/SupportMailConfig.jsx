@@ -109,6 +109,18 @@ export default function SupportMailConfig() {
     }
   };
 
+  useEffect(() => {
+    if(!formData.project && userProjects.length === 1) {
+      setFormData({...formData, project: userProjects[0]._id});
+    }
+  },[userProjects])
+
+  useEffect(() => {
+    if(!formData.subProject && subProjects.length === 1){
+      setFormData({...formData, subProject: subProjects[0]._id});
+    }
+  },[subProjects])
+
   return (
     <div className="colorsForm">
       <h4>Configuration Email du service support</h4>

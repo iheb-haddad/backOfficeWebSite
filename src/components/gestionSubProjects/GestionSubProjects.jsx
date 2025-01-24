@@ -91,6 +91,11 @@ function GestionSubProjects() {
       }));
     }}, [projects]);
 
+  useEffect(() => {
+    if(!projectFilter && userProjects.length === 1) {
+      setProjectFilter(userProjects[0]._id);
+    }}, [userProjects]);
+
   const handleProjectChange = (event) => {
     setprojectForm((prevData) => ({
       ...prevData,
