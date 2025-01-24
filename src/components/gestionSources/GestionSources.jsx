@@ -218,7 +218,7 @@ function GestionSources() {
 
   useEffect(() => {
     if (!webApplicationForm.projet && subProjects.length === 1) {
-      setFormData((prevData) => ({
+      setWebApplicationForm((prevData) => ({
         ...prevData,
         projet: subProjects[0]._id,
       }));
