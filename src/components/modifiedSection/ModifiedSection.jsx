@@ -18,6 +18,8 @@ function ModifiedSection(props) {
     }));
   };
 
+  const handleCustomTitleEnChange = handlePropertyChange("customTitleEn");
+  const handleCustomTitleFrChange = handlePropertyChange("customTitleFr");
   const handleTextPoliceChange = handlePropertyChange("textPolice");
   const handleTitlePoliceChange = handlePropertyChange("titlePolice");
   const handleTitleColorChange = handlePropertyChange("titleColor");
@@ -34,6 +36,24 @@ function ModifiedSection(props) {
   const handleSectionBorderRoundChange = handlePropertyChange("sectionBorderRound");
 
   const confLines = [
+    {
+      label: "Titre personnalisé français (optionnel)",
+      type: "input",
+      value: props.modifiedData.customTitleFr,
+      handle: handleCustomTitleFrChange,
+      style: {},
+      holder: "Titre personnalisé en français",
+      options: [],
+    },
+    {
+      label: "Titre personnalisé anglais (optionnel)",
+      type: "input",
+      value: props.modifiedData.customTitleEn,
+      handle: handleCustomTitleEnChange,
+      style: {},
+      holder: "Titre personnalisé en anglais",
+      options: [],
+    },
     {
       label: "Police du titre",
       type: "input",

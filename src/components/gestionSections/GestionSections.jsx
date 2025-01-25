@@ -44,6 +44,8 @@ function GestionSections() {
   const initialValues = {
     titleFr: "",
     titleEn: "",
+    customTitleFr: "",
+    customTitleEn: "",
     titlePolice: "Montserrat",
     textPolice: "Montserrat",
     titleColor: "white",
@@ -109,6 +111,8 @@ function GestionSections() {
     }));
   };
 
+  const handleCustomTitleFrChange = handleChange("customTitleFr");
+  const handleCustomTitleEnChange = handleChange("customTitleEn");
   const handleTitlePoliceChange = handleChange("titlePolice");
   const handleTextPoliceChange = handleChange("textPolice");
   const handleTitleColorChange = handleChange("titleColor");
@@ -130,7 +134,7 @@ function GestionSections() {
 
   const handleEnregistrer1 = () => {
     const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
-      return value === "";
+      return value === "" && key !== "customTitleFr" && key !== "customTitleEn";
     });
     setShowError(hasEmptyFields);
     if (!hasEmptyFields) {
@@ -166,6 +170,24 @@ function GestionSections() {
   };
 
   const confLines = [
+    {
+      type: "input",
+      label: "Titre personnalisé français (optionnel)",
+      value: formData.customTitleFr,
+      handle: handleCustomTitleFrChange,
+      holder: "Saisir titre",
+      style: {},
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Titre personnalisé anglais (optionnel)",
+      value: formData.customTitleEn,
+      handle: handleCustomTitleEnChange,
+      holder: "Saisir titre",
+      style: {},
+      options: [],
+    },
     {
       type: "input",
       label: "Police du titre",

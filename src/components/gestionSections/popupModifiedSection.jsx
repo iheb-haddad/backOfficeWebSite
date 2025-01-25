@@ -20,6 +20,8 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
   const initialValues = {
     titleFr: section.titleFr,
     titleEn: section.titleEn,
+    customTitleFr: section.customTitleFr,
+    customTitleEn: section.customTitleEn,
     titlePolice: section.titlePolice,
     textPolice: section.textPolice,
     titleColor: section.titleColor,
@@ -41,7 +43,7 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
 
   const handleGetModifiedSection = (_id) => {
     const hasEmptyFields = Object.entries(modifiedData).some(([key, value]) => {
-      return value === "";
+      return value === "" && key !== "customTitleFr" && key !== "customTitleEn";
     });
     setShowError2(hasEmptyFields);
     if (!hasEmptyFields) {
