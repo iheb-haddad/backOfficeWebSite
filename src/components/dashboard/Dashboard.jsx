@@ -359,7 +359,7 @@ function Dashboard() {
         return creationDateMatch && consultationDateMatch && consultNumberMatch;
       })
     );
-  }, [creationDate, consultaionDate]);
+  }, [creationDate, consultaionDate,consultNumber]);
 
   return (
     <div className="accueil">
