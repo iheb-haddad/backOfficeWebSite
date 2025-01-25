@@ -355,7 +355,7 @@ function Dashboard() {
           ? doc.consultNumber < parseInt(consultNumber.slice(1))
           : consultNumber[0] === ">" &&
             doc.consultNumber > parseInt(consultNumber.slice(1))) ||
-            doc.consultNumber.toString().startsWith(consultNumber)    
+            doc.consultNumber?.toString().startsWith(consultNumber)    
         return creationDateMatch && consultationDateMatch && consultNumberMatch;
       })
     );
