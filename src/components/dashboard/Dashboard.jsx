@@ -235,7 +235,6 @@ function Dashboard() {
   const compareConsultNumber = (consultationNumber) => {
     console.log(filterParameters.consultNumber);
     return (
-      true ||
       filterParameters.consultNumber === "" ||
       filterParameters.consultNumber === "<" ||
       filterParameters.consultNumber === ">" ||
@@ -325,7 +324,10 @@ function Dashboard() {
     to: "",
   });
 
-  React.useEffect(() => {
+  const [consultNumber,setConsultNumber] = useState("");
+
+
+  useEffect(() => {
     setFiltredDocumentations(
       documentations.filter((doc) => {
         const creatDate = new Date(doc.createdAt);
@@ -343,7 +345,18 @@ function Dashboard() {
           consultaionDate?.to === "" ||
           (consultDate >= consultaionDate.from &&
             consultDate <= consultaionDate?.to);
-        return creationDateMatch && consultationDateMatch;
+        const consultNumberMatch = consultNumber === "" ||
+        consultNumber === "<" ||
+        consultNumber === ">" ||
+        consultNumber === "=" ||
+        (consultNumber[0] === "="
+          ? doc.consultNumber === parseInt(consultNumber.slice(1))
+          : consultNumber[0] === "<"
+          ? doc.consultNumber < parseInt(consultNumber.slice(1))
+          : consultNumber[0] === ">" &&
+            doc.consultNumber > parseInt(consultNumber.slice(1))) ||
+            doc.consultNumber.toString().startsWith(consultNumber)    
+        return creationDateMatch && consultationDateMatch && consultNumberMatch;
       })
     );
   }, [creationDate, consultaionDate]);
@@ -437,10 +450,8 @@ function Dashboard() {
           consultaionDate={consultaionDate}
           setCreationDate={setCreationDate}
           setConsultationDate={setConsultationDate}
-          consultNumber={filterParameters.consultNumber}
-          setConsultNumber={(value) =>
-            setFilterParameters({ ...filterParameters, consultNumber: value })
-          }
+          consultNumber={consultNumber}
+          setConsultNumber={setConsultNumber}
           nbrColumnsMax={5}
           type="dashboard"
         />
