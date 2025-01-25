@@ -14,7 +14,6 @@ export const RessourcesProvider = ({ children }) => {
     generalUrl: "",
     timer: "",
     resizeBarWidth: "",
-    resizeBarWidth: "",
     backgroundLanguage: "",
     textColorLanguage: "",
     buttonMemoBgColor: "",

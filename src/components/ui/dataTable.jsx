@@ -98,7 +98,7 @@ export function DataTable({
             onChange={(event) =>
               parseInt(event.target.value)
                 ? setConsultNumber(event.target.value)
-                : ((event.target.value[0] === "=" || event.target.value[0] === "<" || event.target.value[0] === ">") && (parseInt(event.target.value.slice(1))) || event.target.value.length === 1) ? setConsultNumber(event.target.value)
+                : ((event.target.value[0] === "=" || event.target.value[0] === "<" || event.target.value[0] === ">") && (parseInt(event.target.value.slice(1)) || parseInt(event.target.value.slice(1)) === 0) || event.target.value.length === 1) ? setConsultNumber(event.target.value)
                 : setConsultNumber("")
             }
             className="max-w-sm"

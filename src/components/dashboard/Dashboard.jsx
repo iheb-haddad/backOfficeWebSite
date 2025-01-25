@@ -350,12 +350,12 @@ function Dashboard() {
         consultNumber === ">" ||
         consultNumber === "=" ||
         (consultNumber[0] === "="
-          ? doc.consultNumber === parseInt(consultNumber.slice(1))
+          ? doc.consultationNumber === parseInt(consultNumber.slice(1))
           : consultNumber[0] === "<"
-          ? doc.consultNumber < parseInt(consultNumber.slice(1))
+          ? doc.consultationNumber < parseInt(consultNumber.slice(1))
           : consultNumber[0] === ">" &&
-            doc.consultNumber > parseInt(consultNumber.slice(1))) ||
-            doc.consultNumber?.toString().startsWith(consultNumber)    
+            doc.consultationNumber > parseInt(consultNumber.slice(1))) ||
+            doc.consultationNumber?.toString().startsWith(consultNumber)   
         return creationDateMatch && consultationDateMatch && consultNumberMatch;
       })
     );
