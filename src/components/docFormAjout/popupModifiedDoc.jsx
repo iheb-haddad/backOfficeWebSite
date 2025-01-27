@@ -30,6 +30,8 @@ const ModifyDocument = ({
     selectedStatut: document.status,
     urlDocument: document.urlDoc,
     affichage: document.display,
+    collapsible : document.collapsible,
+    defaultEtat: document.defaultEtat,
     note: document.note,
     expiration: document.expiration,
     keywords: document.keywords,
@@ -58,6 +60,8 @@ const ModifyDocument = ({
         status: modifiedData.selectedStatut,
         urlDoc: modifiedData.urlDocument,
         display: modifiedData.affichage,
+        collapsible: modifiedData.collapsible,
+        defaultEtat: modifiedData.defaultEtat,
         note: modifiedData.note,
         expiration: modifiedData.expiration,
         keywords: modifiedData.keywords,
@@ -76,6 +80,8 @@ const ModifyDocument = ({
             error.response.data.message || "Erreur lors de la modification"
           );
         });
+    }else{
+      toast.error("Veuillez remplir tous les champs obligatoires");
     }
   };
 

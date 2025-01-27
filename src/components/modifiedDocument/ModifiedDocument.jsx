@@ -12,6 +12,8 @@ function ModifiedDocument(props) {
     selectedStatut: props.document.status,
     urlDocument: props.document.urlDoc,
     affichage: props.document.display,
+    collapsible: props.document.collapsible,
+    defaultEtat: props.document.defaultEtat,
     expiration: props.document.expiration,
   };
 
@@ -223,6 +225,82 @@ function ModifiedDocument(props) {
             </select>
           </div>
         )}
+      {props.modifiedData.affichage === "contenu" && (
+        <div className="configLine flex flex-col justify-evenly">
+          <h3>collapsible</h3>
+          <div className="radioGrp flex gap-4">
+            <div className="flex items-center gap-2">
+              <input
+                className="w-4 h-4"
+                type="radio"
+                name="collapsible"
+                value="collapsible"
+                checked={props.modifiedData.collapsible}
+                onChange={() =>
+                  props.setModifiedData((prevData) => ({
+                    ...prevData,
+                    collapsible: true,
+                  }))
+                }
+              />
+              <span>Oui</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="notCollabsible"
+                value="notCollabsible"
+                checked={!props.modifiedData.collapsible}
+                onChange={() =>
+                  props.setModifiedData((prevData) => ({
+                    ...prevData,
+                    collapsible: false,
+                  }))
+                }
+              />
+              <span>Non</span>
+            </div>
+          </div>
+        </div>
+      )}
+      {props.modifiedData.collapsible && (
+        <div className="configLine flex flex-col justify-evenly">
+          <h3>Etat par défaut</h3>
+          <div className="radioGrp flex gap-4">
+            <div className="flex items-center gap-2">
+              <input
+                className="w-4 h-4"
+                type="radio"
+                name="defaultEtatOpen"
+                value="defaultEtatOpen"
+                checked={props.modifiedData.defaultEtat}
+                onChange={() =>
+                  props.setModifiedData((prevData) => ({
+                    ...prevData,
+                    defaultEtat: true,
+                  }))
+                }
+              />
+              <span>Ouvert</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="defaultEtatClose"
+                value="defaultEtatClose"
+                checked={!props.modifiedData.defaultEtat}
+                onChange={() =>
+                  props.setModifiedData((prevData) => ({
+                    ...prevData,
+                    defaultEtat: false,
+                  }))
+                }
+              />
+              <span>Fermé</span>
+            </div>
+          </div>
+        </div>
+      )}
       {props.modifiedData.urlDocument === "" &&
         props.modifiedData.note !== "" && (
           <div className="configLine">

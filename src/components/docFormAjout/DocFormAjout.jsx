@@ -65,6 +65,8 @@ function DocFormAjout() {
     selectedStatut: "public",
     urlDocument: "",
     affichage: "titre",
+    collapsible: false,
+    defaultEtat: false,
     note: "",
     expiration: "",
     keywords: [],
@@ -73,25 +75,25 @@ function DocFormAjout() {
   const [projectSelected, setProjectSelected] = useState("");
 
   useEffect(() => {
-    if(!projectSelected && userProjects.length === 1) {
-      setProjectSelected(userProjects[0]._id)
+    if (!projectSelected && userProjects.length === 1) {
+      setProjectSelected(userProjects[0]._id);
     }
-    if(!projectFilter && userProjects.length === 1) {
-      setProjectFilter(userProjects[0]._id)
+    if (!projectFilter && userProjects.length === 1) {
+      setProjectFilter(userProjects[0]._id);
     }
-  },[userProjects])
+  }, [userProjects]);
 
   useEffect(() => {
-    if(!formData.project && subProjects.length === 1) {
+    if (!formData.project && subProjects.length === 1) {
       setFormData((prevData) => ({
         ...prevData,
         project: subProjects[0]._id,
       }));
     }
-    if(!subProjectFilter && subProjects.length === 1) {
-      setSubProjectFilter(subProjects[0]._id)
+    if (!subProjectFilter && subProjects.length === 1) {
+      setSubProjectFilter(subProjects[0]._id);
     }
-  },[subProjects])
+  }, [subProjects]);
 
   const handleAnnuler = () => {
     setFormData(initialValues);
@@ -244,6 +246,8 @@ function DocFormAjout() {
         status: formData.selectedStatut,
         urlDoc: formData.urlDocument,
         display: formData.affichage,
+        collapsible: formData.collapsible,
+        defaultEtat: formData.defaultEtat,
         note: formData.note,
         expiration: formData.expiration,
         keywords: formData.keywords,
@@ -548,6 +552,82 @@ function DocFormAjout() {
                 )}
                 <option value="titre">Seulement titre affiché</option>
               </select>
+            </div>
+          )}
+          {formData.affichage === "contenu" && (
+            <div className="configLine flex flex-col justify-evenly">
+              <h3>collapsible</h3>
+              <div className="radioGrp flex gap-4">
+                <div className="flex items-center gap-2">
+                  <input
+                    className="w-4 h-4"
+                    type="radio"
+                    name="collapsible"
+                    value="collapsible"
+                    checked={formData.collapsible}
+                    onChange={() =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        collapsible: true,
+                      }))
+                    }
+                  />
+                  <span>Oui</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="notCollabsible"
+                    value="notCollabsible"
+                    checked={!formData.collapsible}
+                    onChange={() =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        collapsible: false,
+                      }))
+                    }
+                  />
+                  <span>Non</span>
+                </div>
+              </div>
+            </div>
+          )}
+          {formData.collapsible && (
+            <div className="configLine flex flex-col justify-evenly">
+              <h3>Etat par défaut</h3>
+              <div className="radioGrp flex gap-4">
+                <div className="flex items-center gap-2">
+                  <input
+                    className="w-4 h-4"
+                    type="radio"
+                    name="defaultEtatOpen"
+                    value="defaultEtatOpen"
+                    checked={formData.defaultEtat}
+                    onChange={() =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        defaultEtat: true,
+                      }))
+                    }
+                  />
+                  <span>Ouvert</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="defaultEtatClose"
+                    value="defaultEtatClose"
+                    checked={!formData.defaultEtat}
+                    onChange={() =>
+                      setFormData((prevData) => ({
+                        ...prevData,
+                        defaultEtat: false,
+                      }))
+                    }
+                  />
+                  <span>Fermé</span>
+                </div>
+              </div>
             </div>
           )}
           {formData.urlType === "note" && (
