@@ -51,17 +51,18 @@ export default function AreaChartCard() {
   const { auth } = useAuth();
   const [timeRange, setTimeRange] = React.useState("90d");
   const [data, setData] = React.useState([]);
-  const { userProjects, fetchUserProjects, subProjects, fetchSubProjects } =
+  const { userProjects, subProjects, sources ,fetchSources} =
     useStore();
   const [projectSelected, setProjectSelected] = useState("");
   const [subProjectSelected, setSubProjectSelected] = useState("");
+  const [sourceSelected, setSourceSelected] = useState("");
   const [date, setDate] = useState({
     from: "",
     to: "",
   });
   const [filterReset, setFilterReset] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const user = auth?.user?._id || "";
     Axios.get("/documentations/nbrConsultationPerDate/" + user, {
       params: {
@@ -79,8 +80,18 @@ export default function AreaChartCard() {
   }, [filterReset, auth?.user?._id]);
 
   useEffect(() => {
+    const user = auth?.user?._id || "";
+    fetchSources(user);
+  }, [auth?.user?._id]);
+
+  useEffect(() => {
     setSubProjectSelected("");
+    setSourceSelected("");
   }, [projectSelected]);
+
+  useEffect(() => {
+    setSourceSelected("");
+  }, [subProjectSelected]);
 
   const handleReset = () => {
     setFilterReset(!filterReset);
@@ -90,24 +101,20 @@ export default function AreaChartCard() {
       from: "",
       to: "",
     });
+    setSourceSelected("");
   };
 
   const handleFilter = () => {
-    if (date.from && !date.to) {
-      toast.error("Veuillez choisir une date de fin");
+    if ((!date.from || !date.to) && !projectSelected && !subProjectSelected && !sourceSelected) {
+      toast.error("Veuillez remplir au moins un champ");
       return;
     }
-    if (!date.from && date.to) {
-      toast.error("Veuillez choisir une date de début");
-      return;
-    }
-    if (projectSelected !== "" && subProjectSelected === "") {
-      toast.error("Veuillez choisir un sous projet");
-      return;
-    }
+    
     Axios.get("/documentations/nbrConsultationPerDate/" + auth?.user?._id, {
       params: {
+        idProject: projectSelected,
         idSubProject: subProjectSelected,
+        idSource: sourceSelected,
         fromDate: date.from,
         toDate: date.to,
       },
@@ -178,6 +185,33 @@ export default function AreaChartCard() {
                     className="rounded-lg [&_span]:flex"
                   >
                     {subProject.name}
+                  </SelectItem>
+                );
+              })}
+          </SelectContent>
+        </Select>
+        <Labell className="text-sm">Source</Labell>
+        <Select
+          value={sourceSelected}
+          onValueChange={setSourceSelected}
+        >
+          <SelectTrigger
+            className="ml-auto h-7 rounded-lg pl-2.5"
+            aria-label="Select a value"
+          >
+            <SelectValue placeholder="Choisir source" />
+          </SelectTrigger>
+          <SelectContent align="end" className="rounded-xl">
+            {sources
+            .filter((source) => source.idSubProject._id === subProjectSelected)
+              .map((source, index) => {
+                return (
+                  <SelectItem
+                    key={index}
+                    value={source._id}
+                    className="rounded-lg [&_span]:flex"
+                  >
+                    {source.name}
                   </SelectItem>
                 );
               })}

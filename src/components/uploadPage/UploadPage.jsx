@@ -202,6 +202,7 @@ function UploadPage({ filesType, setDataChanged }) {
     const newConfiguration = {
       client: configuration.client,
       panelColor: configuration.panelColor || "white",
+      panelTextColor: configuration.panelTextColor || "black",
       panelWidth: configuration.panelWidth || "300px",
       memoSection: configuration.memoSection || "display",
       memoBackgroundColor: configuration.memoBackgroundColor || "#ffc000",
@@ -209,6 +210,12 @@ function UploadPage({ filesType, setDataChanged }) {
       generalUrl: configuration.generalUrl || "",
       timer: configuration.timer || 10,
       resizeBarWidth: configuration.resizeBarWidth || 10,
+      backgroundLanguage: configuration.backgroundLanguage || "black",
+      textColorLanguage: configuration.textColorLanguage || "white",
+      buttonMemoBgColor: configuration.buttonMemoBgColor || "#ffc000",
+      buttonMemoFontColor: configuration.buttonMemoFontColor || "white",
+      buttonMemoFontSize: configuration.buttonMemoFontSize || "12px",
+      sectionEmailDisplay: configuration.sectionEmailDisplay || "display",
     };
 
     try {
@@ -393,12 +400,20 @@ function UploadPage({ filesType, setDataChanged }) {
     const newSection = {
       titleFr: section.titleFr,
       titleEn: section.titleEn,
+      customTitleFr: section.customTitleFr || "",
+      customTitleEn: section.customTitleEn || "",
       fontFamily: section.fontFamily || "Montserrat",
       titleColor: section.titleColor || "white",
       backgroundColor: section.backgroundColor || "red",
       fontSizeTitle: section.fontSizeTitle || "14px",
       fontSizeText: section.fontSizeText || "14px",
       paddingUnderTitle: section.paddingUnderTitle || "2px",
+      traitDisplay: section.traitDisplay || "display",
+      traitColor: section.traitColor || "black",
+      traitWidth: section.traitWidth || "1px",
+      sectionBorderDisplay: section.sectionBorderDisplay || "",
+      sectionBorderColor: section.sectionBorderColor || "",
+      sectionBorderRound: section.sectionBorderRound || "0px",
     };
 
     try {

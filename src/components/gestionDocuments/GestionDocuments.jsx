@@ -6,6 +6,7 @@ import useRessources from "../../hooks/useRessources";
 import useStore from "../../globalState/UseStore";
 import { toast } from "sonner";
 import { GestionErrors } from "../index";
+import DocumentValidation from "../documentValidation/DocumentValidation";
 
 function GestionDocuments() {
   const { confSelected, setConfSelected } = useRessources();
@@ -128,6 +129,7 @@ function GestionDocuments() {
         </div>
       )}
       <GestionErrors />
+      <DocumentValidation />
     </div>
   );
 }

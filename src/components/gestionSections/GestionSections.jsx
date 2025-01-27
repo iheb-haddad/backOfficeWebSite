@@ -21,9 +21,11 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import ModifySection from "./popupModifiedSection";
 import { Copy, Download } from "lucide-react";
+import ReorderSection from "../reorderSection/ReorderSection";
 
 function GestionSections() {
   const [showUploadPage, setShowUploadPage] = useState(false);
+  const [showOrderChange, setShowOrderChange] = useState(false);
   const clickUploadbtn = () => {
     setShowUploadPage((prev) => !prev);
   };
@@ -70,8 +72,7 @@ function GestionSections() {
   const [copiedSection, setCopiedSection] = useState(null);
 
   const copyStyleSection = (section) => {
-    const { _id,  titleFr, titleEn, ...styleSection } = section;
-    console.log(styleSection);
+    const { _id, titleFr, titleEn, order, ...styleSection } = section;
     setCopiedSection({ ...styleSection });
     toast.success("Style de section copié");
   };
@@ -337,7 +338,7 @@ function GestionSections() {
 
   const pasteStyleToForm = () => {
     setFormData((prev) => ({
-      ...prev,  
+      ...prev,
       ...copiedSection,
     }));
     toast.success("Style collé avec succès");
@@ -441,24 +442,35 @@ function GestionSections() {
             <span>Cacher la page d'importation</span>
           </button>
         )}
-        {showUploadPage && (
+        {showUploadPage ? (
           <a
-            className="uploadbtn"
+            className="uploadbtn text-sm"
             href="SectionsModel.csv"
             download="SectionsModel.csv"
           >
             Télécharger un modèle
           </a>
+        ) : (showOrderChange && sections?.length > 0) ? (
+          <button className="uploadbtn" onClick={() => setShowOrderChange(false)}>
+            <span>Finir changement</span>
+          </button>
+        ) : (sections?.length > 0) && (
+          <button style={{ color : "white" , backgroundColor : "#5356d0", padding : "3px"}} onClick={() => setShowOrderChange(true)}>
+            <span>Changer l'ordre des sections</span>
+          </button>
         )}
       </div>
       {showUploadPage && (
         <UploadPage filesType={"sections"} setDataChanged={setDataChanged} />
       )}
+      {(showOrderChange && !showUploadPage) && <ReorderSection />}
       <div className="colorsForm">
         <div className="absolute flex -top-3 right-4 gap-2">
           {copiedSection && copiedSection.titleFr !== formData.titleFr && (
-            <div className="flex items-center gap-1 p-2 border rounded-md border-blue-600 bg-white cursor-pointer"
-            onClick={pasteStyleToForm}>
+            <div
+              className="flex items-center gap-1 p-2 border rounded-md border-blue-600 bg-white cursor-pointer"
+              onClick={pasteStyleToForm}
+            >
               Coller <Download size={14} />
             </div>
           )}

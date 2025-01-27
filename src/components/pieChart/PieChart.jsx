@@ -51,10 +51,16 @@ export default function PieChartCard() {
     to: "",
   });
 
-  const { userProjects, fetchUserProjects, subProjects, fetchSubProjects } =
-    useStore();
+  const {
+    userProjects,
+    fetchUserProjects,
+    subProjects,
+    fetchSubProjects,
+    sources,
+  } = useStore();
   const [projectSelected, setProjectSelected] = useState("");
   const [subProjectSelected, setSubProjectSelected] = useState("");
+  const [sourceSelected, setSourceSelected] = useState("");
   const [filterReset, setFilterReset] = useState(false);
 
   useEffect(() => {
@@ -96,21 +102,15 @@ export default function PieChartCard() {
       from: "",
       to: "",
     });
+    setSourceSelected("");
   };
 
   const handleFilter = () => {
-    if (date.from && !date.to) {
-      toast.error("Veuillez choisir une date de fin");
+    if ((!date.from || !date.to) && !projectSelected && !subProjectSelected && !sourceSelected) {
+      toast.error("Veuillez remplir au moins un champ");
       return;
     }
-    if (!date.from && date.to) {
-      toast.error("Veuillez choisir une date de début");
-      return;
-    }
-    if (projectSelected !== "" && subProjectSelected === "") {
-      toast.error("Veuillez choisir un sous projet");
-      return;
-    }
+
     Axios.get("/documentations/nbrConsultation/" + auth?.user?._id, {
       params: {
         idSubProject: subProjectSelected,
@@ -185,6 +185,32 @@ export default function PieChartCard() {
                     className="rounded-lg [&_span]:flex"
                   >
                     {subProject.name}
+                  </SelectItem>
+                );
+              })}
+          </SelectContent>
+        </Select>
+        <Labell className="text-sm">Source</Labell>
+        <Select value={sourceSelected} onValueChange={setSourceSelected}>
+          <SelectTrigger
+            className="ml-auto h-7 rounded-lg pl-2.5"
+            aria-label="Select a value"
+          >
+            <SelectValue placeholder="Choisir source" />
+          </SelectTrigger>
+          <SelectContent align="end" className="rounded-xl">
+            {sources
+              .filter(
+                (source) => source.idSubProject._id === subProjectSelected
+              )
+              .map((source, index) => {
+                return (
+                  <SelectItem
+                    key={index}
+                    value={source._id}
+                    className="rounded-lg [&_span]:flex"
+                  >
+                    {source.name}
                   </SelectItem>
                 );
               })}

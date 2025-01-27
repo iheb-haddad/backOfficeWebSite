@@ -514,7 +514,7 @@ function Configurations() {
     >
             <div className="infoContainer">
         <div className="buttonsInfo">
-          <div className="p-2">
+          <div className="p-3 ml-5 mb-2 border-2 rounded-md bg-white shadow-md">
             <h1 className="text-lg">Custom Color Picker</h1>
             <ColorPicker />
           </div>
