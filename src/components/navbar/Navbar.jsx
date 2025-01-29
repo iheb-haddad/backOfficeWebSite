@@ -6,7 +6,8 @@ import {
   faUser,
   faBook,
   faLink,
-  faFolderOpen
+  faFolderOpen,
+  faPenNib
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect } from "react";
 import "./Navbar.css";
@@ -107,6 +108,16 @@ function Navbar(props) {
           >
             <FontAwesomeIcon icon={faTableColumns} />
             <div className="title">Gestion de mapping</div>
+          </Link>
+          <Link
+            to="/GestionThemes"
+            className={`navLine ${
+              navLineClicked === "themes" ? "navClicked" : "notClicked"
+            }`}
+            onClick={props.clickThemes}
+          >
+            <FontAwesomeIcon icon={faPenNib} />
+            <div className="title">Gestion des thèmes</div>
           </Link>
         </div>
       </div>

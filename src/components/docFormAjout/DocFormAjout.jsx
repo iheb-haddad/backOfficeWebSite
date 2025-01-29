@@ -254,6 +254,15 @@ function DocFormAjout() {
         consultationNumber: 0,
         lastConsultation: "",
       };
+
+      const existingDocument = documentations.find(
+        (doc) => doc.urlDoc === newDocument.urlDoc
+      );
+
+      if (existingDocument) {
+        toast.warning(`L'URL existe déjà sous le titre ${existingDocument.title}`);
+      }
+      
       if (isError) {
         Axios.post("/Documents", newDocument)
           .then((response) => {

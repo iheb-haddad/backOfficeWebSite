@@ -34,3 +34,4 @@ export {default as SmtpConfig} from './smtpConfig/SmtpConfig';
 export {default as SupportMailConfig} from './supportMailConfig/SupportMailConfig';
 export {default as PieChartCard} from './pieChart/PieChart';
 export {default as AreaChartCard} from './areaChart/AreaChart';
+export {default as GestionThemes} from './gestionThemes/GestionThemes';

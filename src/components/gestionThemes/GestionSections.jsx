@@ -1,35 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Axios from "../../services/Axios";
-import { ModifiedSection, ConfLine } from "../index";
+import { ConfLine } from "../index";
 import "./GestionSections.css";
-import useRessources from "../../hooks/useRessources";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import UploadPage from "../uploadPage/UploadPage";
-import ExportCSV from "../exportCsv/ExportCsv";
 import { toast } from "sonner";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { DataTable } from "../ui/dataTable";
-import { Button } from "../ui/Button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
-import ModifySection from "./popupModifiedSection";
-import { Copy, Download } from "lucide-react";
 import ReorderSection from "../reorderSection/ReorderSection";
 
-function GestionSections() {
-  const [showUploadPage, setShowUploadPage] = useState(false);
-  const [showOrderChange, setShowOrderChange] = useState(false);
-  const clickUploadbtn = () => {
-    setShowUploadPage((prev) => !prev);
-  };
-
+function GestionSections({setThemeCompleted, setSections,sections}) {
   const defaultTitles = [
     { id: 1, titleFr: "Alertes", titleEn: "Alerts" },
     { id: 2, titleFr: "Communs", titleEn: "Commons" },
@@ -40,8 +16,14 @@ function GestionSections() {
     { id: 7, titleFr: "Autres", titleEn: "Others" },
     { id: 8, titleFr: "Erreurs", titleEn: "Errors" },
   ];
+  const [showOrderChange, setShowOrderChange] = useState(false);
 
-  const [sectionsTitles, setSectionsTitles] = useState([]);
+  const [sectionsTitles, setSectionsTitles] = useState(
+    defaultTitles.filter(
+      (section) =>
+        !sections.some((section2) => section.titleFr === section2.titleFr)
+    )
+  );
 
   const initialValues = {
     titleFr: "",
@@ -66,36 +48,11 @@ function GestionSections() {
   };
 
   const [formData, setFormData] = useState(initialValues);
-  const { sections, setSections } = useRessources();
+
   const [showError, setShowError] = useState(false);
   const [showListSections, setShowListSections] = useState(false);
   const [dataChanged, setDataChanged] = useState(0);
   const [copiedSection, setCopiedSection] = useState(null);
-
-  const copyStyleSection = (section) => {
-    const { _id, titleFr, titleEn, order, ...styleSection } = section;
-    setCopiedSection({ ...styleSection });
-    toast.success("Style de section copié");
-  };
-
-  useEffect(() => {
-    Axios.get("/sections")
-      .then((response) => {
-        setSections(response.data);
-        setSectionsTitles(
-          defaultTitles.filter(
-            (section) =>
-              !response.data.some(
-                (section2) => section.titleFr === section2.titleFr
-              )
-          )
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Erreur lors du chargement des données");
-      });
-  }, [dataChanged]);
 
   const handleTitleChange = (event) => {
     setFormData((prevData) => ({
@@ -142,7 +99,7 @@ function GestionSections() {
     setFormData(initialValues);
   };
 
-  const handleEnregistrer1 = () => {
+  const handleEnregistrerSection = () => {
     const hasEmptyFields = Object.entries(formData).some(([key, value]) => {
       return value === "" && key !== "customTitleFr" && key !== "customTitleEn";
     });
@@ -151,33 +108,22 @@ function GestionSections() {
       const newSection = {
         ...formData,
       };
-      Axios.post("/sections", newSection)
-        .then((response) => {
-          console.log(response);
-          setSections((prev) => [...prev, newSection]);
-          setDataChanged((prev) => prev + 1);
-          toast.success("Section ajoutée avec succès");
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Erreur lors de l'ajout de la section");
-        });
+      setSections((prev) => [...prev, newSection]);
+      toast.success("Section " + newSection.titleFr + " ajoutée avec succès");
       setFormData(initialValues);
     }
   };
 
-  const handleDeleteSection = (_id) => {
-    Axios.delete(`/sections/${_id}`)
-      .then((response) => {
-        console.log(response);
-        toast.success("Section supprimée avec succès");
-        setSections(sections.filter((section) => section._id !== _id));
-        setDataChanged((prev) => prev + 1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  useEffect(() => {
+    setSectionsTitles(
+      defaultTitles.filter(
+        (section) =>
+          !sections.some((section2) => section.titleFr === section2.titleFr)
+      )
+    );
+
+    setThemeCompleted(sections.length === defaultTitles.length);
+  }, [sections]);
 
   const confLines = [
     {
@@ -217,7 +163,7 @@ function GestionSections() {
       options: [],
     },
     {
-      type: "couleur",
+      type: "input",
       label: "Couleur du titre",
       value: formData.titleColor,
       handle: handleTitleColorChange,
@@ -226,7 +172,7 @@ function GestionSections() {
       options: [],
     },
     {
-      type: "couleur",
+      type: "input",
       label: "Couleur du texte",
       value: formData.textColor,
       handle: handleTextColorChange,
@@ -235,7 +181,7 @@ function GestionSections() {
       options: [],
     },
     {
-      type: "couleur",
+      type: "input",
       label: "Couleur du background",
       value: formData.backgroundColor,
       handle: handleBackgroundColorChange,
@@ -290,7 +236,7 @@ function GestionSections() {
       ],
     },
     {
-      type: "couleur",
+      type: "input",
       label: "Couleur du trait",
       value: formData.traitColor,
       handle: handleTraitColorChange,
@@ -309,7 +255,7 @@ function GestionSections() {
     },
     {
       type: "select",
-      label: "Affichage de cadre de section",
+      label: "Affichage de la bordure de section",
       value: formData.sectionBorderDisplay,
       handle: handleSectionBorderDisplayChange,
       holder: "",
@@ -345,7 +291,7 @@ function GestionSections() {
     },
     {
       type: "input",
-      label: "Arrondi de cadre de section",
+      label: "Arrondi de la bordure de section",
       value: formData.sectionBorderRound,
       handle: handleSectionBorderRoundChange,
       holder: "Saisir arrondi",
@@ -364,137 +310,10 @@ function GestionSections() {
     toast.success("Style collé avec succès");
   };
 
-  const pasteStyleToExistedSection = (_id) => {
-    const newSection = {
-      ...copiedSection,
-    };
-    Axios.put(`/sections/${_id}`, newSection)
-      .then((response) => {
-        console.log(response);
-        setDataChanged((prev) => prev + 1);
-        toast.success("Style collé avec succès");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const columns = [
-    {
-      accessorKey: "titleFr",
-      header: "Titre français",
-    },
-    {
-      accessorKey: "titleEn",
-      header: "Titre anglais",
-    },
-    {
-      id: "actions",
-      cell: ({ row }) => {
-        const section = row.original;
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-4 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <ModifySection
-                section={section}
-                setDataChanged={setDataChanged}
-                sectionsTitles={sectionsTitles}
-              />
-              <DropdownMenuItem>
-                <button onClick={() => handleDeleteSection(section._id)}>
-                  Supprimer
-                  <FontAwesomeIcon icon={faTrash} className="text-sm ml-2" />
-                </button>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <button
-                  onClick={() => copyStyleSection(section)}
-                  className="flex items-center gap-2"
-                >
-                  Copier <Copy size={14} />
-                </button>
-              </DropdownMenuItem>
-              {copiedSection && (
-                <DropdownMenuItem>
-                  <button
-                    onClick={() => pasteStyleToExistedSection(section._id)}
-                    className="flex items-center gap-2"
-                  >
-                    Coller <Download size={14} />
-                  </button>
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-    },
-  ];
-
   return (
     <div className="configurations" style={{ marginBottom: "40px" }}>
-      <div
-        className="buttonsBox"
-        style={{
-          marginBottom: "40px",
-          paddingRight: "40px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {!showUploadPage ? (
-          <button className="uploadbtn" onClick={clickUploadbtn}>
-            <FontAwesomeIcon icon={faUpload} />
-            <span>Importer des sections utilisant des fichiers csv</span>
-          </button>
-        ) : (
-          <button className="uploadbtn" onClick={clickUploadbtn}>
-            <FontAwesomeIcon icon={faUpload} />
-            <span>Cacher la page d'importation</span>
-          </button>
-        )}
-        {showUploadPage ? (
-          <a
-            className="uploadbtn text-sm"
-            href="SectionsModel.csv"
-            download="SectionsModel.csv"
-          >
-            Télécharger un modèle
-          </a>
-        ) : (showOrderChange && sections?.length > 0) ? (
-          <button className="uploadbtn" onClick={() => setShowOrderChange(false)}>
-            <span>Finir changement</span>
-          </button>
-        ) : (sections?.length > 0) && (
-          <button style={{ color : "white" , backgroundColor : "#5356d0", padding : "3px"}} onClick={() => setShowOrderChange(true)}>
-            <span>Changer l'ordre des sections</span>
-          </button>
-        )}
-      </div>
-      {showUploadPage && (
-        <UploadPage filesType={"sections"} setDataChanged={setDataChanged} />
-      )}
-      {(showOrderChange && !showUploadPage) && <ReorderSection />}
+      {showOrderChange && <ReorderSection />}
       <div className="colorsForm">
-        <div className="absolute flex -top-3 right-4 gap-2">
-          {copiedSection && copiedSection.titleFr !== formData.titleFr && (
-            <div
-              className="flex items-center gap-1 p-2 border rounded-md border-blue-600 bg-white cursor-pointer"
-              onClick={pasteStyleToForm}
-            >
-              Coller <Download size={14} />
-            </div>
-          )}
-        </div>
         <h4>Gestion des sections</h4>
         <div className="colorsLine">
           <div className="colorsLine">
@@ -531,32 +350,14 @@ function GestionSections() {
             />
           );
         })}
-        <ExportCSV data={sections} fileName={"sections"} />
+        <div></div>
         <div className="confButtons">
           <div>
             <button onClick={handleAnnuler1}>Annuler</button>
-            <button className="appliquer" onClick={handleEnregistrer1}>
-              Ajouter
+            <button className="appliquer" onClick={handleEnregistrerSection}>
+              Ajouter Section
             </button>
           </div>
-        </div>
-        <div className="applicationsList" style={{ gridColumn: "span 2" }}>
-          <div className="flex justify-end">
-            <Button
-              className="bg-white text-black border hover:bg-white"
-              onClick={() => setShowListSections(!showListSections)}
-            >
-              {showListSections ? "cacher liste" : "afficher liste"}
-            </Button>
-          </div>
-          {showListSections && (
-            <DataTable
-              data={sections}
-              columns={columns}
-              type="section"
-              nbrColumnsMax={3}
-            />
-          )}
         </div>
       </div>
     </div>

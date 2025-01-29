@@ -16,6 +16,7 @@ import {
   GestionComptes,
   GestionUsers,
   AddAdminForm,
+  GestionThemes,
 } from "./components/index";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -47,6 +48,7 @@ function App() {
                 <Route path="Configurations" element={<Configurations />} />
                 <Route path="GestionSources" element={<GestionSources />} />
                 <Route path="GestionDocuments" element={<GestionDocuments />} />
+                <Route path="GestionThemes" element={<GestionThemes />} />
                 <Route
                   path="GestionProjects"
                   element={

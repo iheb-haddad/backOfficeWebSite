@@ -1,4 +1,6 @@
 import React from "react";
+import ColorPicker from "../ui/color-picker";
+import { useState } from "react";
 
 function ConfLine(props) {
   return (
@@ -12,7 +14,7 @@ function ConfLine(props) {
           placeholder={props.holder}
           style={props.style}
         />
-      ) : (
+      ) : props.type === "select" ? (
         <select value={props.value} onChange={props.handle} style={props.style}>
           {props.options.map((option, index) => {
             return (
@@ -22,6 +24,8 @@ function ConfLine(props) {
             );
           })}
         </select>
+      ) : (
+        <ColorPicker color={props.value} setColor={props.handle} />
       )}
     </div>
   );

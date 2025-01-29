@@ -132,18 +132,30 @@ function Configurations() {
     }));
   };
 
-  const handlePanelColorChange = createHandleChange("panelColor");
-  const handlePanelTextColorChange = createHandleChange("panelTextColor");
+  const createHandleColorChange = (key) => (color) => {
+    setConfSelected((prevData) => ({
+      ...prevData,
+      [key]: color,
+    }));
+  };
+
+  const handlePanelColorChange = createHandleColorChange("panelColor");
+
+  const handlePanelTextColorChange = createHandleColorChange("panelTextColor");
   const handleMemoSectionChange = createHandleChange("memoSection");
-  const handleMemoBackColorChange = createHandleChange("memoBackgroundColor");
-  const handleMemoFontColorChange = createHandleChange("memoFontColor");
+  const handleMemoBackColorChange = createHandleColorChange(
+    "memoBackgroundColor"
+  );
+  const handleMemoFontColorChange = createHandleColorChange("memoFontColor");
   const handlePanelWidthChange = createHandleChange("panelWidth");
   const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
   const handleBackgroundLanguageChange =
-    createHandleChange("backgroundLanguage");
-  const handleTextColorLanguageChange = createHandleChange("textColorLanguage");
-  const handleButtonMemoBgColorChange = createHandleChange("buttonMemoBgColor");
-  const handleButtonMemoFontColorChange = createHandleChange(
+    createHandleColorChange("backgroundLanguage");
+  const handleTextColorLanguageChange =
+    createHandleColorChange("textColorLanguage");
+  const handleButtonMemoBgColorChange =
+    createHandleColorChange("buttonMemoBgColor");
+  const handleButtonMemoFontColorChange = createHandleColorChange(
     "buttonMemoFontColor"
   );
   const handleButtonMemoFontSizeChange =
@@ -151,6 +163,9 @@ function Configurations() {
   const handleSectionEmailDisplayChange = createHandleChange(
     "sectionEmailDisplay"
   );
+  const handleFontTitleMemoChange = createHandleChange("fontTitleMemo");
+  const handleFontTextMemoChange = createHandleChange("fontTextMemo");
+  const handleArrondiMemoChange = createHandleChange("arrondiMemo");
   const handleTimerChange = (event) => {
     const value = parseInt(event.target.value, 10);
     if (!isNaN(value)) {
@@ -181,6 +196,9 @@ function Configurations() {
     buttonMemoFontColor: "white",
     buttonMemoFontSize: "white",
     handleSectionEmailDisplay: "white",
+    fontTitleMemo: "white",
+    fontTextMemo: "white",
+    arrondiMemo: "white",
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
@@ -273,6 +291,24 @@ function Configurations() {
         handleSectionEmailDisplay: "#50e150",
       }));
     }
+    if (confSelected.fontTitleMemo != initialValues.fontTitleMemo) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        fontTitleMemo: "#50e150",
+      }));
+    }
+    if (confSelected.fontTextMemo != initialValues.fontTextMemo) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        fontTextMemo: "#50e150",
+      }));
+    }
+    if (confSelected.arrondiMemo != initialValues.arrondiMemo) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        arrondiMemo: "#50e150",
+      }));
+    }
 
     setTimeout(() => {
       setInputColor(initialInputColors);
@@ -299,21 +335,24 @@ function Configurations() {
 
   const reinitialisedData = {
     idProject: confSelected.idProject,
-    panelColor: "white",
-    panelTextColor: "black",
+    panelColor: "#ffffff",
+    panelTextColor: "#000000",
     panelWidth: "300px",
     memoSection: "display",
     memoBackgroundColor: "#ffc000",
-    memoFontColor: "white",
+    memoFontColor: "#ffffff",
     generalUrl: confSelected.generalUrl,
     timer: 10,
     resizeBarWidth: "5px",
-    backgroundLanguage: "black",
-    textColorLanguage: "white",
-    buttonMemoBgColor: "black",
-    buttonMemoFontColor: "white",
+    backgroundLanguage: "#000000",
+    textColorLanguage: "#ffffff",
+    buttonMemoBgColor: "#000000",
+    buttonMemoFontColor: "#ffffff",
     buttonMemoFontSize: "10px",
     sectionEmailDisplay: "display",
+    memoFontTitle: "Montserrat",
+    memoFontText: "Montserrat",
+    arrondiMemo: "0px",
   };
 
   const handleAReinitialiser = () => {
@@ -358,7 +397,7 @@ function Configurations() {
 
   const confLines = [
     {
-      type: "input",
+      type: "couleur",
       label: "Couleur du panneau",
       value: confSelected.panelColor,
       handle: handlePanelColorChange,
@@ -367,8 +406,8 @@ function Configurations() {
       options: [],
     },
     {
-      type: "input",
-      label: "Couleur du texte du panneau",
+      type: "couleur",
+      label: "Couleur du mot 'Langue'",
       value: confSelected.panelTextColor,
       handle: handlePanelTextColorChange,
       holder: "Saisir couleur",
@@ -403,7 +442,7 @@ function Configurations() {
       options: [],
     },
     {
-      type: "input",
+      type: "couleur",
       label: "Couleur de fond de la langue",
       value: confSelected.backgroundLanguage,
       handle: handleBackgroundLanguageChange,
@@ -412,7 +451,7 @@ function Configurations() {
       options: [],
     },
     {
-      type: "input",
+      type: "couleur",
       label: "Couleur du texte de la langue",
       value: confSelected.textColorLanguage,
       handle: handleTextColorLanguageChange,
@@ -445,7 +484,7 @@ function Configurations() {
       ],
     },
     {
-      type: "input",
+      type: "couleur",
       label: "Couleur de section Mémo",
       value: confSelected.memoBackgroundColor,
       handle: handleMemoBackColorChange,
@@ -455,6 +494,24 @@ function Configurations() {
     },
     {
       type: "input",
+      label: "Police du titre Mémo",
+      value: confSelected.fontTitleMemo,
+      handle: handleFontTitleMemoChange,
+      holder: "Saisir police",
+      style: { backgroundColor: inputColor.fontTitleMemo },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Police du texte Mémo",
+      value: confSelected.fontTextMemo,
+      handle: handleFontTextMemoChange,
+      holder: "Saisir police",
+      style: { backgroundColor: inputColor.fontTextMemo },
+      options: [],
+    },
+    {
+      type: "couleur",
       label: "Couleur du texte Mémo",
       value: confSelected.memoFontColor,
       handle: handleMemoFontColorChange,
@@ -463,7 +520,7 @@ function Configurations() {
       options: [],
     },
     {
-      type: "input",
+      type: "couleur",
       label: "Couleur de fond de bouton Mémo",
       value: confSelected.buttonMemoBgColor,
       handle: handleButtonMemoBgColorChange,
@@ -472,7 +529,7 @@ function Configurations() {
       options: [],
     },
     {
-      type: "input",
+      type: "couleur",
       label: "Couleur du texte de bouton Mémo",
       value: confSelected.buttonMemoFontColor,
       handle: handleButtonMemoFontColorChange,
@@ -487,6 +544,15 @@ function Configurations() {
       handle: handleButtonMemoFontSizeChange,
       holder: "Saisir taille",
       style: { backgroundColor: inputColor.buttonMemoFontSize },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Arrondi de cadre du Mémo",
+      value: confSelected.arrondiMemo,
+      handle: handleArrondiMemoChange,
+      holder: "Saisir arrondi",
+      style: { backgroundColor: inputColor.arrondiMemo },
       options: [],
     },
   ];
@@ -512,21 +578,17 @@ function Configurations() {
       className="configurations"
       style={{ paddingTop: "40px", position: "relative" }}
     >
-            <div className="infoContainer">
+      <div className="infoContainer">
         <div className="buttonsInfo">
-          <div className="p-3 ml-5 mb-2 border-2 rounded-md bg-white shadow-md">
-            <h1 className="text-lg">Custom Color Picker</h1>
-            <ColorPicker />
-          </div>
           <div className="flex items-center gap-2">
-          <button onClick={handleLiveConfiguration}>
-            Configurer en direct
-          </button>
-          <Icon
-            className="infoIcon"
-            icon="mdi:information-variant-circle-outline"
-            onClick={onOpenModal}
-          />
+            <button onClick={handleLiveConfiguration}>
+              Configurer en direct
+            </button>
+            <Icon
+              className="infoIcon"
+              icon="mdi:information-variant-circle-outline"
+              onClick={onOpenModal}
+            />
           </div>
         </div>
         <Modal open={open} onClose={onCloseModal} center>
@@ -620,6 +682,7 @@ function Configurations() {
                 />
               );
             })}
+            <ExportCSV data={configurations} fileName={"configurations"} />
             <div className="confButtons">
               <div>
                 <button onClick={handleAReinitialiser}>Réinitialiser</button>
@@ -629,8 +692,6 @@ function Configurations() {
                 </button>
               </div>
             </div>
-            <div></div>
-            <ExportCSV data={configurations} fileName={"configurations"} />
           </div>
           <div
             className="colorsForm"

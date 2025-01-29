@@ -80,6 +80,11 @@ function Home() {
     setNavLineClicked("users");
     screenWidth < 1160 && setShowNavbar(false);
   };
+  const handleClickThemes = () => {
+    setModBackground(true);
+    setNavLineClicked("themes");
+    screenWidth < 1160 && setShowNavbar(false);
+  }
 
   return (
     <>
@@ -103,6 +108,7 @@ function Home() {
               clickDocuments={handleClickDocuments}
               clickProjects={handleClickProjects}
               clickUsers={handleClickUsers}
+              clickThemes={handleClickThemes}
             />
           )}
           {(!showNavbar || screenWidth > 450) && (
