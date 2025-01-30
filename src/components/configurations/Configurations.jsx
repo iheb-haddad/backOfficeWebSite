@@ -21,7 +21,7 @@ import useStore from "../../globalState/UseStore";
 import { toast } from "sonner";
 import SmtpConfig from "../smtpConfig/SmtpConfig";
 import SupportMailConfig from "../supportMailConfig/SupportMailConfig";
-import ColorPicker from "../ui/color-picker";
+import { set } from "date-fns";
 
 function Configurations() {
   const [initialValues, setInitialValues] = useState({});
@@ -31,14 +31,43 @@ function Configurations() {
   const [isAddingLanguage, setIsAddingLanguage] = useState(false);
   const { setNavLineClicked, setLiveConfiguration, auth } = useAuth();
   const [showUploadPage, setShowUploadPage] = useState(false);
+  const [themes, setThemes] = useState([]);
+  const [themeSelected, setThemeSelected] = useState("");
+  const [clientSelected, setClientSelected] = useState("");
 
   const clickUploadbtn = () => {
     setShowUploadPage((prev) => !prev);
   };
 
+  const defaultData = {
+    idProject: "",
+    panelColor: "#000000",
+    panelTextColor: "#000000",
+    panelWidth: "",
+    memoSection: "",
+    memoBackgroundColor: "#000000",
+    memoFontColor: "#000000",
+    generalUrl: "",
+    timer: "",
+    resizeBarWidth: "",
+    backgroundLanguage: "#000000",
+    textColorLanguage: "#ffffff",
+    fontTitleMemo: "",
+    fontTextMemo: "",
+    buttonMemoBgColor: "#000000",
+    buttonMemoFontColor: "#000000",
+    buttonMemoFontSize: "",
+    sectionEmailDisplay: "",
+  };
+
   const [configurations, setConfigurations] = useState([]);
-  const { languages, setLanguages, confSelected, setConfSelected } =
-    useRessources();
+  const {
+    languages,
+    setLanguages,
+    confSelected,
+    setConfSelected,
+    setThemeSections,
+  } = useRessources();
   const { projects, fetchProjects } = useStore();
 
   const langs = [
@@ -103,6 +132,17 @@ function Configurations() {
         console.error("Error fetching documents:", error);
       });
   }, [languagesChanged]);
+
+  useEffect(() => {
+    Axios.get("/themes")
+      .then((response) => {
+        setThemes(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
+    setThemeSections([]);
+  }, []);
 
   useEffect(() => {
     const user = auth?.user?._id || "";
@@ -419,7 +459,7 @@ function Configurations() {
       label: "Largeur initial du panneau",
       value: confSelected.panelWidth,
       handle: handlePanelWidthChange,
-      holder: "Saisir couleur",
+      holder: "Saisir largeur",
       style: { backgroundColor: inputColor.widthPanelFieldColor },
       options: [],
     },
@@ -573,6 +613,23 @@ function Configurations() {
     setInitialValues(conf);
   };
 
+  const handleAppliquerTheme = () => {
+    Axios.put(`/configurations/${clientSelected}`, {
+      projectId: clientSelected,
+      ...confSelected,
+    })
+      .then((data) => {
+        setInitialValues(confSelected);
+        setDataChanged((prev) => prev + 1);
+        console.log("Object modified:", data);
+        toast.success("Configuration modifiée avec succès");
+      })
+      .catch((error) => {
+        console.error("Error modifying object:", error);
+        toast.error("Erreur lors de la modification");
+      });
+  };
+
   return (
     <div
       className="configurations"
@@ -613,6 +670,65 @@ function Configurations() {
           <img src="./fleche4.png" alt="" className="fleche5" />
           <h4 className="sectionTitle">Titre de section</h4>
         </Modal>
+      </div>
+      <div className="colorsForm">
+        <h4>Thème</h4>
+        <div>
+          <h1 className="text-sm font-semibold mb-2">
+            Choisir un thème déjà pret pour faciliter la configuration.
+          </h1>
+          <ConfLine
+            type="select"
+            label="Thème"
+            value={themeSelected}
+            handle={(e) => {
+              setThemeSelected(e.target.value);
+              const theme = themes.find(
+                (theme) => theme._id === e.target.value
+              );
+              if(theme){
+              setThemeSections(theme?.sections || []);
+              setConfSelected((prevData) => ({
+                ...prevData,
+                ...theme.configuration,
+              }));
+            }else{
+              setThemeSections([]);
+              setConfSelected((prevData) => ({
+                ...prevData,
+                ...defaultData,
+              }));
+            }
+            }}
+            holder=""
+            style={{}}
+            options={[
+              { title: "---", value: "" },
+              ...themes.map((theme) => ({
+                title: theme.name,
+                value: theme._id,
+              })),
+            ]}
+          />
+          <div className="h-4"></div>
+            <ConfLine
+             type="select"
+             label="Client"
+              value={clientSelected}
+              handle={(e) => { setClientSelected(e.target.value);}}
+              holder="Choisir un client"
+              style={{}}
+              options={[{ title: "---", value : ""},...projects.map((project) => ({
+                title: project.name,
+                value: project._id,
+              }))]}
+            />
+            <div className="confButtons">
+              <button className="appliquer" onClick={handleAppliquerTheme}>
+                Appliquer
+              </button>
+            </div>
+        </div>
       </div>
       {(auth?.user?.role === "admin" || projects.length > 0) && (
         <>

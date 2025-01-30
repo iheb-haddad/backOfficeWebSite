@@ -12,7 +12,7 @@ import useRessources from "../../../hooks/useRessources";
 import useAuth from "../../../hooks/useAuth";
 
 function NormalPanel() {
-  const { languages, sections, confSelected } = useRessources();
+  const { languages, sections, confSelected, themeSections } = useRessources();
   const { setLiveConfiguration, liveConfiguration } = useAuth();
 
   const handleCloseLiveConfiguration = () => {
@@ -192,9 +192,13 @@ function NormalPanel() {
                 </button>
               </div>
             </div>
-            {sections.map((section, index) => {
-              return <Encart key={index} sectionConfig={section} />;
-            })}
+            {themeSections.length > 0
+              ? themeSections.map((section, index) => {
+                  return <Encart key={index} sectionConfig={section} />;
+                })
+              : sections.map((section, index) => {
+                  return <Encart key={index} sectionConfig={section} />;
+                })}
             {confSelected.memoSection === "display" && (
               <Memos
                 title={t("Memo")}

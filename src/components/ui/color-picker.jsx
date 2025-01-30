@@ -26,7 +26,8 @@ const ColorPicker= ({color,setColor}) => {
       <Input
         value={color}
         onChange={(e) => setColor(e.target.value)}
-        className="w-28"
+        className="w-28 placeholder:text-xs"
+        placeholder="Choisir couleur"
       />
     </div>
   );

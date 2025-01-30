@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faUpload, faTrash } from "@fortawesome/free-solid-svg-icons";
 import UploadPage from "../uploadPage/UploadPage";
 import ColorPicker from "../ui/color-picker";
 import useAuth from "../../hooks/useAuth";
@@ -14,10 +14,21 @@ import { Separator } from "@/components/ui/separator";
 import GestionSections from "./GestionSections";
 import { toast } from "sonner";
 import Axios from "@/services/Axios";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { MoreHorizontal } from "lucide-react";
+import { DataTable } from "../ui/dataTable";
 
 const GestionThemes = () => {
   const [theme, setTheme] = useState({});
-  const [sections,setSections] = useState([]);
+  const [themeChanged, setThemeChanged] = useState(false);
+  const [themes, setThemes] = useState([]);
+  const [sections, setSections] = useState([]);
   const { setNavLineClicked, setLiveConfiguration, auth } = useAuth();
   const [showUploadPage, setShowUploadPage] = useState(false);
   const [themeCompleted, setThemeCompleted] = useState(false);
@@ -59,7 +70,7 @@ const GestionThemes = () => {
   const handleNameChange = createHandleChange("name");
   const handleDescriptionChange = createHandleChange("description");
   const createHandleColorChange = (key) => (color) => {
-    setConfSelected((prevData) => ({
+    setTheme((prevData) => ({
       ...prevData,
       [key]: color,
     }));
@@ -69,14 +80,18 @@ const GestionThemes = () => {
 
   const handlePanelTextColorChange = createHandleColorChange("panelTextColor");
   const handleMemoSectionChange = createHandleChange("memoSection");
-  const handleMemoBackColorChange = createHandleColorChange("memoBackgroundColor");
+  const handleMemoBackColorChange = createHandleColorChange(
+    "memoBackgroundColor"
+  );
   const handleMemoFontColorChange = createHandleColorChange("memoFontColor");
   const handlePanelWidthChange = createHandleChange("panelWidth");
   const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
   const handleBackgroundLanguageChange =
-  createHandleColorChange("backgroundLanguage");
-  const handleTextColorLanguageChange = createHandleColorChange("textColorLanguage");
-  const handleButtonMemoBgColorChange = createHandleColorChange("buttonMemoBgColor");
+    createHandleColorChange("backgroundLanguage");
+  const handleTextColorLanguageChange =
+    createHandleColorChange("textColorLanguage");
+  const handleButtonMemoBgColorChange =
+    createHandleColorChange("buttonMemoBgColor");
   const handleButtonMemoFontColorChange = createHandleColorChange(
     "buttonMemoFontColor"
   );
@@ -120,9 +135,9 @@ const GestionThemes = () => {
     buttonMemoFontColor: "rgb(214, 214, 214)",
     buttonMemoFontSize: "rgb(214, 214, 214)",
     handleSectionEmailDisplay: "rgb(214, 214, 214)",
-    fontTitleMemo : "rgb(214, 214, 214)",
-    fontTextMemo : "rgb(214, 214, 214)",
-    arrondiMemo : "rgb(214, 214, 214)",
+    fontTitleMemo: "rgb(214, 214, 214)",
+    fontTextMemo: "rgb(214, 214, 214)",
+    arrondiMemo: "rgb(214, 214, 214)",
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
@@ -187,7 +202,7 @@ const GestionThemes = () => {
       label: "Largeur initial du panneau",
       value: theme.panelWidth,
       handle: handlePanelWidthChange,
-      holder: "Saisir couleur",
+      holder: "Saisir largeur",
       style: {
         borderColor:
           showError2 && !theme.panelWidth
@@ -261,6 +276,7 @@ const GestionThemes = () => {
           showError2 && !theme.memoSection ? "red" : inputColor.memoFieldColor,
       },
       options: [
+        { title: "---", value: "" },
         { title: "Afficher Mémo", value: "display" },
         { title: "Cacher Mémo", value: "hide" },
       ],
@@ -278,6 +294,7 @@ const GestionThemes = () => {
             : inputColor.handleSectionEmailDisplay,
       },
       options: [
+        { title: "---", value: "" },
         { title: "Afficher Email", value: "display" },
         { title: "Cacher Email", value: "hide" },
       ],
@@ -302,7 +319,10 @@ const GestionThemes = () => {
       value: theme.fontTitleMemo,
       handle: handleFontTitleMemoChange,
       holder: "Saisir police",
-      style: { borderColor: showError2 && !theme.fontTitleMemo ? "red" : inputColor.fontTitleMemo },
+      style: {
+        borderColor:
+          showError2 && !theme.fontTitleMemo ? "red" : inputColor.fontTitleMemo,
+      },
       options: [],
     },
     {
@@ -311,7 +331,10 @@ const GestionThemes = () => {
       value: theme.fontTextMemo,
       handle: handleFontTextMemoChange,
       holder: "Saisir police",
-      style: { borderColor: showError2 && !theme.fontTextMemo ? "red" : inputColor.fontTextMemo },
+      style: {
+        borderColor:
+          showError2 && !theme.fontTextMemo ? "red" : inputColor.fontTextMemo,
+      },
       options: [],
     },
     {
@@ -376,9 +399,12 @@ const GestionThemes = () => {
       value: theme.arrondiMemo,
       handle: handleArrondiMemoChange,
       holder: "Saisir arrondi",
-      style: { borderColor: showError2 && !theme.arrondiMemo ? "red" : inputColor.arrondiMemo },
+      style: {
+        borderColor:
+          showError2 && !theme.arrondiMemo ? "red" : inputColor.arrondiMemo,
+      },
       options: [],
-    }
+    },
   ];
 
   const handleThemeEnregistrer = () => {
@@ -386,7 +412,7 @@ const GestionThemes = () => {
       Axios.post("/themes", {
         name: theme.name,
         description: theme.description,
-        configurations : {
+        configuration: {
           panelColor: theme.panelColor,
           panelTextColor: theme.panelTextColor,
           panelWidth: theme.panelWidth,
@@ -403,23 +429,83 @@ const GestionThemes = () => {
           sectionEmailDisplay: theme.sectionEmailDisplay,
           fontTitleMemo: theme.fontTitleMemo,
           fontTextMemo: theme.fontTextMemo,
-          arrondiMemo: theme.arrondiMemo
+          arrondiMemo: theme.arrondiMemo,
         },
         sections: sections,
       })
-      .then(() => {
-        toast.success("Thème enregistré avec succès");
-        setThemeCompleted(false);
-        setTheme({});
-        setSections([]);
-      })
-      .catch(() => {
+        .then(() => {
+          toast.success("Thème enregistré avec succès");
+          setThemeCompleted(false);
+          setTheme({});
+          setSections([]);
+          stepper.goTo("step-1");
+        })
+        .catch(() => {
           toast.error("Erreur lors de l'enregistrement du thème");
-      });
+        });
     } else {
       toast.error("Veuillez compléter la configuration du thème");
     }
   };
+
+  const handleDeleteTheme = (id) => {
+    Axios.delete(`/themes/${id}`)
+      .then(() => {
+        setThemeChanged(prev => !prev);
+        toast.success("Thème supprimé avec succès");
+      })
+      .catch(() => {
+        toast.error("Erreur lors de la suppression du thème");
+      });
+  };
+
+  useEffect(() => {
+    Axios.get("/themes")
+      .then((response) => {
+        setThemes(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
+  }, [themeChanged]);
+
+  const columns = [
+    {
+      accessorKey: "name",
+      header: "Nom du thème",
+    },
+    {
+      accessorKey: "description",
+      header: "Description",
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const theme = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-4 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <button onClick={() => handleDeleteTheme(theme._id)}>
+                  Supprimer
+                  <FontAwesomeIcon icon={faTrash} className="text-sm ml-2" />
+                </button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
+
   return (
     <div
       className="configurations"
@@ -532,31 +618,34 @@ const GestionThemes = () => {
             <div className="confButtons">
               <div>
                 <button
-                  onClick={() => {
-                    stepper.beforeNext(() => {
+                  onClick={async () => {
+                    stepper.beforeNext(async () => {
                       if (theme.name && theme.description) {
-                        return true
-                        // Axios.post("/themes/verifyNameUniqueness", { name: theme.name })
-                        //   .then((response) => {
-                        //   if (response.status === 200) {
-                        //     return true;
-                        //   }
-                        //   return false;
-                        //   })
-                        //   .catch((error) => {
-                        //   if (error.response && error.response.status === 400) {
-                        //     toast.error("Nom de thème déjà utilisé");
-                        //   } else {
-                        //     toast.error("Erreur lors de la vérification du nom du thème");
-                        //   }
-                        //   return false;
-                        //   });
+                        try {
+                          const response = await Axios.post(
+                            "/themes/verifyNameUniqueness",
+                            { name: theme.name }
+                          );
+                          if (response.status === 200) {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        } catch (error) {
+                          if (error.response && error.response.status === 400) {
+                            toast.error("Nom de thème déjà utilisé");
+                          } else {
+                            toast.error(
+                              "Erreur lors de la vérification du nom du thème"
+                            );
+                          }
+                          return false;
+                        }
                       } else {
                         setShowError1(true);
                         return false;
                       }
-                     });
-                    
+                    });
                   }}
                   className="appliquer flex items-center gap-2"
                   style={{ fontSize: "1.1rem" }}
@@ -642,7 +731,11 @@ const GestionThemes = () => {
         ))}
         {stepper.when("step-3", () => (
           <>
-            <GestionSections setThemeCompleted={setThemeCompleted} setSections={setSections} sections={sections}/>
+            <GestionSections
+              setThemeCompleted={setThemeCompleted}
+              setSections={setSections}
+              sections={sections}
+            />
             <div className="confButtons justify-between pr-0 w-[80%] mx-auto mb-20">
               <button
                 onClick={() => {
@@ -664,6 +757,14 @@ const GestionThemes = () => {
             </div>
           </>
         ))}
+        <div className="w-[80%] mx-auto mb-20">
+          <DataTable
+            data={themes}
+            columns={columns}
+            type="themes"
+            nbrColumnsMax={4}
+          />
+        </div>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export const RessourcesProvider = ({ children }) => {
     timer: "",
     resizeBarWidth: "",
     backgroundLanguage: "#000000",
-    textColorLanguage: "#000000",
+    textColorLanguage: "#ffffff",
     fontTitleMemo: "",
     fontTextMemo: "",
     buttonMemoBgColor: "#000000",
@@ -25,6 +25,7 @@ export const RessourcesProvider = ({ children }) => {
   };
   const [languages, setLanguages] = useState([]);
   const [sections, setSections] = useState([]);
+  const [themeSections, setThemeSections] = useState([]);
   const [confSelected, setConfSelected] = useState(defaultData);
   const [btnClicked, setBtnClicked] = useState("users");
   return (
@@ -36,6 +37,8 @@ export const RessourcesProvider = ({ children }) => {
         setConfSelected,
         sections,
         setSections,
+        themeSections,
+        setThemeSections,
         btnClicked,
         setBtnClicked,
       }}
