@@ -525,7 +525,7 @@ const GestionThemes = () => {
           {!showUploadPage ? (
             <button className="uploadbtn" onClick={clickUploadbtn}>
               <FontAwesomeIcon icon={faUpload} />
-              <span>Importer configuration utilisant des fichiers csv</span>
+              <span>Importer thèmes utilisant des fichiers csv</span>
             </button>
           ) : (
             <button className="uploadbtn" onClick={clickUploadbtn}>
@@ -546,7 +546,7 @@ const GestionThemes = () => {
         {showUploadPage && (
           <UploadPage
             filesType={"configurations"}
-            setDataChanged={setDataChanged}
+            setDataChanged={setThemeChanged}
           />
         )}
         <div className="flex justify-between w-[80%] mx-auto">

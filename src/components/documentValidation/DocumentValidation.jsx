@@ -24,13 +24,17 @@ const DocumentValidation = () => {
   const verifyDocument = async (id) => {
     const document = documentations.find((doc) => doc._id === id);
     try {
-      const response = await fetch(document.urlDoc);
+      const url = document.urlDoc.startsWith("http") ? document.urlDoc : `https://${document.urlDoc}`;
+      const response = await fetch(url);
       if (response.ok) {
+        console.log(response);
         updateDocumentStatus(id, "OK");
       } else {
+        console.log(response);
         updateDocumentStatus(id, "KO");
       }
     } catch (error) {
+      console.log(error);
       updateDocumentStatus(id, "KO");
     }
   };
