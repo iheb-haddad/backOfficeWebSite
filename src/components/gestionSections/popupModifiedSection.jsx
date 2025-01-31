@@ -60,7 +60,6 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
         .catch((error) => {
           console.log(error);
         });
-      setIsModified("");
     }
   };
 

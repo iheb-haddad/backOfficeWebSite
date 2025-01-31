@@ -5,7 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Axios from "@/services/Axios";
 import { DataTable } from "./dataTable";
@@ -18,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { ConfLine } from "..";
 import { DialogDescription } from "@radix-ui/react-dialog";
 
@@ -89,9 +88,10 @@ const CustomTitlesManager = ({ customTitles, setCustomTitles }) => {
             e.preventDefault();
             setIsOpen(true);
           }}
-          className="flex items-center space-x-2 bg-slate-100 w-full border border-blue-950 rounded-md p-1"
+          className="flex items-center gap-2 space-x-2 bg-white w-full border border-gray-400 rounded-md p-1"
         >
           Titres personnalisés
+          <FontAwesomeIcon icon={faPenToSquare} />
         </Button>
       </div>
 
