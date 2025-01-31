@@ -19,9 +19,6 @@ import { toast } from "sonner";
 const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
   const initialValues = {
     titleFr: section.titleFr,
-    titleEn: section.titleEn,
-    customTitleFr: section.customTitleFr,
-    customTitleEn: section.customTitleEn,
     titlePolice: section.titlePolice,
     textPolice: section.textPolice,
     titleColor: section.titleColor,
@@ -37,7 +34,9 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
     sectionBorderColor: section.sectionBorderColor,
     sectionBorderRound: section.sectionBorderRound,
   };
+  const initialCustomTitles = section.customTitles;
   const [modifiedData, setModifiedData] = useState(initialValues);
+  const [modifiedCustopmTitles, setModifiedCustomTitles] = useState(initialCustomTitles);
   const [showError2, setShowError2] = useState(false);
   const [msgErreurColor2, setMsgErreurColor2] = useState("#EEEEEE");
 
@@ -50,6 +49,7 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
       setMsgErreurColor2("#EEEEEE");
       const newSection = {
         ...modifiedData,
+        customTitles: modifiedCustopmTitles,
       };
       Axios.put(`/sections/${_id}`, newSection)
         .then((response) => {
@@ -88,6 +88,8 @@ const ModifySection = ({ section, setDataChanged, sectionsTitles }) => {
               setModifiedData={setModifiedData}
               showError={showError2}
               msgErreurColor={msgErreurColor2}
+              customTitles={modifiedCustopmTitles}
+              setCustomTitles={setModifiedCustomTitles}
             />
           </div>
         </DialogDescription>

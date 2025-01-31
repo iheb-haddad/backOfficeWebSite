@@ -22,10 +22,12 @@ import { MoreHorizontal } from "lucide-react";
 import ModifySection from "./popupModifiedSection";
 import { Copy, Download } from "lucide-react";
 import ReorderSection from "../reorderSection/ReorderSection";
+import CustomTitlesManager from "../ui/customTitlesManager";
 
 function GestionSections() {
   const [showUploadPage, setShowUploadPage] = useState(false);
   const [showOrderChange, setShowOrderChange] = useState(false);
+  const [customTitles, setCustomTitles] = useState([]);
   const clickUploadbtn = () => {
     setShowUploadPage((prev) => !prev);
   };
@@ -45,9 +47,7 @@ function GestionSections() {
 
   const initialValues = {
     titleFr: "",
-    titleEn: "",
-    customTitleFr: "",
-    customTitleEn: "",
+    customTitles: [],
     titlePolice: "Montserrat",
     textPolice: "Montserrat",
     titleColor: "white",
@@ -120,8 +120,6 @@ function GestionSections() {
     }));
   };
 
-  const handleCustomTitleFrChange = handleChange("customTitleFr");
-  const handleCustomTitleEnChange = handleChange("customTitleEn");
   const handleTitlePoliceChange = handleChange("titlePolice");
   const handleTextPoliceChange = handleChange("textPolice");
   const handleTitleColorChange = handleChangeColor("titleColor");
@@ -150,6 +148,7 @@ function GestionSections() {
     if (!hasEmptyFields) {
       const newSection = {
         ...formData,
+        customTitles: customTitles,
       };
       Axios.post("/sections", newSection)
         .then((response) => {
@@ -180,24 +179,6 @@ function GestionSections() {
   };
 
   const confLines = [
-    {
-      type: "input",
-      label: "Titre personnalisé français (optionnel)",
-      value: formData.customTitleFr,
-      handle: handleCustomTitleFrChange,
-      holder: "Saisir titre",
-      style: {},
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Titre personnalisé anglais (optionnel)",
-      value: formData.customTitleEn,
-      handle: handleCustomTitleEnChange,
-      holder: "Saisir titre",
-      style: {},
-      options: [],
-    },
     {
       type: "input",
       label: "Police du titre",
@@ -508,7 +489,7 @@ function GestionSections() {
             >
               <option value="" disabled hidden>
                 ----
-              </option>
+              </option> 
               {sectionsTitles.map((section, index) => (
                 <option key={index} value={section.titleFr}>
                   {section.titleFr}
@@ -517,6 +498,7 @@ function GestionSections() {
             </select>
           </div>
         </div>
+        <CustomTitlesManager  customTitles={customTitles} setCustomTitles={setCustomTitles}/>
         {confLines.map((line, index) => {
           return (
             <ConfLine
@@ -531,6 +513,7 @@ function GestionSections() {
             />
           );
         })}
+        <div></div>
         <ExportCSV data={sections} fileName={"sections"} />
         <div className="confButtons">
           <div>

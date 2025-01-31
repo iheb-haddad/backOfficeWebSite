@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ConfLine from "../confLine/ConfLine";
+import CustomTitlesManager from "@/components/ui/customTitlesManager";
 
 function ModifiedSection(props) {
   const handleTitleChange = (event) => {
@@ -18,8 +19,6 @@ function ModifiedSection(props) {
     }));
   };
 
-  const handleCustomTitleEnChange = handlePropertyChange("customTitleEn");
-  const handleCustomTitleFrChange = handlePropertyChange("customTitleFr");
   const handleTextPoliceChange = handlePropertyChange("textPolice");
   const handleTitlePoliceChange = handlePropertyChange("titlePolice");
   const handleTitleColorChange = handlePropertyChange("titleColor");
@@ -36,24 +35,6 @@ function ModifiedSection(props) {
   const handleSectionBorderRoundChange = handlePropertyChange("sectionBorderRound");
 
   const confLines = [
-    {
-      label: "Titre personnalisé français (optionnel)",
-      type: "input",
-      value: props.modifiedData.customTitleFr,
-      handle: handleCustomTitleFrChange,
-      style: {},
-      holder: "Titre personnalisé en français",
-      options: [],
-    },
-    {
-      label: "Titre personnalisé anglais (optionnel)",
-      type: "input",
-      value: props.modifiedData.customTitleEn,
-      handle: handleCustomTitleEnChange,
-      style: {},
-      holder: "Titre personnalisé en anglais",
-      options: [],
-    },
     {
       label: "Police du titre",
       type: "input",
@@ -270,6 +251,7 @@ function ModifiedSection(props) {
           ))}
         </select>
       </div>
+      <CustomTitlesManager  customTitles={props.customTitles} setCustomTitles={props.setCustomTitles}/>
       {confLines.map((line, index) => {
         return (
           <ConfLine
