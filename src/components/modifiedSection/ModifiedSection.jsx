@@ -19,25 +19,49 @@ function ModifiedSection(props) {
     }));
   };
 
+  const handleChangeColor = (field) => (color) => {
+    props.setModifiedData((prevData) => ({
+      ...prevData,
+      [field]: color,
+    }));
+  };
+
+  const polices = [
+    { title: "---", value: "" },
+    { title: "Arial", value: "Arial" },
+    { title: "Bookman", value: "Bookman" },
+    { title: "Comic Sans MS", value: "Comic Sans MS" },
+    { title: "Courier New", value: "Courier New" },
+    { title: "Garamond", value: "Garamond" },
+    { title: "Georgia", value: "Georgia" },
+    { title: "Helvetica", value: "Helvetica" },
+    { title: "Montserrat", value: "Montserrat" },
+    { title: "Palatino", value: "Palatino" },
+    { title: "Sans-serif", value: "Sans-serif" },
+    { title: "Times New Roman", value: "Times New Roman" },
+    { title: "Verdana", value: "Verdana" },
+];
+
   const handleTextPoliceChange = handlePropertyChange("textPolice");
   const handleTitlePoliceChange = handlePropertyChange("titlePolice");
-  const handleTitleColorChange = handlePropertyChange("titleColor");
-  const handleTextColorChange = handlePropertyChange("textColor");
-  const handleBackgroundColorChange = handlePropertyChange("backgroundColor");
+  const handleTitleColorChange = handleChangeColor("titleColor");
+  const handleTextColorChange = handleChangeColor("textColor");
+  const handleBackgroundColorChange = handleChangeColor("backgroundColor");
   const handleFontSizeTitleChange = handlePropertyChange("fontSizeTitle");
   const handleFontSizeTextChange = handlePropertyChange("fontSizeText");
   const handlePaddingUnderTitleChange = handlePropertyChange("paddingUnderTitle");
   const handleTraitDisplayChange = handlePropertyChange("traitDisplay");
-  const handleTraitColorChange = handlePropertyChange("traitColor");
+  const handleTraitColorChange = handleChangeColor("traitColor");
   const handleTraitWidthChange = handlePropertyChange("traitWidth");
   const handleSectionBorderDisplayChange = handlePropertyChange("sectionBorderDisplay");
-  const handleSectionBorderColorChange = handlePropertyChange("sectionBorderColor");
+  const handleSectionBorderWidthChange = handlePropertyChange("sectionBorderWidth");
+  const handleSectionBorderColorChange = handleChangeColor("sectionBorderColor");
   const handleSectionBorderRoundChange = handlePropertyChange("sectionBorderRound");
 
   const confLines = [
     {
       label: "Police du titre",
-      type: "input",
+      type: "select",
       value: props.modifiedData.titlePolice,
       handle: handleTitlePoliceChange,
       holder: "Saisir police",
@@ -45,11 +69,11 @@ function ModifiedSection(props) {
         border:
           props.showError && !props.modifiedData.titlePolice && "1px solid red",
       },
-      options: [],
+      options: polices
     },
     {
       label: "Police du texte",
-      type: "input",
+      type: "select",
       value: props.modifiedData.textPolice,
       handle: handleTextPoliceChange,
       holder: "Saisir police",
@@ -57,11 +81,11 @@ function ModifiedSection(props) {
         border:
           props.showError && !props.modifiedData.textPolice && "1px solid red",
       },
-      options: [],
+      options: polices
     },
     {
       label: "Couleur du titre",
-      type: "input",
+      type: "couleur",
       value: props.modifiedData.titleColor,
       handle: handleTitleColorChange,
       holder: "Couleur du titre",
@@ -73,7 +97,7 @@ function ModifiedSection(props) {
     },
     {
       label: "Couleur du texte",
-      type: "input",
+      type: "couleur",
       value: props.modifiedData.textColor,
       handle: handleTextColorChange,
       holder: "Couleur du texte",
@@ -85,7 +109,7 @@ function ModifiedSection(props) {
     },
     {
       label: "Couleur du background",
-      type: "input",
+      type: "couleur",
       value: props.modifiedData.backgroundColor,
       handle: handleBackgroundColorChange,
       holder: "Couleur du background",
@@ -159,7 +183,7 @@ function ModifiedSection(props) {
     },
     {
       label: "Couleur du trait",
-      type: "input",
+      type: "couleur",
       value: props.modifiedData.traitColor,
       handle: handleTraitColorChange,
       holder: "Couleur du trait",
@@ -182,7 +206,7 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Affichage de la bordure de section",
+      label: "Affichage de cadre de section",
       type: "select",
       value: props.modifiedData.sectionBorderDisplay,
       handle: handleSectionBorderDisplayChange,
@@ -195,16 +219,30 @@ function ModifiedSection(props) {
       },
       options: [
         { title: "----", value: "" },
-        { title: "Afficher Bordure", value: "display" },
-        { title: "Cacher Bordure", value: "hide" },
+        { title: "Afficher cadre", value: "display" },
+        { title: "Cacher cadre", value: "hide" },
       ],
     },
     {
-      label: "Couleur de la bordure de section",
+      label: "Largeur de cadre de section",
       type: "input",
+      value: props.modifiedData.sectionBorderWidth,
+      handle: handleSectionBorderWidthChange,
+      holder: "Largeur du trait de section",
+      style: {
+        border:
+          props.showError &&
+          !props.modifiedData.sectionBorderWidth &&
+          "1px solid red",
+      },
+      options: [],
+    },
+    {
+      label: "Couleur de cadre de section",
+      type: "coueur",
       value: props.modifiedData.sectionBorderColor,
       handle: handleSectionBorderColorChange,
-      holder: "Couleur de la bordure de section",
+      holder: "Couleur de cadre de section",
       style: {
         border:
           props.showError &&
@@ -214,11 +252,11 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Arrondi de la bordure de section",
+      label: "Arrondi de cadre de section",
       type: "input",
       value: props.modifiedData.sectionBorderRound,
       handle: handleSectionBorderRoundChange,
-      holder: "Arrondi de la bordure de section",
+      holder: "Arrondi de cadre de section",
       style: {
         border:
           props.showError &&

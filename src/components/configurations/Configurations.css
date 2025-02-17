@@ -187,8 +187,8 @@
 }
 .demo {
   height: 80vh;
-  width: 280px;
-  margin: 10px 200px;
+  width:100%;
+  margin: auto;
 }
 .fleche1 {
   width: 100px;

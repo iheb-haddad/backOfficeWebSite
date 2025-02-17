@@ -23,6 +23,7 @@ import {
 } from "../ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { DataTable } from "../ui/dataTable";
+import GestionMemo from "./GestionMemo";
 
 const GestionThemes = () => {
   const [theme, setTheme] = useState({});
@@ -141,6 +142,22 @@ const GestionThemes = () => {
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
+  const polices = [
+      { title: "---", value: "" },
+      { title: "Arial", value: "Arial" },
+      { title: "Bookman", value: "Bookman" },
+      { title: "Comic Sans MS", value: "Comic Sans MS" },
+      { title: "Courier New", value: "Courier New" },
+      { title: "Garamond", value: "Garamond" },
+      { title: "Georgia", value: "Georgia" },
+      { title: "Helvetica", value: "Helvetica" },
+      { title: "Montserrat", value: "Montserrat" },
+      { title: "Palatino", value: "Palatino" },
+      { title: "Sans-serif", value: "Sans-serif" },
+      { title: "Times New Roman", value: "Times New Roman" },
+      { title: "Verdana", value: "Verdana" },
+  ];
+
   const confThemeLines = [
     {
       type: "input",
@@ -169,6 +186,131 @@ const GestionThemes = () => {
       options: [],
     },
   ];
+
+  const memoConfLines = [
+    {
+      type: "select",
+      label: "Affichage de la section Mémo",
+      value: theme.memoSection,
+      handle: handleMemoSectionChange,
+      holder: "",
+      style: {
+        borderColor:
+          showError2 && !theme.memoSection ? "red" : inputColor.memoFieldColor,
+      },
+      options: [
+        { title: "---", value: "" },
+        { title: "Afficher Mémo", value: "display" },
+        { title: "Cacher Mémo", value: "hide" },
+      ],
+    },
+    {
+      type: "couleur",
+      label: "Couleur de section Mémo",
+      value: theme.memoBackgroundColor,
+      handle: handleMemoBackColorChange,
+      holder: "Saisir couleur",
+      style: {
+        borderColor:
+          showError2 && !theme.memoBackgroundColor
+            ? "red"
+            : inputColor.memoBackColorFieldColor,
+      },
+      options: [],
+    },
+    {
+      type: "select",
+      label: "Police du titre Mémo",
+      value: theme.fontTitleMemo,
+      handle: handleFontTitleMemoChange,
+      holder: "Saisir police",
+      style: {
+        borderColor:
+          showError2 && !theme.fontTitleMemo ? "red" : inputColor.fontTitleMemo,
+      },
+      options: polices,
+    },
+    {
+      type: "select",
+      label: "Police du texte Mémo",
+      value: theme.fontTextMemo,
+      handle: handleFontTextMemoChange,
+      holder: "Saisir police",
+      style: {
+        borderColor:
+          showError2 && !theme.fontTextMemo ? "red" : inputColor.fontTextMemo,
+      },
+      options: polices
+    },
+    {
+      type: "couleur",
+      label: "Couleur du texte Mémo",
+      value: theme.memoFontColor,
+      handle: handleMemoFontColorChange,
+      holder: "Saisir couleur",
+      style: {
+        borderColor:
+          showError2 && !theme.memoFontColor
+            ? "red"
+            : inputColor.memoFontColorFieldColor,
+      },
+      options: [],
+    },
+    {
+      type: "couleur",
+      label: "Couleur de fond de bouton Mémo",
+      value: theme.buttonMemoBgColor,
+      handle: handleButtonMemoBgColorChange,
+      holder: "Saisir couleur",
+      style: {
+        borderColor:
+          showError2 && !theme.buttonMemoBgColor
+            ? "red"
+            : inputColor.buttonMemoBgColor,
+      },
+      options: [],
+    },
+    {
+      type: "couleur",
+      label: "Couleur du texte de bouton Mémo",
+      value: theme.buttonMemoFontColor,
+      handle: handleButtonMemoFontColorChange,
+      holder: "Saisir couleur",
+      style: {
+        borderColor:
+          showError2 && !theme.buttonMemoFontColor
+            ? "red"
+            : inputColor.buttonMemoFontColor,
+      },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Taille du texte de bouton Mémo",
+      value: theme.buttonMemoFontSize,
+      handle: handleButtonMemoFontSizeChange,
+      holder: "Saisir taille",
+      style: {
+        borderColor:
+          showError2 && !theme.buttonMemoFontSize
+            ? "red"
+            : inputColor.buttonMemoFontSize,
+      },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Arrondi de cadre du Mémo",
+      value: theme.arrondiMemo,
+      handle: handleArrondiMemoChange,
+      holder: "Saisir arrondi",
+      style: {
+        borderColor:
+          showError2 && !theme.arrondiMemo ? "red" : inputColor.arrondiMemo,
+      },
+      options: [],
+    },
+  ]
 
   const confLines = [
     {
@@ -267,22 +409,6 @@ const GestionThemes = () => {
     },
     {
       type: "select",
-      label: "Affichage de la section Mémo",
-      value: theme.memoSection,
-      handle: handleMemoSectionChange,
-      holder: "",
-      style: {
-        borderColor:
-          showError2 && !theme.memoSection ? "red" : inputColor.memoFieldColor,
-      },
-      options: [
-        { title: "---", value: "" },
-        { title: "Afficher Mémo", value: "display" },
-        { title: "Cacher Mémo", value: "hide" },
-      ],
-    },
-    {
-      type: "select",
       label: "Affichage de la section Email",
       value: theme.sectionEmailDisplay,
       handle: handleSectionEmailDisplayChange,
@@ -299,112 +425,7 @@ const GestionThemes = () => {
         { title: "Cacher Email", value: "hide" },
       ],
     },
-    {
-      type: "couleur",
-      label: "Couleur de section Mémo",
-      value: theme.memoBackgroundColor,
-      handle: handleMemoBackColorChange,
-      holder: "Saisir couleur",
-      style: {
-        borderColor:
-          showError2 && !theme.memoBackgroundColor
-            ? "red"
-            : inputColor.memoBackColorFieldColor,
-      },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Police du titre Mémo",
-      value: theme.fontTitleMemo,
-      handle: handleFontTitleMemoChange,
-      holder: "Saisir police",
-      style: {
-        borderColor:
-          showError2 && !theme.fontTitleMemo ? "red" : inputColor.fontTitleMemo,
-      },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Police du texte Mémo",
-      value: theme.fontTextMemo,
-      handle: handleFontTextMemoChange,
-      holder: "Saisir police",
-      style: {
-        borderColor:
-          showError2 && !theme.fontTextMemo ? "red" : inputColor.fontTextMemo,
-      },
-      options: [],
-    },
-    {
-      type: "couleur",
-      label: "Couleur du texte Mémo",
-      value: theme.memoFontColor,
-      handle: handleMemoFontColorChange,
-      holder: "Saisir couleur",
-      style: {
-        borderColor:
-          showError2 && !theme.memoFontColor
-            ? "red"
-            : inputColor.memoFontColorFieldColor,
-      },
-      options: [],
-    },
-    {
-      type: "couleur",
-      label: "Couleur de fond de bouton Mémo",
-      value: theme.buttonMemoBgColor,
-      handle: handleButtonMemoBgColorChange,
-      holder: "Saisir couleur",
-      style: {
-        borderColor:
-          showError2 && !theme.buttonMemoBgColor
-            ? "red"
-            : inputColor.buttonMemoBgColor,
-      },
-      options: [],
-    },
-    {
-      type: "couleur",
-      label: "Couleur du texte de bouton Mémo",
-      value: theme.buttonMemoFontColor,
-      handle: handleButtonMemoFontColorChange,
-      holder: "Saisir couleur",
-      style: {
-        borderColor:
-          showError2 && !theme.buttonMemoFontColor
-            ? "red"
-            : inputColor.buttonMemoFontColor,
-      },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Taille du texte de bouton Mémo",
-      value: theme.buttonMemoFontSize,
-      handle: handleButtonMemoFontSizeChange,
-      holder: "Saisir taille",
-      style: {
-        borderColor:
-          showError2 && !theme.buttonMemoFontSize
-            ? "red"
-            : inputColor.buttonMemoFontSize,
-      },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Arrondi de cadre du Mémo",
-      value: theme.arrondiMemo,
-      handle: handleArrondiMemoChange,
-      holder: "Saisir arrondi",
-      style: {
-        borderColor:
-          showError2 && !theme.arrondiMemo ? "red" : inputColor.arrondiMemo,
-      },
-      options: [],
-    },
+    
   ];
 
   const handleThemeEnregistrer = () => {
@@ -480,6 +501,7 @@ const GestionThemes = () => {
     },
     {
       id: "actions",
+      header: "Actions",
       cell: ({ row }) => {
         const theme = row.original;
 
@@ -658,6 +680,7 @@ const GestionThemes = () => {
           </div>
         ))}
         {stepper.when("step-2", (step) => (
+          <div>
           <div className="colorsForm">
             <h4>Configuration du panneau latéral</h4>
             {confLines.map((line, index) => {
@@ -675,7 +698,10 @@ const GestionThemes = () => {
               );
             })}
             <div></div>
-            <div className="confButtons">
+            {/* <ExportCSV data={configurations} fileName={"configurations"} /> */}
+          </div>
+          <GestionMemo confLines={memoConfLines} />
+          <div className="confButtons px-10 w-[80%] mx-auto -mt-10 mb-10">
               <div className="flex justify-between w-full">
                 <button
                   onClick={() => {
@@ -688,8 +714,6 @@ const GestionThemes = () => {
                   Previous
                 </button>
               </div>
-            </div>
-            <div className="confButtons">
               <div className="flex justify-end w-full">
                 <button
                   onClick={() => {
@@ -713,6 +737,7 @@ const GestionThemes = () => {
                         return true;
                       } else {
                         setShowError2(true);
+                        toast.error("Veuillez compléter tous les champs");
                         return false;
                       }
                     });
@@ -725,8 +750,6 @@ const GestionThemes = () => {
                 </button>
               </div>
             </div>
-            <div></div>
-            {/* <ExportCSV data={configurations} fileName={"configurations"} /> */}
           </div>
         ))}
         {stepper.when("step-3", () => (

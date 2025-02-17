@@ -116,6 +116,7 @@ function GestionProjects() {
     },
     {
       id: "actions",
+      header: "Actions",
       cell: ({ row }) => {
         const project = row.original;
 

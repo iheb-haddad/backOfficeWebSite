@@ -25,7 +25,7 @@ function ConfLine(props) {
           })}
         </select>
       ) : (
-        <ColorPicker color={props.value} setColor={props.handle} />
+        <ColorPicker color={props.value} setColor={props.handle} style={props.style}/>
       )}
     </div>
   );

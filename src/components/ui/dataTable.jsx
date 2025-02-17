@@ -138,7 +138,7 @@ export function DataTable({
                       }
                     }}
                   >
-                    {column.id}
+                    {column.columnDef.header}
                   </DropdownMenuCheckboxItem>
                 )
               })}

@@ -4,8 +4,10 @@ import { ConfLine } from "../index";
 import "./GestionSections.css";
 import { toast } from "sonner";
 import ReorderSection from "../reorderSection/ReorderSection";
+import CustomTitlesManager from "../ui/customTitlesManager";
 
 function GestionSections({setThemeCompleted, setSections,sections}) {
+  const [customTitles, setCustomTitles] = useState([]);
   const defaultTitles = [
     { id: 1, titleFr: "Alertes", titleEn: "Alerts" },
     { id: 2, titleFr: "Communs", titleEn: "Commons" },
@@ -77,8 +79,6 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
     }));
   };
 
-  const handleCustomTitleFrChange = handleChange("customTitleFr");
-  const handleCustomTitleEnChange = handleChange("customTitleEn");
   const handleTitlePoliceChange = handleChange("titlePolice");
   const handleTextPoliceChange = handleChange("textPolice");
   const handleTitleColorChange = handleChangeColor("titleColor");
@@ -125,42 +125,40 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
     setThemeCompleted(sections.length === defaultTitles.length);
   }, [sections]);
 
+  const polices = [
+    { title: "---", value: "" },
+    { title: "Arial", value: "Arial" },
+    { title: "Bookman", value: "Bookman" },
+    { title: "Comic Sans MS", value: "Comic Sans MS" },
+    { title: "Courier New", value: "Courier New" },
+    { title: "Garamond", value: "Garamond" },
+    { title: "Georgia", value: "Georgia" },
+    { title: "Helvetica", value: "Helvetica" },
+    { title: "Montserrat", value: "Montserrat" },
+    { title: "Palatino", value: "Palatino" },
+    { title: "Sans-serif", value: "Sans-serif" },
+    { title: "Times New Roman", value: "Times New Roman" },
+    { title: "Verdana", value: "Verdana" },
+];
+
   const confLines = [
     {
-      type: "input",
-      label: "Titre personnalisé français (optionnel)",
-      value: formData.customTitleFr,
-      handle: handleCustomTitleFrChange,
-      holder: "Saisir titre",
-      style: {},
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Titre personnalisé anglais (optionnel)",
-      value: formData.customTitleEn,
-      handle: handleCustomTitleEnChange,
-      holder: "Saisir titre",
-      style: {},
-      options: [],
-    },
-    {
-      type: "input",
+      type: "select",
       label: "Police du titre",
       value: formData.titlePolice,
       handle: handleTitlePoliceChange,
       holder: "Saisir Police ",
       style: { border: showError && !formData.titlePolice && "1px solid red" },
-      options: [],
+      options: polices,
     },
     {
-      type: "input",
+      type: "select",
       label: "Police du texte",
       value: formData.textPolice,
       handle: handleTextPoliceChange,
       holder: "Saisir Police",
       style: { border: showError && !formData.textPolice && "1px solid red" },
-      options: [],
+      options: polices
     },
     {
       type: "input",
@@ -255,7 +253,7 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
     },
     {
       type: "select",
-      label: "Affichage de la bordure de section",
+      label: "Affichage de cadre de section",
       value: formData.sectionBorderDisplay,
       handle: handleSectionBorderDisplayChange,
       holder: "",
@@ -263,8 +261,8 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
         border: showError && !formData.sectionBorderDisplay && "1px solid red",
       },
       options: [
-        { title: "Afficher Bordure", value: "display" },
-        { title: "Cacher Bordure", value: "hide" },
+        { title: "Afficher Cadre", value: "display" },
+        { title: "Cacher Cadre", value: "hide" },
       ],
     },
     {
@@ -291,7 +289,7 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
     },
     {
       type: "input",
-      label: "Arrondi de la bordure de section",
+      label: "Arrondi de cadre de section",
       value: formData.sectionBorderRound,
       handle: handleSectionBorderRoundChange,
       holder: "Saisir arrondi",
@@ -336,6 +334,7 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
             </select>
           </div>
         </div>
+        <CustomTitlesManager  customTitles={customTitles} setCustomTitles={setCustomTitles}/>
         {confLines.map((line, index) => {
           return (
             <ConfLine
@@ -350,7 +349,6 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
             />
           );
         })}
-        <div></div>
         <div className="confButtons">
           <div>
             <button onClick={handleAnnuler1}>Annuler</button>

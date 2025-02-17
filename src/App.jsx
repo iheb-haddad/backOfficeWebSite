@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useState } from "react";
 import {
   Registration,
   Home,
@@ -48,7 +47,7 @@ function App() {
                 <Route path="Configurations" element={<Configurations />} />
                 <Route path="GestionSources" element={<GestionSources />} />
                 <Route path="GestionDocuments" element={<GestionDocuments />} />
-                <Route path="GestionThemes" element={<GestionThemes />} />
+                <Route path="GestionThemes" element={auth?.user?.role === "admin" && <GestionThemes />} />
                 <Route
                   path="GestionProjects"
                   element={

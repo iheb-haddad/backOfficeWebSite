@@ -21,7 +21,7 @@ import useStore from "../../globalState/UseStore";
 import { toast } from "sonner";
 import SmtpConfig from "../smtpConfig/SmtpConfig";
 import SupportMailConfig from "../supportMailConfig/SupportMailConfig";
-import { set } from "date-fns";
+import GestionMemo from "./GestionMemo";
 
 function Configurations() {
   const [initialValues, setInitialValues] = useState({});
@@ -44,19 +44,11 @@ function Configurations() {
     panelColor: "#000000",
     panelTextColor: "#000000",
     panelWidth: "",
-    memoSection: "",
-    memoBackgroundColor: "#000000",
-    memoFontColor: "#000000",
     generalUrl: "",
     timer: "",
     resizeBarWidth: "",
     backgroundLanguage: "#000000",
     textColorLanguage: "#ffffff",
-    fontTitleMemo: "",
-    fontTextMemo: "",
-    buttonMemoBgColor: "#000000",
-    buttonMemoFontColor: "#000000",
-    buttonMemoFontSize: "",
     sectionEmailDisplay: "",
   };
 
@@ -182,30 +174,18 @@ function Configurations() {
   const handlePanelColorChange = createHandleColorChange("panelColor");
 
   const handlePanelTextColorChange = createHandleColorChange("panelTextColor");
-  const handleMemoSectionChange = createHandleChange("memoSection");
-  const handleMemoBackColorChange = createHandleColorChange(
-    "memoBackgroundColor"
-  );
-  const handleMemoFontColorChange = createHandleColorChange("memoFontColor");
+
   const handlePanelWidthChange = createHandleChange("panelWidth");
   const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
   const handleBackgroundLanguageChange =
     createHandleColorChange("backgroundLanguage");
   const handleTextColorLanguageChange =
     createHandleColorChange("textColorLanguage");
-  const handleButtonMemoBgColorChange =
-    createHandleColorChange("buttonMemoBgColor");
-  const handleButtonMemoFontColorChange = createHandleColorChange(
-    "buttonMemoFontColor"
-  );
-  const handleButtonMemoFontSizeChange =
-    createHandleChange("buttonMemoFontSize");
+
   const handleSectionEmailDisplayChange = createHandleChange(
     "sectionEmailDisplay"
   );
-  const handleFontTitleMemoChange = createHandleChange("fontTitleMemo");
-  const handleFontTextMemoChange = createHandleChange("fontTextMemo");
-  const handleArrondiMemoChange = createHandleChange("arrondiMemo");
+
   const handleTimerChange = (event) => {
     const value = parseInt(event.target.value, 10);
     if (!isNaN(value)) {
@@ -224,21 +204,12 @@ function Configurations() {
   const initialInputColors = {
     panelFieldColor: "white",
     panelTextColorFieldColor: "white",
-    memoFieldColor: "white",
-    memoBackColorFieldColor: "white",
-    memoFontColorFieldColor: "white",
     widthPanelFieldColor: "white",
     timerFieldColor: "white",
     resizeBarWidthFieldColor: "white",
     backgroundLanguage: "white",
     textColorLanguage: "white",
-    buttonMemoBgColor: "white",
-    buttonMemoFontColor: "white",
-    buttonMemoFontSize: "white",
     handleSectionEmailDisplay: "white",
-    fontTitleMemo: "white",
-    fontTextMemo: "white",
-    arrondiMemo: "white",
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
@@ -257,26 +228,6 @@ function Configurations() {
       }));
     }
 
-    if (confSelected.memoBackColor != initialValues.memoBackColor) {
-      setInputColor((prevData) => ({
-        ...prevData,
-        memoBackColorFieldColor: "#50e150",
-      }));
-    }
-
-    if (confSelected.memoFontColor != initialValues.memoFontColor) {
-      setInputColor((prevData) => ({
-        ...prevData,
-        memoFontColorFieldColor: "#50e150",
-      }));
-    }
-
-    if (confSelected.memoSection != initialValues.memoSection) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        memoFieldColor: "#50e150",
-      }));
-    }
     if (confSelected.panelWidth != initialValues.panelWidth) {
       setInputColor((prevColor) => ({
         ...prevColor,
@@ -307,46 +258,11 @@ function Configurations() {
         textColorLanguage: "#50e150",
       }));
     }
-    if (confSelected.buttonMemoBgColor != initialValues.buttonMemoBgColor) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        buttonMemoBgColor: "#50e150",
-      }));
-    }
-    if (confSelected.buttonMemoFontColor != initialValues.buttonMemoFontColor) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        buttonMemoFontColor: "#50e150",
-      }));
-    }
-    if (confSelected.buttonMemoFontSize != initialValues.buttonMemoFontSize) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        buttonMemoFontSize: "#50e150",
-      }));
-    }
+
     if (confSelected.sectionEmailDisplay != initialValues.sectionEmailDisplay) {
       setInputColor((prevColor) => ({
         ...prevColor,
         handleSectionEmailDisplay: "#50e150",
-      }));
-    }
-    if (confSelected.fontTitleMemo != initialValues.fontTitleMemo) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        fontTitleMemo: "#50e150",
-      }));
-    }
-    if (confSelected.fontTextMemo != initialValues.fontTextMemo) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        fontTextMemo: "#50e150",
-      }));
-    }
-    if (confSelected.arrondiMemo != initialValues.arrondiMemo) {
-      setInputColor((prevColor) => ({
-        ...prevColor,
-        arrondiMemo: "#50e150",
       }));
     }
 
@@ -357,7 +273,17 @@ function Configurations() {
 
   const handleEnregistrer1 = () => {
     changeInputColors();
-    Axios.put(`/configurations/${confSelected._id}`, confSelected)
+    Axios.put(`/configurations/${confSelected._id}`, {
+      panelColor: confSelected.panelColor,
+      panelTextColor: confSelected.panelTextColor,
+      panelWidth: confSelected.panelWidth,
+      generalUrl: confSelected.generalUrl,
+      timer: confSelected.timer,
+      resizeBarWidth: confSelected.resizeBarWidth,
+      backgroundLanguage: confSelected.backgroundLanguage,
+      textColorLanguage: confSelected.textColorLanguage,
+      sectionEmailDisplay: confSelected.sectionEmailDisplay,
+    })
       .then((data) => {
         setInitialValues(confSelected);
         setDataChanged((prev) => prev + 1);
@@ -370,7 +296,7 @@ function Configurations() {
       });
   };
   const handleAnnuler1 = () => {
-    setConfSelected(initialValues);
+    setConfSelected({ ...confSelected, ...initialValues });
   };
 
   const reinitialisedData = {
@@ -378,25 +304,19 @@ function Configurations() {
     panelColor: "#ffffff",
     panelTextColor: "#000000",
     panelWidth: "300px",
-    memoSection: "display",
-    memoBackgroundColor: "#ffc000",
-    memoFontColor: "#ffffff",
     generalUrl: confSelected.generalUrl,
     timer: 10,
     resizeBarWidth: "5px",
     backgroundLanguage: "#000000",
     textColorLanguage: "#ffffff",
-    buttonMemoBgColor: "#000000",
-    buttonMemoFontColor: "#ffffff",
-    buttonMemoFontSize: "10px",
     sectionEmailDisplay: "display",
-    memoFontTitle: "Montserrat",
-    memoFontText: "Montserrat",
-    arrondiMemo: "0px",
   };
 
   const handleAReinitialiser = () => {
-    setConfSelected(reinitialisedData);
+    setConfSelected({
+      ...confSelected,
+      ...reinitialisedData,
+    });
     Axios.put(`/configurations/${confSelected._id}`, reinitialisedData)
       .then((data) => {
         console.log("Object modified:", data);
@@ -501,18 +421,6 @@ function Configurations() {
     },
     {
       type: "select",
-      label: "Affichage de la section Mémo",
-      value: confSelected.memoSection,
-      handle: handleMemoSectionChange,
-      holder: "",
-      style: { backgroundColor: inputColor.memoFieldColor },
-      options: [
-        { title: "Afficher Mémo", value: "display" },
-        { title: "Cacher Mémo", value: "hide" },
-      ],
-    },
-    {
-      type: "select",
       label: "Affichage de la section Email",
       value: confSelected.sectionEmailDisplay,
       handle: handleSectionEmailDisplayChange,
@@ -522,78 +430,6 @@ function Configurations() {
         { title: "Afficher Email", value: "display" },
         { title: "Cacher Email", value: "hide" },
       ],
-    },
-    {
-      type: "couleur",
-      label: "Couleur de section Mémo",
-      value: confSelected.memoBackgroundColor,
-      handle: handleMemoBackColorChange,
-      holder: "Saisir couleur",
-      style: { backgroundColor: inputColor.memoBackColorFieldColor },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Police du titre Mémo",
-      value: confSelected.fontTitleMemo,
-      handle: handleFontTitleMemoChange,
-      holder: "Saisir police",
-      style: { backgroundColor: inputColor.fontTitleMemo },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Police du texte Mémo",
-      value: confSelected.fontTextMemo,
-      handle: handleFontTextMemoChange,
-      holder: "Saisir police",
-      style: { backgroundColor: inputColor.fontTextMemo },
-      options: [],
-    },
-    {
-      type: "couleur",
-      label: "Couleur du texte Mémo",
-      value: confSelected.memoFontColor,
-      handle: handleMemoFontColorChange,
-      holder: "Saisir couleur",
-      style: { backgroundColor: inputColor.memoFontColorFieldColor },
-      options: [],
-    },
-    {
-      type: "couleur",
-      label: "Couleur de fond de bouton Mémo",
-      value: confSelected.buttonMemoBgColor,
-      handle: handleButtonMemoBgColorChange,
-      holder: "Saisir couleur",
-      style: { backgroundColor: inputColor.buttonMemoBgColor },
-      options: [],
-    },
-    {
-      type: "couleur",
-      label: "Couleur du texte de bouton Mémo",
-      value: confSelected.buttonMemoFontColor,
-      handle: handleButtonMemoFontColorChange,
-      holder: "Saisir couleur",
-      style: { backgroundColor: inputColor.buttonMemoFontColor },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Taille du texte de bouton Mémo",
-      value: confSelected.buttonMemoFontSize,
-      handle: handleButtonMemoFontSizeChange,
-      holder: "Saisir taille",
-      style: { backgroundColor: inputColor.buttonMemoFontSize },
-      options: [],
-    },
-    {
-      type: "input",
-      label: "Arrondi de cadre du Mémo",
-      value: confSelected.arrondiMemo,
-      handle: handleArrondiMemoChange,
-      holder: "Saisir arrondi",
-      style: { backgroundColor: inputColor.arrondiMemo },
-      options: [],
     },
   ];
 
@@ -649,26 +485,7 @@ function Configurations() {
           </div>
         </div>
         <Modal open={open} onClose={onCloseModal} center>
-          <img src="./fleche1.png" alt="" className="fleche1" />
-          <img src="./modeNormal.png" alt="" className="demo" />
-          <h4 className="panelColor">
-            Couleur <br />
-            du panneau
-          </h4>
-          <img src="./fleche2.png" alt="" className="fleche2" />
-          <h4 className="memoSection">
-            Section <br />
-            mémo
-          </h4>
-          <img src="./fleche2.png" alt="" className="fleche3" />
-          <h4 className="barreRed">
-            Barre de <br />
-            redimensionnement
-          </h4>
-          <img src="./fleche3.png" alt="" className="fleche4" />
-          <h4 className="sectionText">Texte de section</h4>
-          <img src="./fleche4.png" alt="" className="fleche5" />
-          <h4 className="sectionTitle">Titre de section</h4>
+          <img src="./InfoPanel.png" alt="" className="demo" />
         </Modal>
       </div>
       <div className="colorsForm">
@@ -798,6 +615,7 @@ function Configurations() {
                 />
               );
             })}
+            <div></div>
             <ExportCSV data={configurations} fileName={"configurations"} />
             <div className="confButtons">
               <div>
@@ -809,6 +627,9 @@ function Configurations() {
               </div>
             </div>
           </div>
+          {(auth?.user?.role === "admin" || projects.length > 0) && (
+              <GestionMemo projects={projects}/>
+            )}
           <div
             className="colorsForm"
             style={{

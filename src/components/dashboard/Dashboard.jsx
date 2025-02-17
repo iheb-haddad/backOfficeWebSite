@@ -86,6 +86,7 @@ function Dashboard() {
     },
     {
       id: "actions",
+      header: "Actions",
       cell: ({ row }) => {
         const document = row.original;
 

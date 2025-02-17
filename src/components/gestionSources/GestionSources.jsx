@@ -165,6 +165,7 @@ function GestionSources() {
     },
     {
       id: "actions",
+      header: "Actions",
       cell: ({ row }) => {
         const source = row.original;
 

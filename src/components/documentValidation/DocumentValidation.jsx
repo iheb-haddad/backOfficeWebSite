@@ -14,7 +14,8 @@ import { Button } from "../ui/button";
 import { MoreHorizontal, BadgeCheck } from "lucide-react";
 
 const DocumentValidation = () => {
-  const { documentations, fetchDocumentations } = useStore();
+  const { documentations } = useStore();
+  const [isVerifying, setIsVerifying] = useState(false);
   const [documents, setDocuments] = useState(
     documentations
       .filter((doc) => doc.urlDoc)
@@ -24,19 +25,24 @@ const DocumentValidation = () => {
   const verifyDocument = async (id) => {
     const document = documentations.find((doc) => doc._id === id);
     try {
-      const url = document.urlDoc.startsWith("http") ? document.urlDoc : `https://${document.urlDoc}`;
-      const response = await fetch(url);
-      if (response.ok) {
-        console.log(response);
+      let url = document.urlDoc.startsWith("http") ? document.urlDoc : `https://${document.urlDoc}`;
+      let response = await fetch(url, { mode: 'no-cors' });
+      if (response.type === "opaque" || response.ok) {
         updateDocumentStatus(id, "OK");
       } else {
-        console.log(response);
         updateDocumentStatus(id, "KO");
       }
     } catch (error) {
       console.log(error);
       updateDocumentStatus(id, "KO");
     }
+  };
+
+  const verifyAllDocuments = () => {
+    setIsVerifying(true);
+    Promise.all(documents.map((doc) => verifyDocument(doc._id)))
+      .then(() => setIsVerifying(false))
+      .catch(() => setIsVerifying(false));
   };
 
   const updateDocumentStatus = (id, validation) => {
@@ -127,7 +133,20 @@ const DocumentValidation = () => {
 
   return (
     <div className="w-[80%] m-auto p-4 mb-20">
-      <h1 className="font-semibold text-xl">Document Validation</h1>
+      <div className="flex justify-between">
+        <h1 className="font-semibold text-xl">Document Validation</h1>
+        <Button
+          variant="secondary"
+          onClick={verifyAllDocuments}
+          className="flex items-center space-x-2 mb-4 text-lg"
+          disabled={isVerifying}
+        >
+          <BadgeCheck className="w-4 h-4" />
+          <span>
+            {isVerifying ? "Verification en cours..." : "Verifier tout les documents"}
+          </span>
+        </Button>
+      </div>
       <DataTable
         data={documents}
         columns={columns}

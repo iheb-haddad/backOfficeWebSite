@@ -165,6 +165,7 @@ function DocsList(props) {
     },
     {
       id: "actions",
+      header: "Actions",
       cell: ({ row }) => {
         const mapping = row.original;
 

@@ -3,7 +3,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Input } from '@/components/ui/input'; // Adjust import paths
 import { ChromePicker } from 'react-color';
 
-const ColorPicker= ({color,setColor}) => {
+const ColorPicker= ({color,setColor,style}) => {
   const handleChange = (newColor) => {
     setColor(newColor.hex);
   };
@@ -28,6 +28,7 @@ const ColorPicker= ({color,setColor}) => {
         onChange={(e) => setColor(e.target.value)}
         className="w-28 placeholder:text-xs"
         placeholder="Choisir couleur"
+        style={style}
       />
     </div>
   );
