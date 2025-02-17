@@ -9,32 +9,32 @@ const LinkPreview = ({ url }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("Impossible de charger le contenu");
 
-  useEffect(() => {
-    const fetchIframelyData = async () => {
-      if (!url) return;
-      try {
-        const response = await fetch(
-          `https://iframe.ly/api/iframely?url=${encodeURIComponent(url)}&api_key=${import.meta.env.VITE_IFRAMELY_API_KEY}`
-        );
-        const data = await response.json();
-        setLoading(false);
-        if (data.html) {
-          setHtmlContent(data.html);
-        } else {
-          console.error(data.status === 403);
-          if(data.status === 403) {
-            setError("Ce site necessite une authentification pour afficher le contenu");
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching Iframely data:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchIframelyData = async () => {
+  //     if (!url) return;
+  //     try {
+  //       const response = await fetch(
+  //         `https://iframe.ly/api/iframely?url=${encodeURIComponent(url)}&api_key=${import.meta.env.VITE_IFRAMELY_API_KEY}`
+  //       );
+  //       const data = await response.json();
+  //       setLoading(false);
+  //       if (data.html) {
+  //         setHtmlContent(data.html);
+  //       } else {
+  //         console.error(data.status === 403);
+  //         if(data.status === 403) {
+  //           setError("Ce site necessite une authentification pour afficher le contenu");
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching Iframely data:", error);
+  //     }
+  //   };
 
-    // if (isOpen) {
-      fetchIframelyData();
-    // }
-  }, [url]);
+  //   // if (isOpen) {
+  //     fetchIframelyData();
+  //   // }
+  // }, [url]);
 
   return (
     <div className="inline-block">
@@ -59,13 +59,19 @@ const LinkPreview = ({ url }) => {
           <DialogHeader>
             <DialogTitle>Link Preview</DialogTitle>
           </DialogHeader>
-          {htmlContent ? (
-            <div dangerouslySetInnerHTML={{ __html: htmlContent }} className="w-full border rounded" />
-          ) : loading ? (
-            <p className="text-center text-lg my-6 text-gray-500">Chargement du contenu...</p>
-          ): (
-            <p className="text-center text-lg my-6 text-red-500">{error}</p>
-          )}
+          {/* {htmlContent ? ( */}
+            <iframe
+            src={url}
+            title="Link Preview"
+            className="w-full h-96"
+            frameBorder="0"
+            allowFullScreen
+            />
+          {/* // ) : loading ? (
+          //   <p className="text-center text-lg my-6 text-gray-500">Chargement du contenu...</p>
+          // ): (
+          //   <p className="text-center text-lg my-6 text-red-500">{error}</p>
+          // )} */}
         </DialogContent>
       </Dialog>
     </div>
