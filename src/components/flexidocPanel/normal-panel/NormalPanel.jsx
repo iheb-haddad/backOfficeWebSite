@@ -202,8 +202,7 @@ function NormalPanel() {
             {confSelected.memoSection === "display" && (
               <Memos
                 title={t("Memo")}
-                fontColor={confSelected.memoFontColor}
-                bgcolor={confSelected.memoBackgroundColor}
+                configurations={confSelected}
                 buttonBgColor={confSelected.buttonMemoBgColor}
                 buttonFontColor={confSelected.buttonMemoFontColor}
                 buttonFontSize={confSelected.buttonMemoFontSize}

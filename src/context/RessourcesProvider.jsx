@@ -21,7 +21,19 @@ export const RessourcesProvider = ({ children }) => {
     buttonMemoBgColor: "#000000",
     buttonMemoFontColor: "#000000",
     buttonMemoFontSize: "",
+    arrondiMemo: "",
+    fontTitleMemo: "",
+    fontTextMemo: "",
     sectionEmailDisplay: "",
+    textMemoSize: "",
+    titleMemoSize: "",
+    paddingUnderTitle: "",
+    traitDisplay: "",
+    traitColor: "#000000",
+    traitWidth: "",
+    sectionBorderDisplay: "",
+    sectionBorderWidth: "",
+    sectionBorderColor: "#000000",
   };
   const [languages, setLanguages] = useState([]);
   const [sections, setSections] = useState([]);

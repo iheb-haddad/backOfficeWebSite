@@ -3,6 +3,7 @@ import useRessources from "../../hooks/useRessources";
 import ConfLine from "../confLine/ConfLine";
 import Axios from "../../services/Axios";
 import { toast } from "sonner";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 const GestionMemo = ({ projects }) => {
   const [initialValues, setInitialValues] = useState({});
@@ -24,6 +25,15 @@ const GestionMemo = ({ projects }) => {
     buttonMemoFontColor: "#000000",
     buttonMemoFontSize: "",
     arrondiMemo: "",
+    textMemoSize: "",
+    titleMemoSize: "",
+    paddingUnderTitle: "",
+    traitDisplay: "",
+    traitColor: "#000000",
+    traitWidth: "",
+    sectionBorderDisplay: "",
+    sectionBorderWidth: "",
+    sectionBorderColor: "#000000",
   };
 
   useEffect(() => {
@@ -68,6 +78,15 @@ const GestionMemo = ({ projects }) => {
   const handleFontTitleMemoChange = createHandleChange("fontTitleMemo");
   const handleFontTextMemoChange = createHandleChange("fontTextMemo");
   const handleArrondiMemoChange = createHandleChange("arrondiMemo");
+  const handleTextSizeChange = createHandleChange("textMemoSize");
+  const handleTitleSizeChange = createHandleChange("titleMemoSize");
+  const handlePaddingUnderTitleChange = createHandleChange("paddingUnderTitle");
+  const handleTraitDisplayChange = createHandleChange("traitDisplay");
+  const handleTraitColorChange = createHandleColorChange("traitColor");
+  const handleTraitWidthChange = createHandleChange("traitWidth");
+  const handleSectionBorderDisplayChange = createHandleChange("sectionBorderDisplay");
+  const handleSectionBorderWidthChange = createHandleChange("sectionBorderWidth");
+  const handleSectionBorderColorChange = createHandleColorChange("sectionBorderColor");
 
   const initialInputColors = {
     memoFieldColor: "white",
@@ -79,6 +98,15 @@ const GestionMemo = ({ projects }) => {
     fontTitleMemo: "white",
     fontTextMemo: "white",
     arrondiMemo: "white",
+    textMemoSize: "white",
+    titleMemoSize: "white",
+    paddingUnderTitle: "white",
+    traitDisplay: "white",
+    traitColor: "white",
+    traitWidth: "white",
+    sectionBorderDisplay: "white",
+    sectionBorderWidth: "white",
+    sectionBorderColor: "white",
   };
 
   const [inputColor, setInputColor] = useState(initialInputColors);
@@ -141,6 +169,60 @@ const GestionMemo = ({ projects }) => {
         arrondiMemo: "#50e150",
       }));
     }
+    if (confSelected.textMemoSize != initialValues.textMemoSize) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        textMemoSize: "#50e150",
+      }));
+    }
+    if (confSelected.titleMemoSize != initialValues.titleMemoSize) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        titleMemoSize: "#50e150",
+      }));
+    }
+    if (confSelected.paddingUnderTitle != initialValues.paddingUnderTitle) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        paddingUnderTitle: "#50e150",
+      }));
+    }
+    if (confSelected.traitDisplay != initialValues.traitDisplay) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        traitDisplay: "#50e150",
+      }));
+    }
+    if (confSelected.traitColor != initialValues.traitColor) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        traitColor: "#50e150",
+      }));
+    }
+    if (confSelected.traitWidth != initialValues.traitWidth) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        traitWidth: "#50e150",
+      }));
+    }
+    if (confSelected.sectionBorderDisplay != initialValues.sectionBorderDisplay) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        sectionBorderDisplay: "#50e150",
+      }));
+    }
+    if (confSelected.sectionBorderWidth != initialValues.sectionBorderWidth) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        sectionBorderWidth: "#50e150",
+      }));
+    }
+    if (confSelected.sectionBorderColor != initialValues.sectionBorderColor) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        sectionBorderColor: "#50e150",
+      }));
+    }
 
     setTimeout(() => {
       setInputColor(initialInputColors);
@@ -158,6 +240,15 @@ const GestionMemo = ({ projects }) => {
     memoFontTitle: "Montserrat",
     memoFontText: "Montserrat",
     arrondiMemo: "0px",
+    textMemoSize: "12px",
+    titleMemoSize: "16px",
+    paddingUnderTitle: "10px",
+    traitDisplay: "display",
+    traitColor: "#000000",
+    traitWidth: "1px",
+    sectionBorderDisplay: "display",
+    sectionBorderWidth: "1px",
+    sectionBorderColor: "#000000",
   };
 
 const polices = [
@@ -185,13 +276,14 @@ const polices = [
       holder: "",
       style: { backgroundColor: inputColor.memoFieldColor },
       options: [
+        { title: "---", value: "" },
         { title: "Afficher Mémo", value: "display" },
         { title: "Cacher Mémo", value: "hide" },
       ],
     },
     {
       type: "couleur",
-      label: "Couleur de section Mémo",
+      label: "Couleur du background",
       value: confSelected.memoBackgroundColor,
       handle: handleMemoBackColorChange,
       holder: "Saisir couleur",
@@ -226,6 +318,24 @@ const polices = [
       options: [],
     },
     {
+      type: 'input',
+      label: 'Taille du Titre Mémo',
+      value: confSelected.titleMemoSize,
+      handle: handleTitleSizeChange,
+      holder: 'Saisir taille',
+      style: { backgroundColor: inputColor.titleMemoSize },
+      options: []
+    },
+    {
+      type: 'input',
+      label: 'Taille du texte Mémo',
+      value: confSelected.textMemoSize,
+      handle: handleTextSizeChange,
+      holder: 'Saisir taille',
+      style: { backgroundColor: inputColor.textMemoSize },
+      options: []
+    },
+    {
       type: "couleur",
       label: "Couleur de fond de bouton Mémo",
       value: confSelected.buttonMemoBgColor,
@@ -250,6 +360,77 @@ const polices = [
       handle: handleButtonMemoFontSizeChange,
       holder: "Saisir taille",
       style: { backgroundColor: inputColor.buttonMemoFontSize },
+      options: [],
+    },
+    {
+      type: "select",
+      label: "Affichage trait sous titre",
+      value: confSelected.traitDisplay,
+      handle: handleTraitDisplayChange,
+      holder: "",
+      style: { backgroundColor: inputColor.traitDisplay },
+      options: [
+        { title: "---", value: "" },
+        { title: "Afficher", value: "display" },
+        { title: "Cacher", value: "hide" },
+      ],
+    },
+    {
+      type: "couleur",
+      label: "Couleur du trait",
+      value: confSelected.traitColor,
+      handle: handleTraitColorChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.traitColor },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Largeur du trait",
+      value: confSelected.traitWidth,
+      handle: handleTraitWidthChange,
+      holder: "Saisir largeur",
+      style: { backgroundColor: inputColor.traitWidth },
+      options: [],
+    },
+    {
+      type: "input",
+      label: "Padding sous le titre",
+      value: confSelected.paddingUnderTitle,
+      handle: handlePaddingUnderTitleChange,
+      holder: "Saisir padding",
+      style: { backgroundColor: inputColor.paddingUnderTitle },
+      options: [],
+    },
+    {
+      type: "select",
+      label: "Affichage bordure de section",
+      value: confSelected.sectionBorderDisplay,
+      handle: handleSectionBorderDisplayChange,
+      holder: "",
+      style: { backgroundColor: inputColor.sectionBorderDisplay },
+      options: [
+        { title: "---", value: "" },
+        { title: "Afficher", value: "display" },
+        { title: "Cacher", value: "hide" },
+      ],
+    },
+    {
+      type: "input",
+      label: "Largeur de la bordure de section",
+      value: confSelected.sectionBorderWidth,
+      handle: handleSectionBorderWidthChange,
+      holder: "Saisir largeur",
+      style: { backgroundColor: inputColor.sectionBorderWidth },
+      options: [],
+    },
+    {
+      type: "couleur",
+      label: "Couleur de la bordure de section",
+      value: confSelected.sectionBorderColor,
+      handle: handleSectionBorderColorChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.sectionBorderColor },
       options: [],
     },
     {
@@ -295,6 +476,15 @@ const polices = [
         buttonMemoFontColor: confSelected.buttonMemoFontColor,
         buttonMemoFontSize: confSelected.buttonMemoFontSize,
         arrondiMemo: confSelected.arrondiMemo,
+        textMemoSize: confSelected.textMemoSize,
+        titleMemoSize: confSelected.titleMemoSize,
+        paddingUnderTitle: confSelected.paddingUnderTitle,
+        traitDisplay: confSelected.traitDisplay,
+        traitColor: confSelected.traitColor,
+        traitWidth: confSelected.traitWidth,
+        sectionBorderDisplay: confSelected.sectionBorderDisplay,
+        sectionBorderWidth: confSelected.sectionBorderWidth,
+        sectionBorderColor: confSelected.sectionBorderColor,
     })
       .then((data) => {
         setInitialValues(confSelected);
@@ -337,7 +527,6 @@ const polices = [
           />
         );
       })}
-      <div></div>
       <div className="confButtons">
         <div>
           <button onClick={handleAReinitialiser}>Réinitialiser</button>
