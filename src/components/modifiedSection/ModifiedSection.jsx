@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import ConfLine from "../confLine/ConfLine";
 import CustomTitlesManager from "@/components/ui/customTitlesManager";
+import useRessources from "@/hooks/useRessources";
 
 function ModifiedSection(props) {
+  const { polices } = useRessources();
   const handleTitleChange = (event) => {
     props.setModifiedData((prevData) => ({
       ...prevData,
@@ -26,37 +28,36 @@ function ModifiedSection(props) {
     }));
   };
 
-  const polices = [
-    { title: "---", value: "" },
-    { title: "Arial", value: "Arial" },
-    { title: "Bookman", value: "Bookman" },
-    { title: "Comic Sans MS", value: "Comic Sans MS" },
-    { title: "Courier New", value: "Courier New" },
-    { title: "Garamond", value: "Garamond" },
-    { title: "Georgia", value: "Georgia" },
-    { title: "Helvetica", value: "Helvetica" },
-    { title: "Montserrat", value: "Montserrat" },
-    { title: "Palatino", value: "Palatino" },
-    { title: "Sans-serif", value: "Sans-serif" },
-    { title: "Times New Roman", value: "Times New Roman" },
-    { title: "Verdana", value: "Verdana" },
-];
+  const handleTailleChange = (key) => (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      props.setModifiedData((prevData) => ({
+        ...prevData,
+        [key]: value,
+      }));
+    } else {
+      props.setModifiedData((prevData) => ({
+        ...prevData,
+        [key]: 0,
+      }));
+    }
+  };
 
   const handleTextPoliceChange = handlePropertyChange("textPolice");
   const handleTitlePoliceChange = handlePropertyChange("titlePolice");
   const handleTitleColorChange = handleChangeColor("titleColor");
   const handleTextColorChange = handleChangeColor("textColor");
   const handleBackgroundColorChange = handleChangeColor("backgroundColor");
-  const handleFontSizeTitleChange = handlePropertyChange("fontSizeTitle");
-  const handleFontSizeTextChange = handlePropertyChange("fontSizeText");
-  const handlePaddingUnderTitleChange = handlePropertyChange("paddingUnderTitle");
+  const handleFontSizeTitleChange = handleTailleChange("fontSizeTitle");
+  const handleFontSizeTextChange = handleTailleChange("fontSizeText");
+  const handlePaddingUnderTitleChange = handleTailleChange("paddingUnderTitle");
   const handleTraitDisplayChange = handlePropertyChange("traitDisplay");
   const handleTraitColorChange = handleChangeColor("traitColor");
-  const handleTraitWidthChange = handlePropertyChange("traitWidth");
+  const handleTraitWidthChange = handleTailleChange("traitWidth");
   const handleSectionBorderDisplayChange = handlePropertyChange("sectionBorderDisplay");
-  const handleSectionBorderWidthChange = handlePropertyChange("sectionBorderWidth");
+  const handleSectionBorderWidthChange = handleTailleChange("sectionBorderWidth");
   const handleSectionBorderColorChange = handleChangeColor("sectionBorderColor");
-  const handleSectionBorderRoundChange = handlePropertyChange("sectionBorderRound");
+  const handleSectionBorderRoundChange = handleTailleChange("sectionBorderRound");
 
   const confLines = [
     {
@@ -122,7 +123,7 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Taille du titre",
+      label: "Taille du titre (px)",
       type: "input",
       value: props.modifiedData.fontSizeTitle,
       handle: handleFontSizeTitleChange,
@@ -136,7 +137,7 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Taille du texte",
+      label: "Taille du texte (px)",
       type: "input",
       value: props.modifiedData.fontSizeText,
       handle: handleFontSizeTextChange,
@@ -150,7 +151,7 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Padding sous le titre",
+      label: "Padding sous le titre (px)",
       type: "input",
       value: props.modifiedData.paddingUnderTitle,
       handle: handlePaddingUnderTitleChange,
@@ -176,7 +177,6 @@ function ModifiedSection(props) {
           "1px solid red",
       },
       options: [
-        { title: "----", value: "" },
         { title: "Afficher Trait", value: "display" },
         { title: "Cacher Trait", value: "hide" },
       ],
@@ -194,7 +194,7 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Largeur du trait",
+      label: "Largeur du trait (px)",
       type: "input",
       value: props.modifiedData.traitWidth,
       handle: handleTraitWidthChange,
@@ -218,13 +218,12 @@ function ModifiedSection(props) {
           "1px solid red",
       },
       options: [
-        { title: "----", value: "" },
         { title: "Afficher cadre", value: "display" },
         { title: "Cacher cadre", value: "hide" },
       ],
     },
     {
-      label: "Largeur de cadre de section",
+      label: "Largeur de cadre de section (px)",
       type: "input",
       value: props.modifiedData.sectionBorderWidth,
       handle: handleSectionBorderWidthChange,
@@ -252,7 +251,7 @@ function ModifiedSection(props) {
       options: [],
     },
     {
-      label: "Arrondi de cadre de section",
+      label: "Arrondi de cadre de section (px)",
       type: "input",
       value: props.modifiedData.sectionBorderRound,
       handle: handleSectionBorderRoundChange,

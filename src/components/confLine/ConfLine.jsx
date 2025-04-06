@@ -1,8 +1,10 @@
 import React from "react";
 import ColorPicker from "../ui/color-picker";
-import { useState } from "react";
+import useRessources from "@/hooks/useRessources";
 
 function ConfLine(props) {
+  const { polices } = useRessources();
+
   return (
     <div className="colorsLine">
       <h3>{props.label}</h3>
@@ -18,7 +20,7 @@ function ConfLine(props) {
         <select value={props.value} onChange={props.handle} style={props.style}>
           {props.options.map((option, index) => {
             return (
-              <option key={index} value={option.value}>
+              <option key={index} value={option.value} style={{ fontFamily: polices[index].value === option.value ? option.value : "" }}>
                 {option.title}
               </option>
             );

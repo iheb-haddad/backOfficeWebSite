@@ -49,7 +49,7 @@ function Configurations() {
     resizeBarWidth: "",
     backgroundLanguage: "#000000",
     textColorLanguage: "#ffffff",
-    sectionEmailDisplay: "",
+    sectionEmailDisplay: "display",
   };
 
   const [configurations, setConfigurations] = useState([]);
@@ -171,12 +171,27 @@ function Configurations() {
     }));
   };
 
+  const createHandleTailleChange = (key) => (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        [key]: value,
+      }));
+    } else {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        [key]: 0,
+      }));
+    }
+  };
+
   const handlePanelColorChange = createHandleColorChange("panelColor");
 
   const handlePanelTextColorChange = createHandleColorChange("panelTextColor");
 
-  const handlePanelWidthChange = createHandleChange("panelWidth");
-  const handleResizeBarWidthChange = createHandleChange("resizeBarWidth");
+  const handlePanelWidthChange = createHandleTailleChange("panelWidth");
+  const handleResizeBarWidthChange = createHandleTailleChange("resizeBarWidth");
   const handleBackgroundLanguageChange =
     createHandleColorChange("backgroundLanguage");
   const handleTextColorLanguageChange =
@@ -303,10 +318,10 @@ function Configurations() {
     idProject: confSelected.idProject,
     panelColor: "#ffffff",
     panelTextColor: "#000000",
-    panelWidth: "300px",
+    panelWidth: "300",
     generalUrl: confSelected.generalUrl,
     timer: 10,
-    resizeBarWidth: "5px",
+    resizeBarWidth: "5",
     backgroundLanguage: "#000000",
     textColorLanguage: "#ffffff",
     sectionEmailDisplay: "display",
@@ -376,7 +391,7 @@ function Configurations() {
     },
     {
       type: "input",
-      label: "Largeur initial du panneau",
+      label: "Largeur initial du panneau (px)",
       value: confSelected.panelWidth,
       handle: handlePanelWidthChange,
       holder: "Saisir largeur",
@@ -394,7 +409,7 @@ function Configurations() {
     },
     {
       type: "input",
-      label: "Largeur de la barre de redimensionnement",
+      label: "Largeur de la barre de redimensionnement (px)",
       value: confSelected.resizeBarWidth,
       handle: handleResizeBarWidthChange,
       holder: "Saisir largeur",

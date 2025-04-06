@@ -53,20 +53,20 @@ function GestionSections() {
     titleColor: "white",
     textColor: "black",
     backgroundColor: "red",
-    fontSizeTitle: "14px",
-    fontSizeText: "14px",
-    paddingUnderTitle: "2px",
+    fontSizeTitle: "14",
+    fontSizeText: "14",
+    paddingUnderTitle: "2",
     traitDisplay: "display",
     traitColor: "black",
-    traitWidth: "1px",
+    traitWidth: "1",
     sectionBorderDisplay: "display",
-    sectionBorderWidth: "1px",
+    sectionBorderWidth: "1",
     sectionBorderColor: "black",
-    sectionBorderRound: "0px",
+    sectionBorderRound: "0",
   };
 
   const [formData, setFormData] = useState(initialValues);
-  const { sections, setSections } = useRessources();
+  const { sections, setSections , polices} = useRessources();
   const [showError, setShowError] = useState(false);
   const [showListSections, setShowListSections] = useState(false);
   const [dataChanged, setDataChanged] = useState(0);
@@ -120,21 +120,36 @@ function GestionSections() {
     }));
   };
 
+  const createHandleTailleChange = (key) => (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        [key]: value,
+      }));
+    } else {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        [key]: 0,
+      }));
+    }
+  };
+
   const handleTitlePoliceChange = handleChange("titlePolice");
   const handleTextPoliceChange = handleChange("textPolice");
   const handleTitleColorChange = handleChangeColor("titleColor");
   const handleTextColorChange = handleChangeColor("textColor");
   const handleBackgroundColorChange = handleChangeColor("backgroundColor");
-  const handleFontSizeTitleChange = handleChange("fontSizeTitle");
-  const handleFontSizeTextChange = handleChange("fontSizeText");
-  const handlePaddingUnderTitleChange = handleChange("paddingUnderTitle");
+  const handleFontSizeTitleChange = createHandleTailleChange("fontSizeTitle");
+  const handleFontSizeTextChange = createHandleTailleChange("fontSizeText");
+  const handlePaddingUnderTitleChange = createHandleTailleChange("paddingUnderTitle");
   const handleTraitDisplayChange = handleChange("traitDisplay");
   const handleTraitColorChange = handleChangeColor("traitColor");
-  const handleTraitWidthChange = handleChange("traitWidth");
+  const handleTraitWidthChange = createHandleTailleChange("traitWidth");
   const handleSectionBorderDisplayChange = handleChange("sectionBorderDisplay");
-  const handleSectionBorderWidthChange = handleChange("sectionBorderWidth");
+  const handleSectionBorderWidthChange = createHandleTailleChange("sectionBorderWidth");
   const handleSectionBorderColorChange = handleChangeColor("sectionBorderColor");
-  const handleSectionBorderRoundChange = handleChange("sectionBorderRound");
+  const handleSectionBorderRoundChange = createHandleTailleChange("sectionBorderRound");
 
   const handleAnnuler1 = () => {
     setFormData(initialValues);
@@ -178,22 +193,6 @@ function GestionSections() {
       });
   };
 
-  const polices = [
-    { title: "---", value: "" },
-    { title: "Arial", value: "Arial" },
-    { title: "Bookman", value: "Bookman" },
-    { title: "Comic Sans MS", value: "Comic Sans MS" },
-    { title: "Courier New", value: "Courier New" },
-    { title: "Garamond", value: "Garamond" },
-    { title: "Georgia", value: "Georgia" },
-    { title: "Helvetica", value: "Helvetica" },
-    { title: "Montserrat", value: "Montserrat" },
-    { title: "Palatino", value: "Palatino" },
-    { title: "Sans-serif", value: "Sans-serif" },
-    { title: "Times New Roman", value: "Times New Roman" },
-    { title: "Verdana", value: "Verdana" },
-];
-
   const confLines = [
     {
       type: "select",
@@ -232,19 +231,8 @@ function GestionSections() {
       options: [],
     },
     {
-      type: "couleur",
-      label: "Couleur du background",
-      value: formData.backgroundColor,
-      handle: handleBackgroundColorChange,
-      holder: "Saisir couleur ",
-      style: {
-        border: showError && !formData.backgroundColor && "1px solid red",
-      },
-      options: [],
-    },
-    {
       type: "input",
-      label: "Taille du titre",
+      label: "Taille du titre (px)",
       value: formData.fontSizeTitle,
       handle: handleFontSizeTitleChange,
       holder: "Saisir taille",
@@ -255,7 +243,7 @@ function GestionSections() {
     },
     {
       type: "input",
-      label: "Taille du texte",
+      label: "Taille du texte (px)",
       value: formData.fontSizeText,
       handle: handleFontSizeTextChange,
       holder: "Saisir taille",
@@ -264,7 +252,7 @@ function GestionSections() {
     },
     {
       type: "input",
-      label: "Padding sous le titre",
+      label: "Padding sous le titre (px)",
       value: formData.paddingUnderTitle,
       handle: handlePaddingUnderTitleChange,
       holder: "Saisir padding",
@@ -281,7 +269,6 @@ function GestionSections() {
       holder: "",
       style: { border: showError && !formData.traitDisplay && "1px solid red" },
       options: [
-        { title: "----", value: "" },
         { title: "Afficher Trait", value: "display" },
         { title: "Cacher Trait", value: "hide" },
       ],
@@ -297,11 +284,22 @@ function GestionSections() {
     },
     {
       type: "input",
-      label: "Largeur du trait",
+      label: "Largeur du trait (px)",
       value: formData.traitWidth,
       handle: handleTraitWidthChange,
       holder: "Saisir largeur",
       style: { border: showError && !formData.traitWidth && "1px solid red" },
+      options: [],
+    },
+    {
+      type: "couleur",
+      label: "Couleur du background",
+      value: formData.backgroundColor,
+      handle: handleBackgroundColorChange,
+      holder: "Saisir couleur ",
+      style: {
+        border: showError && !formData.backgroundColor && "1px solid red",
+      },
       options: [],
     },
     {
@@ -320,7 +318,7 @@ function GestionSections() {
     },
     {
       type: "input",
-      label: "Largeur de cadre de section",
+      label: "Largeur de cadre de section (px)",
       value: formData.sectionBorderWidth,
       handle: handleSectionBorderWidthChange,
       holder: "Saisir largeur",
@@ -342,7 +340,7 @@ function GestionSections() {
     },
     {
       type: "input",
-      label: "Arrondi de cadre de section",
+      label: "Arrondi de cadre de section (px)",
       value: formData.sectionBorderRound,
       handle: handleSectionBorderRoundChange,
       holder: "Saisir arrondi",

@@ -24,6 +24,7 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { DataTable } from "../ui/dataTable";
 import GestionMemo from "./GestionMemo";
+import useRessources from "@/hooks/useRessources";
 
 const GestionThemes = () => {
   const [theme, setTheme] = useState({});
@@ -35,6 +36,7 @@ const GestionThemes = () => {
   const [themeCompleted, setThemeCompleted] = useState(false);
   const [showError1, setShowError1] = useState(false);
   const [showError2, setShowError2] = useState(false);
+  const { polices } = useRessources();
 
   const { useStepper, steps, utils } = defineStepper(
     { id: "step-1", title: "Création de thème", description: "First step" },
@@ -142,22 +144,6 @@ const GestionThemes = () => {
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
-  const polices = [
-      { title: "---", value: "" },
-      { title: "Arial", value: "Arial" },
-      { title: "Bookman", value: "Bookman" },
-      { title: "Comic Sans MS", value: "Comic Sans MS" },
-      { title: "Courier New", value: "Courier New" },
-      { title: "Garamond", value: "Garamond" },
-      { title: "Georgia", value: "Georgia" },
-      { title: "Helvetica", value: "Helvetica" },
-      { title: "Montserrat", value: "Montserrat" },
-      { title: "Palatino", value: "Palatino" },
-      { title: "Sans-serif", value: "Sans-serif" },
-      { title: "Times New Roman", value: "Times New Roman" },
-      { title: "Verdana", value: "Verdana" },
-  ];
-
   const confThemeLines = [
     {
       type: "input",
@@ -199,7 +185,6 @@ const GestionThemes = () => {
           showError2 && !theme.memoSection ? "red" : inputColor.memoFieldColor,
       },
       options: [
-        { title: "---", value: "" },
         { title: "Afficher Mémo", value: "display" },
         { title: "Cacher Mémo", value: "hide" },
       ],
@@ -420,7 +405,6 @@ const GestionThemes = () => {
             : inputColor.handleSectionEmailDisplay,
       },
       options: [
-        { title: "---", value: "" },
         { title: "Afficher Email", value: "display" },
         { title: "Cacher Email", value: "hide" },
       ],

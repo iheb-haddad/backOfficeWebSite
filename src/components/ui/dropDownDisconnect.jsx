@@ -28,7 +28,7 @@ export default function DropDownDisconnect() {
     <DropdownMenuTrigger asChild>
         <div className="user">
             <div className="rounded-image">
-                <img src="../../public/profilAvatar.png"alt="" />
+                <img src="/profilAvatar.png"alt="" />
             </div>
             <span className="username" onClick={() => setIsDeconnecting(prev => !prev)}>
                 {auth?.user?.username}

@@ -3,7 +3,6 @@ import useRessources from "../../hooks/useRessources";
 import ConfLine from "../confLine/ConfLine";
 import Axios from "../../services/Axios";
 import { toast } from "sonner";
-import { text } from "@fortawesome/fontawesome-svg-core";
 
 const GestionMemo = ({ projects }) => {
   const [initialValues, setInitialValues] = useState({});
@@ -12,12 +11,13 @@ const GestionMemo = ({ projects }) => {
   const handleProjectChange = (event) => {
     setProjet(event.target.value);
   };
-  const { confSelected, setConfSelected } = useRessources();
+  const { confSelected, setConfSelected , polices} = useRessources();
 
   const defaultData = {
     idProject: "",
-    memoSection: "",
+    memoSection: "display",
     memoBackgroundColor: "#000000",
+    memoTitleColor: "#000000",
     memoFontColor: "#000000",
     fontTitleMemo: "",
     fontTextMemo: "",
@@ -28,10 +28,10 @@ const GestionMemo = ({ projects }) => {
     textMemoSize: "",
     titleMemoSize: "",
     paddingUnderTitle: "",
-    traitDisplay: "",
+    traitDisplay: "display",
     traitColor: "#000000",
     traitWidth: "",
-    sectionBorderDisplay: "",
+    sectionBorderDisplay: "display",
     sectionBorderWidth: "",
     sectionBorderColor: "#000000",
   };
@@ -63,10 +63,26 @@ const GestionMemo = ({ projects }) => {
     }));
   };
 
+  const createHandleTailleChange = (key) => (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        [key]: value,
+      }));
+    } else {
+      setConfSelected((prevData) => ({
+        ...prevData,
+        [key]: 0,
+      }));
+    }
+  };
+
   const handleMemoSectionChange = createHandleChange("memoSection");
   const handleMemoBackColorChange = createHandleColorChange(
     "memoBackgroundColor"
   );
+  const handleMemoTitleColorChange = createHandleColorChange("memoTitleColor");
   const handleMemoFontColorChange = createHandleColorChange("memoFontColor");
   const handleButtonMemoBgColorChange =
     createHandleColorChange("buttonMemoBgColor");
@@ -74,23 +90,24 @@ const GestionMemo = ({ projects }) => {
     "buttonMemoFontColor"
   );
   const handleButtonMemoFontSizeChange =
-    createHandleChange("buttonMemoFontSize");
+  createHandleTailleChange("buttonMemoFontSize");
   const handleFontTitleMemoChange = createHandleChange("fontTitleMemo");
   const handleFontTextMemoChange = createHandleChange("fontTextMemo");
-  const handleArrondiMemoChange = createHandleChange("arrondiMemo");
-  const handleTextSizeChange = createHandleChange("textMemoSize");
-  const handleTitleSizeChange = createHandleChange("titleMemoSize");
-  const handlePaddingUnderTitleChange = createHandleChange("paddingUnderTitle");
+  const handleArrondiMemoChange = createHandleTailleChange("arrondiMemo");
+  const handleTextSizeChange = createHandleTailleChange("textMemoSize");
+  const handleTitleSizeChange = createHandleTailleChange("titleMemoSize");
+  const handlePaddingUnderTitleChange = createHandleTailleChange("paddingUnderTitle");
   const handleTraitDisplayChange = createHandleChange("traitDisplay");
   const handleTraitColorChange = createHandleColorChange("traitColor");
-  const handleTraitWidthChange = createHandleChange("traitWidth");
+  const handleTraitWidthChange = createHandleTailleChange("traitWidth");
   const handleSectionBorderDisplayChange = createHandleChange("sectionBorderDisplay");
-  const handleSectionBorderWidthChange = createHandleChange("sectionBorderWidth");
+  const handleSectionBorderWidthChange = createHandleTailleChange("sectionBorderWidth");
   const handleSectionBorderColorChange = createHandleColorChange("sectionBorderColor");
 
   const initialInputColors = {
     memoFieldColor: "white",
     memoBackColorFieldColor: "white",
+    memoTitleColorFieldColor: "white",
     memoFontColorFieldColor: "white",
     buttonMemoBgColor: "white",
     buttonMemoFontColor: "white",
@@ -116,6 +133,13 @@ const GestionMemo = ({ projects }) => {
       setInputColor((prevData) => ({
         ...prevData,
         memoBackColorFieldColor: "#50e150",
+      }));
+    }
+
+    if (confSelected.memoTitleColor != initialValues.memoTitleColor) {
+      setInputColor((prevData) => ({
+        ...prevData,
+        memoTitleColorFieldColor: "#50e150",
       }));
     }
 
@@ -233,39 +257,24 @@ const GestionMemo = ({ projects }) => {
     idProject: confSelected.idProject,
     memoSection: "display",
     memoBackgroundColor: "#ffc000",
+    memoTitleColor: "#000000",
     memoFontColor: "#ffffff",
     buttonMemoBgColor: "#000000",
     buttonMemoFontColor: "#ffffff",
-    buttonMemoFontSize: "10px",
+    buttonMemoFontSize: "10",
     memoFontTitle: "Montserrat",
     memoFontText: "Montserrat",
-    arrondiMemo: "0px",
-    textMemoSize: "12px",
-    titleMemoSize: "16px",
-    paddingUnderTitle: "10px",
+    arrondiMemo: "0",
+    textMemoSize: "12",
+    titleMemoSize: "16",
+    paddingUnderTitle: "10",
     traitDisplay: "display",
     traitColor: "#000000",
-    traitWidth: "1px",
+    traitWidth: "1",
     sectionBorderDisplay: "display",
-    sectionBorderWidth: "1px",
+    sectionBorderWidth: "1",
     sectionBorderColor: "#000000",
   };
-
-const polices = [
-    { title: "---", value: "" },
-    { title: "Arial", value: "Arial" },
-    { title: "Bookman", value: "Bookman" },
-    { title: "Comic Sans MS", value: "Comic Sans MS" },
-    { title: "Courier New", value: "Courier New" },
-    { title: "Garamond", value: "Garamond" },
-    { title: "Georgia", value: "Georgia" },
-    { title: "Helvetica", value: "Helvetica" },
-    { title: "Montserrat", value: "Montserrat" },
-    { title: "Palatino", value: "Palatino" },
-    { title: "Sans-serif", value: "Sans-serif" },
-    { title: "Times New Roman", value: "Times New Roman" },
-    { title: "Verdana", value: "Verdana" },
-];
 
   const confLines = [
     {
@@ -276,19 +285,9 @@ const polices = [
       holder: "",
       style: { backgroundColor: inputColor.memoFieldColor },
       options: [
-        { title: "---", value: "" },
         { title: "Afficher Mémo", value: "display" },
         { title: "Cacher Mémo", value: "hide" },
       ],
-    },
-    {
-      type: "couleur",
-      label: "Couleur du background",
-      value: confSelected.memoBackgroundColor,
-      handle: handleMemoBackColorChange,
-      holder: "Saisir couleur",
-      style: { backgroundColor: inputColor.memoBackColorFieldColor },
-      options: [],
     },
     {
       type: "select",
@@ -310,6 +309,15 @@ const polices = [
     },
     {
       type: "couleur",
+      label: "Couleur du titre Mémo",
+      value: confSelected.memoTitleColor,
+      handle: handleMemoTitleColorChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.memoTitleColorFieldColor },
+      options: [],
+    },
+    {
+      type: "couleur",
       label: "Couleur du texte Mémo",
       value: confSelected.memoFontColor,
       handle: handleMemoFontColorChange,
@@ -319,7 +327,7 @@ const polices = [
     },
     {
       type: 'input',
-      label: 'Taille du Titre Mémo',
+      label: 'Taille du Titre Mémo (px)',
       value: confSelected.titleMemoSize,
       handle: handleTitleSizeChange,
       holder: 'Saisir taille',
@@ -328,12 +336,21 @@ const polices = [
     },
     {
       type: 'input',
-      label: 'Taille du texte Mémo',
+      label: 'Taille du texte Mémo (px)',
       value: confSelected.textMemoSize,
       handle: handleTextSizeChange,
       holder: 'Saisir taille',
       style: { backgroundColor: inputColor.textMemoSize },
       options: []
+    },
+    {
+      type: "input",
+      label: "Padding sous le titre (px)",
+      value: confSelected.paddingUnderTitle,
+      handle: handlePaddingUnderTitleChange,
+      holder: "Saisir padding",
+      style: { backgroundColor: inputColor.paddingUnderTitle },
+      options: [],
     },
     {
       type: "couleur",
@@ -355,7 +372,7 @@ const polices = [
     },
     {
       type: "input",
-      label: "Taille du texte de bouton Mémo",
+      label: "Taille du texte de bouton Mémo (px)",
       value: confSelected.buttonMemoFontSize,
       handle: handleButtonMemoFontSizeChange,
       holder: "Saisir taille",
@@ -370,7 +387,6 @@ const polices = [
       holder: "",
       style: { backgroundColor: inputColor.traitDisplay },
       options: [
-        { title: "---", value: "" },
         { title: "Afficher", value: "display" },
         { title: "Cacher", value: "hide" },
       ],
@@ -386,7 +402,7 @@ const polices = [
     },
     {
       type: "input",
-      label: "Largeur du trait",
+      label: "Largeur du trait (px)",
       value: confSelected.traitWidth,
       handle: handleTraitWidthChange,
       holder: "Saisir largeur",
@@ -394,12 +410,12 @@ const polices = [
       options: [],
     },
     {
-      type: "input",
-      label: "Padding sous le titre",
-      value: confSelected.paddingUnderTitle,
-      handle: handlePaddingUnderTitleChange,
-      holder: "Saisir padding",
-      style: { backgroundColor: inputColor.paddingUnderTitle },
+      type: "couleur",
+      label: "Couleur du background",
+      value: confSelected.memoBackgroundColor,
+      handle: handleMemoBackColorChange,
+      holder: "Saisir couleur",
+      style: { backgroundColor: inputColor.memoBackColorFieldColor },
       options: [],
     },
     {
@@ -410,14 +426,13 @@ const polices = [
       holder: "",
       style: { backgroundColor: inputColor.sectionBorderDisplay },
       options: [
-        { title: "---", value: "" },
         { title: "Afficher", value: "display" },
         { title: "Cacher", value: "hide" },
       ],
     },
     {
       type: "input",
-      label: "Largeur de la bordure de section",
+      label: "Largeur de la bordure de section (px)",
       value: confSelected.sectionBorderWidth,
       handle: handleSectionBorderWidthChange,
       holder: "Saisir largeur",
@@ -435,7 +450,7 @@ const polices = [
     },
     {
       type: "input",
-      label: "Arrondi de cadre du Mémo",
+      label: "Arrondi de cadre du Mémo (px)",
       value: confSelected.arrondiMemo,
       handle: handleArrondiMemoChange,
       holder: "Saisir arrondi",
@@ -527,6 +542,7 @@ const polices = [
           />
         );
       })}
+      <div></div>
       <div className="confButtons">
         <div>
           <button onClick={handleAReinitialiser}>Réinitialiser</button>

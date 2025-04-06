@@ -28,7 +28,7 @@ function Navbar(props) {
     <div style={{ display: "flex" }}>
       <div className="navbar">
         <div className="head">
-          <img src="../../../public/logo2.png" alt="" />
+          <img src="logo2.png" alt="" />
         </div>
         <div className="navbarBody">
           <Link

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Axios from "../../services/Axios";
 import { ConfLine } from "../index";
 import "./GestionSections.css";
 import { toast } from "sonner";
 import ReorderSection from "../reorderSection/ReorderSection";
 import CustomTitlesManager from "../ui/customTitlesManager";
+import useRessources from "@/hooks/useRessources";
 
 function GestionSections({setThemeCompleted, setSections,sections}) {
   const [customTitles, setCustomTitles] = useState([]);
@@ -19,6 +19,7 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
     { id: 8, titleFr: "Erreurs", titleEn: "Errors" },
   ];
   const [showOrderChange, setShowOrderChange] = useState(false);
+  const { polices } = useRessources();
 
   const [sectionsTitles, setSectionsTitles] = useState(
     defaultTitles.filter(
@@ -125,22 +126,6 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
     setThemeCompleted(sections.length === defaultTitles.length);
   }, [sections]);
 
-  const polices = [
-    { title: "---", value: "" },
-    { title: "Arial", value: "Arial" },
-    { title: "Bookman", value: "Bookman" },
-    { title: "Comic Sans MS", value: "Comic Sans MS" },
-    { title: "Courier New", value: "Courier New" },
-    { title: "Garamond", value: "Garamond" },
-    { title: "Georgia", value: "Georgia" },
-    { title: "Helvetica", value: "Helvetica" },
-    { title: "Montserrat", value: "Montserrat" },
-    { title: "Palatino", value: "Palatino" },
-    { title: "Sans-serif", value: "Sans-serif" },
-    { title: "Times New Roman", value: "Times New Roman" },
-    { title: "Verdana", value: "Verdana" },
-];
-
   const confLines = [
     {
       type: "select",
@@ -228,7 +213,6 @@ function GestionSections({setThemeCompleted, setSections,sections}) {
       holder: "",
       style: { border: showError && !formData.traitDisplay && "1px solid red" },
       options: [
-        { title: "----", value: "" },
         { title: "Afficher Trait", value: "display" },
         { title: "Cacher Trait", value: "hide" },
       ],
