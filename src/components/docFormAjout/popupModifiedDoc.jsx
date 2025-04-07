@@ -35,6 +35,8 @@ const ModifyDocument = ({
     note: document.note,
     expiration: document.expiration,
     keywords: document.keywords,
+    frameWidth: document.frameWidth,
+    frameHeight: document.frameHeight,
   });
   const [showError, setShowError] = useState(false);
 
@@ -44,6 +46,8 @@ const ModifyDocument = ({
         key !== "urlDocument" &&
         key !== "title" &&
         key !== "note" &&
+        key !== "frameWidth" &&
+        key !== "frameHeight" &&
         value === ""
       );
     });
@@ -67,6 +71,8 @@ const ModifyDocument = ({
         keywords: modifiedData.keywords,
         consultationNumber: document.consultNumber,
         lastConsultation: document.lastConsultation,
+        frameWidth: modifiedData.frameWidth,
+        frameHeight: modifiedData.frameHeight,
       };
       Axios.put(`/documentations/${document._id}`, newDocument)
         .then((response) => {

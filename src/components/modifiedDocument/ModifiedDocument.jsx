@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
+import { parse } from "dotenv";
 
 function ModifiedDocument(props) {
   const [keyword, setKeyword] = useState("");
@@ -15,6 +16,8 @@ function ModifiedDocument(props) {
     collapsible: props.document.collapsible,
     defaultEtat: props.document.defaultEtat,
     expiration: props.document.expiration,
+    frameWidth: props.document.frameWidth,
+    frameHeight: props.document.frameHeight,
   };
 
   const handleProjectChange = (event) => {
@@ -75,6 +78,36 @@ function ModifiedDocument(props) {
       ...prevData,
       note: event.target.value,
     }));
+  };
+
+  const handleFrameHeightChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      props.setModifiedData((prevData) => ({
+        ...prevData,
+        frameHeight: value,
+      }));
+    } else {
+      props.setModifiedData((prevData) => ({
+        ...prevData,
+        frameHeight: "",
+      }));
+    }
+  };
+
+  const handleFrameWidthChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      props.setModifiedData((prevData) => ({
+        ...prevData,
+        frameWidth: value,
+      }));
+    } else {
+      props.setModifiedData((prevData) => ({
+        ...prevData,
+        frameWidth: "",
+      }));
+    }
   };
 
   const handleKeywordsChange = (event) => {
@@ -261,6 +294,28 @@ function ModifiedDocument(props) {
               <span>Non</span>
             </div>
           </div>
+        </div>
+      )}
+      {props.modifiedData.affichage === "contenu" && (
+        <div className="configLine">
+          <h3>Largeur du cadre d'affichage (px)</h3>
+          <input
+            type="number"
+            value={props.modifiedData.frameWidth}
+            onChange={handleFrameWidthChange}
+            placeholder={initialValues.frameWidth}
+          />
+        </div>
+      )}
+      {props.modifiedData.affichage === "contenu" && (
+        <div className="configLine">
+          <h3>Hauteur du cadre d'affichage (px)</h3>
+          <input
+            type="number"
+            value={props.modifiedData.frameHeight}
+            onChange={handleFrameHeightChange}
+            placeholder={initialValues.frameHeight}
+          />
         </div>
       )}
       {props.modifiedData.collapsible && (

@@ -269,8 +269,8 @@ function GestionSections() {
       holder: "",
       style: { border: showError && !formData.traitDisplay && "1px solid red" },
       options: [
-        { title: "Afficher Trait", value: "display" },
         { title: "Cacher Trait", value: "hide" },
+        { title: "Afficher Trait", value: "display" },
       ],
     },
     {
@@ -312,8 +312,8 @@ function GestionSections() {
         border: showError && !formData.sectionBorderDisplay && "1px solid red",
       },
       options: [
-        { title: "Afficher Cadre", value: "display" },
         { title: "Cacher Cadre", value: "hide" },
+        { title: "Afficher Cadre", value: "display" },
       ],
     },
     {

@@ -23,6 +23,7 @@ export const RessourcesProvider = ({ children }) => {
     buttonMemoFontSize: "",
     arrondiMemo: "",
     sectionEmailDisplay: "",
+    btnCloseAllDisplay: "",
     textMemoSize: "",
     titleMemoSize: "",
     paddingUnderTitle: "",

@@ -70,6 +70,8 @@ function DocFormAjout() {
     note: "",
     expiration: "",
     keywords: [],
+    frameWidth: "",
+    frameHeight: "",
   };
   const [formData, setFormData] = useState(initialValues);
   const [projectSelected, setProjectSelected] = useState("");
@@ -213,6 +215,37 @@ function DocFormAjout() {
     }
   };
 
+  const handleFrameWidthChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setFormData((prevData) => ({
+        ...prevData,
+        frameWidth: value,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        frameWidth: "",
+      }));
+    }
+  };
+
+  const handleFrameHeightChange = (event) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setFormData((prevData) => ({
+        ...prevData,
+        ...prevData,
+        frameHeight: value,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        frameHeight: "",
+      }));
+    }
+  };
+
   const deleteKeyword = (index) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -229,6 +262,8 @@ function DocFormAjout() {
         key !== "urlDocument" &&
         key != "expiration" &&
         key !== "note" &&
+        key !== "frameWidth" &&
+        key !== "frameHeight" &&
         value === ""
       );
     });
@@ -253,6 +288,8 @@ function DocFormAjout() {
         keywords: formData.keywords,
         consultationNumber: 0,
         lastConsultation: "",
+        frameWidth: formData.frameWidth,
+        frameHeight: formData.frameHeight,
       };
 
       const existingDocument = documentations.find(
@@ -600,6 +637,30 @@ function DocFormAjout() {
                   <span>Non</span>
                 </div>
               </div>
+            </div>
+          )}
+          {
+            formData.affichage === "contenu" && (
+              <div className="configLine">
+                <h3>Largeur du cadre d'affichage (px)</h3>
+                <input
+                  type="number"
+                  value={formData.frameWidth}
+                  onChange={handleFrameWidthChange}
+                  placeholder="Saisir largeur du cadre"
+                />
+              </div>
+            )
+          }
+          {formData.affichage === "contenu" && (
+            <div className="configLine">
+              <h3>Hauteur du cadre d'affichage (px)</h3>
+              <input
+                type="number"
+                value={formData.frameHeight}
+                onChange={handleFrameHeightChange}
+                placeholder="Saisir hauteur du cadre"
+              />
             </div>
           )}
           {formData.collapsible && (

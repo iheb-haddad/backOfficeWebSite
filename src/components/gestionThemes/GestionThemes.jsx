@@ -103,6 +103,9 @@ const GestionThemes = () => {
   const handleSectionEmailDisplayChange = createHandleChange(
     "sectionEmailDisplay"
   );
+  const handleBtnCloseAllDisplayChange = createHandleChange(
+    "btnCloseAllDisplay"
+  );
   const handleFontTitleMemoChange = createHandleChange("fontTitleMemo");
   const handleFontTextMemoChange = createHandleChange("fontTextMemo");
   const handleArrondiMemoChange = createHandleChange("arrondiMemo");
@@ -138,6 +141,7 @@ const GestionThemes = () => {
     buttonMemoFontColor: "rgb(214, 214, 214)",
     buttonMemoFontSize: "rgb(214, 214, 214)",
     handleSectionEmailDisplay: "rgb(214, 214, 214)",
+    handleBtnCloseAllDisplay: "rgb(214, 214, 214)",
     fontTitleMemo: "rgb(214, 214, 214)",
     fontTextMemo: "rgb(214, 214, 214)",
     arrondiMemo: "rgb(214, 214, 214)",
@@ -405,10 +409,27 @@ const GestionThemes = () => {
             : inputColor.handleSectionEmailDisplay,
       },
       options: [
-        { title: "Afficher Email", value: "display" },
         { title: "Cacher Email", value: "hide" },
+        { title: "Afficher Email", value: "display" },
       ],
     },
+    {
+      type: "select",
+      label: "Affichage du bouton Fermer/Ouvrir tout",
+      value: theme.btnCloseAllDisplay,
+      handle: handleBtnCloseAllDisplayChange,
+      holder: "",
+      style: {
+        borderColor:
+          showError2 && !theme.btnCloseAllDisplay
+            ? "red"
+            : inputColor.handleBtnCloseAllDisplay,
+      },
+      options: [
+        { title: "Cacher le bouton", value: "hide" },
+        { title: "Afficher le bouton", value: "display" },
+      ],
+    }
     
   ];
 
@@ -432,6 +453,7 @@ const GestionThemes = () => {
           buttonMemoFontColor: theme.buttonMemoFontColor,
           buttonMemoFontSize: theme.buttonMemoFontSize,
           sectionEmailDisplay: theme.sectionEmailDisplay,
+          btnCloseAllDisplay: theme.btnCloseAllDisplay,
           fontTitleMemo: theme.fontTitleMemo,
           fontTextMemo: theme.fontTextMemo,
           arrondiMemo: theme.arrondiMemo,

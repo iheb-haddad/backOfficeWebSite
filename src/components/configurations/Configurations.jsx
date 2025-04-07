@@ -50,6 +50,7 @@ function Configurations() {
     backgroundLanguage: "#000000",
     textColorLanguage: "#ffffff",
     sectionEmailDisplay: "display",
+    btnCloseAllDisplay: "display",
   };
 
   const [configurations, setConfigurations] = useState([]);
@@ -201,6 +202,10 @@ function Configurations() {
     "sectionEmailDisplay"
   );
 
+  const handleBtnCloseAllDisplayChange = createHandleChange(
+    "btnCloseAllDisplay"
+  );
+
   const handleTimerChange = (event) => {
     const value = parseInt(event.target.value, 10);
     if (!isNaN(value)) {
@@ -225,6 +230,7 @@ function Configurations() {
     backgroundLanguage: "white",
     textColorLanguage: "white",
     handleSectionEmailDisplay: "white",
+    btnCloseAllDisplay: "white",
   };
   const [inputColor, setInputColor] = useState(initialInputColors);
 
@@ -281,6 +287,13 @@ function Configurations() {
       }));
     }
 
+    if (confSelected.btnCloseAllDisplay != initialValues.btnCloseAllDisplay) {
+      setInputColor((prevColor) => ({
+        ...prevColor,
+        btnCloseAllDisplay: "#50e150",
+      }));
+    }
+
     setTimeout(() => {
       setInputColor(initialInputColors);
     }, 2000);
@@ -298,6 +311,7 @@ function Configurations() {
       backgroundLanguage: confSelected.backgroundLanguage,
       textColorLanguage: confSelected.textColorLanguage,
       sectionEmailDisplay: confSelected.sectionEmailDisplay,
+      btnCloseAllDisplay: confSelected.btnCloseAllDisplay,
     })
       .then((data) => {
         setInitialValues(confSelected);
@@ -325,6 +339,7 @@ function Configurations() {
     backgroundLanguage: "#000000",
     textColorLanguage: "#ffffff",
     sectionEmailDisplay: "display",
+    btnCloseAllDisplay: "display",
   };
 
   const handleAReinitialiser = () => {
@@ -442,10 +457,22 @@ function Configurations() {
       holder: "",
       style: { backgroundColor: inputColor.handleSectionEmailDisplay },
       options: [
-        { title: "Afficher Email", value: "display" },
         { title: "Cacher Email", value: "hide" },
+        { title: "Afficher Email", value: "display" }
       ],
     },
+    {
+      type: "select",
+      label: "Afficher le bouton 'Fermer/Ouvrir tout'",
+      value: confSelected.btnCloseAllDisplay,
+      handle: handleBtnCloseAllDisplayChange,
+      holder: "",
+      style: { backgroundColor: inputColor.btnCloseAllDisplay },
+      options: [
+        { title: "Cacher le bouton", value: "hide" },
+        { title: "Afficher le bouton", value: "display" }
+      ],
+    }
   ];
 
   const [open, setOpen] = useState(false);
@@ -630,7 +657,6 @@ function Configurations() {
                 />
               );
             })}
-            <div></div>
             <ExportCSV data={configurations} fileName={"configurations"} />
             <div className="confButtons">
               <div>
