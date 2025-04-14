@@ -293,17 +293,18 @@ function DocFormAjout() {
       };
 
       const existingDocument = documentations.find(
-        (doc) => doc.urlDoc === newDocument.urlDoc
+        (doc) => doc.urlDoc === newDocument.urlDoc && newDocument.urlDoc !== ""
       );
 
       if (existingDocument) {
         toast.warning(`L'URL existe déjà sous le titre ${existingDocument.title}`);
+        return ;
       }
       
       if (isError) {
-        Axios.post("/Documents", newDocument)
+        Axios.post("/errors", newDocument)
           .then((response) => {
-            console.log("New document added:", response.data);
+            console.log("New error added:", response.data);
             setDataChanged((prev) => prev + 1);
             setFormData(initialValues);
             toast.success("L'erreur est ajouté avec succés");

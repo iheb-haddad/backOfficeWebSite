@@ -19,6 +19,7 @@ import HistoricList from "./HistoricList";
 import { AreaChartCard, PieChartCard } from "../index";
 import { DataTable } from "../ui/dataTable";
 import { MoreHorizontal } from "lucide-react";
+import ExportHistoric from "./ExportHistoric";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -106,6 +107,7 @@ function Dashboard() {
                   onContinue={() => handleResetConsultNumber(document)}
                   message={`Voulez-vous vraiment supprimer l'historique de consultation de du document "${document.title}" ?`}
                 />
+                <ExportHistoric doc={document} />
               </DropdownMenuContent>
             </DropdownMenu>
           )
