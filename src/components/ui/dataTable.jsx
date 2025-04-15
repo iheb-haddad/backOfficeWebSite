@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/input"
 import { DatePickerWithRange } from "./dateRange"
 import { toast } from "sonner"
 import { DataTablePagination } from "./dataTablePagination"
-import { set } from "date-fns"
+import ExportAllHist from "@/components/dashboard/ExportAllHist"
 export function DataTable({
   columns,
   data,
@@ -110,6 +110,11 @@ export function DataTable({
         {type === 'historic' && table.getColumn('date')?.getIsVisible() && (
           <DatePickerWithRange date={consultaionDate} setDate={setConsultationDate} placeholder={'Date de consultation'} />
         )}
+        {
+          type === 'dashboard' && (
+            <ExportAllHist docs={data} />
+          )
+        }
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">

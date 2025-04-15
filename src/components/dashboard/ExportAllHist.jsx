@@ -1,28 +1,28 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
 import Axios from "../../services/Axios";
+import { toast } from "sonner";
 
-const ExportHistoric = ({ doc }) => {
-  const [historic, setHistoric] = useState([]);
+const ExportAllHist = ({ docs }) => {
+  const getHistorics = () => {
+    setLoading(true);
+    const idsDocs = docs.map((doc) => doc._id).join(",");
+    Axios.get(`/consultHistoric/docs/${idsDocs}`)
+      .then((res) => {
+        exportToCSV(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Erreur lors de l'exportation des historiques");
+      });
+  };
 
-  useEffect(() => {
-    if (doc._id) {
-      Axios.get(`/consultHistoric/documentation/${doc._id}`)
-        .then((res) => {
-          setHistoric(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [doc._id]);
-
-  const exportToCSV = () => {
+  const exportToCSV = (historic) => {
     if (historic.length > 0) {
       const csvData = historic.map((item) => {
-        const { createdAt, updatedAt, __v, idDocumentation, id, ...rest } = item;
+        const { createdAt, updatedAt, __v, idDocumentation, _id, ...rest } =
+          item;
         return {
           document: item.idDocumentation.title,
           ...rest,
@@ -46,24 +46,26 @@ const ExportHistoric = ({ doc }) => {
       if (link.download !== undefined) {
         const url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
-        link.setAttribute("download", "historique_doc_" + doc.title + ".csv");
+        link.setAttribute("download", "historique_consultations.csv");
         link.style.visibility = "hidden";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
       }
+      setLoading(false);
     }
   };
+
   return (
     <div
-      className="cursor-pointer p-2 py-1 hover:bg-gray-100 flex gap-2 items-center"
-      style={{ fontSize: "0.9rem" }}
-      onClick={exportToCSV}
+      className="cursor-pointer p-2 hover:bg-gray-100 flex gap-2 items-center"
+      style={{ fontSize: "0.9rem" , borderRadius: "0.5rem", backgroundColor: "#f0f0f0", color: "#333"}}
+      onClick={getHistorics}
     >
-      <span>Export Historiq</span>
+      <span>Exporter</span>
       <FontAwesomeIcon icon={faDownload} />
     </div>
   );
 };
 
-export default ExportHistoric;
+export default ExportAllHist;
