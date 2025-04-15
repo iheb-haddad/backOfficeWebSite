@@ -22,7 +22,7 @@ const ExportHistoric = ({ doc }) => {
   const exportToCSV = () => {
     if (historic.length > 0) {
       const csvData = historic.map((item) => {
-        const { createdAt, updatedAt, __v, idDocumentation, id, ...rest } = item;
+        const { createdAt, updatedAt, __v, idDocumentation, _id, ...rest } = item;
         return {
           document: item.idDocumentation.title,
           ...rest,
