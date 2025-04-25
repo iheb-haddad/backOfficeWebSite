@@ -48,6 +48,7 @@ const ModifyDocument = ({
         key !== "note" &&
         key !== "frameWidth" &&
         key !== "frameHeight" &&
+        key !== "expiration" &&
         value === ""
       );
     });
